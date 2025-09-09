@@ -1,7 +1,7 @@
 import { FnLanguage } from "./FnLanguage";
 import { FByteArchive } from "../reader/FByteArchive";
 import { FTextLocalizationResource } from "../objects/core/i18n/FTextLocalizationResource";
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 
 /**
  * UE4 Text Localization (.locres)

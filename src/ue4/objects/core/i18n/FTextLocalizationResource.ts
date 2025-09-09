@@ -2,7 +2,7 @@ import { FGuid } from "../misc/Guid";
 import { FArchive } from "../../../reader/FArchive";
 import { ParserException } from "../../../../exceptions/Exceptions";
 import { FArchiveWriter } from "../../../writer/FArchiveWriter";
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 
 /**
  * FTextLocalizationResource

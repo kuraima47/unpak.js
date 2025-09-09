@@ -1,7 +1,7 @@
 import { UProperty } from "../../../util/decorators/UProperty";
 import { FArchive } from "../../reader/FArchive";
 import { IStructType } from "../../assets/objects/UScriptStruct";
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 
 /**
  * FPerQualityLevelInt

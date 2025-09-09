@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 
 /**
  * Map used in unreal.js
@@ -37,5 +37,36 @@ export class UnrealMap<K, V> extends Collection<K, V> {
         } else {
             return super.delete(key)
         }
+    }
+
+    /**
+     * Maps values to a new map
+     * @param {Function} fn Function to map values
+     * @returns {UnrealMap} New map with mapped values
+     */
+    mapValues<T>(fn: (value: V, key: K, collection: this) => T): UnrealMap<K, T> {
+        const result = new UnrealMap<K, T>();
+        for (const [key, value] of this) {
+            result.set(key, fn(value, key, this));
+        }
+        return result;
+    }
+
+    /**
+     * Sets a key-value pair
+     * @param {K} key Key to set
+     * @param {V} value Value to set
+     * @returns {this} This map for chaining
+     */
+    set(key: K, value: V): this {
+        return super.set(key, value);
+    }
+
+    /**
+     * Iterator for the map
+     * @returns {IterableIterator} Iterator for entries
+     */
+    [Symbol.iterator](): IterableIterator<[K, V]> {
+        return super[Symbol.iterator]();
     }
 }

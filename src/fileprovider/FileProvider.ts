@@ -334,7 +334,7 @@ export class FileProvider extends EventEmitter {
      * @returns {?IoPackage} The parsed package or null if not found
      * @public
      */
-    loadGameFile(packageId: bigint): IoPackage
+    loadGameFile(packageId: bigint): IoPackage | null
 
     /**
      * Searches for the game file and then load its contained package
@@ -342,19 +342,21 @@ export class FileProvider extends EventEmitter {
      * @returns {?Package} The parsed package or null if the path was not found or the found game file was not an ue4 package (.uasset)
      * @public
      */
-    loadGameFile(filePath: string): Package
+    loadGameFile(filePath: string): Package | null
 
     /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
     loadGameFile(x?: any): Package | null {
         try {
             if (x instanceof GameFile) {
-                if (x.ioPackageId != null)
-                    return this.loadGameFile(x.ioPackageId)
+                if (x.ioPackageId != null) {
+                    const result = this.loadGameFile(x.ioPackageId);
+                    return result as Package;
+                }
                 if (!x.isUE4Package() || !x.hasUexp())
                     throw new Error("The provided file is not a package file")
                 const uasset = this.saveGameFile(x)
                 const uexp = this.saveGameFile(x.uexp)
-                const ubulk = x.hasUbulk() ? this.saveGameFile(x.ubulk!) : null
+                const ubulk = x.hasUbulk() ? this.saveGameFile(x.ubulk!) : undefined
                 return new PakPackage(uasset, uexp, ubulk, x.path, this, this.versions)
             } else if (typeof x === "string") {
                 const path = this.fixPath(x)
@@ -368,7 +370,7 @@ export class FileProvider extends EventEmitter {
                     try {
                         const ioFile = this.loadGameFile(packageId)
                         if (ioFile)
-                            return ioFile
+                            return ioFile as Package
                     } catch (e) {
                         console.error(e)
                         console.error(`Failed to load package ${path}`)
@@ -391,7 +393,7 @@ export class FileProvider extends EventEmitter {
                     return null
                 const chunkType = this.game >= Game.GAME_UE5_BASE ? EIoChunkType5.ExportBundleData : EIoChunkType.ExportBundleData
                 const ioBuffer = this.saveChunk(createIoChunkId(x, 0, chunkType))
-                return new IoPackage(ioBuffer, x, storeEntry, this.globalPackageStore.value, this, this.versions)
+                return new IoPackage(ioBuffer, x, storeEntry, this.globalPackageStore.value, this, this.versions) as Package
             }
         } catch (e) {
             console.error(`Failed to load package ${x?.toString() || 'unknown'}`)
@@ -477,7 +479,10 @@ export class FileProvider extends EventEmitter {
                             if (f == null) {
                                 first = this.loadLocres(file)
                             } else {
-                                this.loadLocres(file)?.mergeInto(first)
+                                const locres = this.loadLocres(file)
+                                if (locres && first) {
+                                    locres.mergeInto(first)
+                                }
                             }
                         } catch (e) {
                             console.error(`Failed to locres file ${file.getName()}`)
@@ -670,7 +675,7 @@ export class FileProvider extends EventEmitter {
                 continue
             try {
                 return reader.read(chunkId)
-            } catch (e) {
+            } catch (e: any) {
                 if (e.message !== "Unknown chunk ID") {
                     throw e
                 }

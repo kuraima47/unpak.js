@@ -50,11 +50,17 @@ export * from './ue4/performance/AssetParsingBenchmark';
 export * from './api/server/RestServer';
 export * from './api/monitoring/AssetMonitor';
 
+// NEW: Web Interface (Phase 12) ✅
+export * from './api/web/UnpakWebInterface';
+
 // Plugin support (Phase 9 start)
 export * from './ue4/assets/plugins/UPlugin';
 
 // Enhanced asset registry (Phase 8 continuation)
 export * from './ue4/registry/EnhancedAssetRegistry';
+
+// NEW: Enhanced Audio System (Phase 7) ✅
+export * from './ue4/converters/sounds/EnhancedWwiseConverter';
 
 // Main library version and metadata
 export const VERSION = '2.0.0-alpha.1';
@@ -80,6 +86,9 @@ export const FEATURES = {
   ASSET_BENCHMARKING: true, // Phase 11 - NEW: Performance profiling ✅
   REST_API_SERVER: true, // Phase 12 - NEW: Web service interface ✅
   REAL_TIME_MONITORING: true, // Phase 12 - NEW: Asset change monitoring ✅
+  WEB_INTERFACE: true, // Phase 12 - NEW: FModel-like web interface ✅
+  ENHANCED_WWISE_AUDIO: true, // Phase 7 - NEW: Advanced audio system ✅
+  ENHANCED_ASSET_REGISTRY: true, // Phase 8 - NEW: Complete metadata support ✅
   
   // Future features
   BULK_DATA_LAZY: false, // Phase 10 - Future

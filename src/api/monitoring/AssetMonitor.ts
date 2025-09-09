@@ -180,7 +180,7 @@ export class AssetMonitor extends EventEmitter {
 
         } catch (error: any) {
             logger.error('Failed to watch directory', {
-                directoryPath,
+                directoryPath: directoryPath,
                 error: error.message
             });
             throw error;
@@ -204,8 +204,8 @@ export class AssetMonitor extends EventEmitter {
                 await this.processFileSystemEvent(eventType, filePath);
             } catch (error: any) {
                 logger.error('Error processing filesystem event', {
-                    eventType,
-                    filePath,
+                    eventType: eventType,
+                    filePath: filePath,
                     error: error.message
                 });
             } finally {
@@ -433,7 +433,7 @@ export class AssetMonitor extends EventEmitter {
 
         } catch (error: any) {
             logger.error('Failed to watch archive file', {
-                archivePath,
+                archivePath: archivePath,
                 error: error.message
             });
         }

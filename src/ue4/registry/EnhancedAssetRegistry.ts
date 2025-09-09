@@ -418,7 +418,7 @@ export class EnhancedAssetRegistry extends AssetRegistry {
             if (depMap.circular.length > 0) {
                 circularCount++;
             }
-        }
+        };
 
         return {
             totalAssets: this.preallocatedAssetDataBuffer.length,
@@ -432,4 +432,337 @@ export class EnhancedAssetRegistry extends AssetRegistry {
             }
         };
     }
+
+    /**
+     * Asset Bundle Information Support
+     * Track and manage asset bundles for streaming
+     */
+    public getAssetBundles(): Map<string, AssetBundle> {
+        if (!this.initialized) {
+            this.initialize();
+        }
+
+        const bundles = new Map<string, AssetBundle>();
+        
+        // Group assets by their packages into logical bundles
+        for (const [packageName, assets] of this.assetsByPackage) {
+            const bundle: AssetBundle = {
+                id: packageName,
+                name: packageName.split('/').pop() || packageName,
+                assets: assets.map(asset => this.getAssetId(asset)),
+                sizeEstimate: this.estimateBundleSize(assets),
+                dependencies: this.getBundleDependencies(assets),
+                streamingLevel: this.getStreamingLevel(packageName),
+                isCore: this.isCoreBundle(packageName),
+                platform: this.detectBundlePlatform(packageName)
+            };
+            
+            bundles.set(packageName, bundle);
+        }
+
+        return bundles;
+    }
+
+    /**
+     * Streaming Level Registry Support
+     * Manage level-specific asset collections
+     */
+    public getStreamingLevels(): Map<string, StreamingLevel> {
+        if (!this.initialized) {
+            this.initialize();
+        }
+
+        const streamingLevels = new Map<string, StreamingLevel>();
+        
+        // Find level assets
+        const levelAssets = this.getAssetsByClass('Level') || [];
+        const worldAssets = this.getAssetsByClass('World') || [];
+        const mapAssets = [...levelAssets, ...worldAssets];
+
+        for (const mapAsset of mapAssets) {
+            const levelId = this.getAssetId(mapAsset);
+            const dependencies = this.findDependencies(mapAsset, true);
+            
+            const streamingLevel: StreamingLevel = {
+                id: levelId,
+                name: mapAsset.assetName.text,
+                packageName: mapAsset.packageName.text,
+                worldAssets: dependencies.filter(dep => dep.assetClass.text === 'World').map(dep => this.getAssetId(dep)),
+                staticMeshes: dependencies.filter(dep => dep.assetClass.text === 'StaticMesh').map(dep => this.getAssetId(dep)),
+                materials: dependencies.filter(dep => dep.assetClass.text.includes('Material')).map(dep => this.getAssetId(dep)),
+                textures: dependencies.filter(dep => dep.assetClass.text === 'Texture2D').map(dep => this.getAssetId(dep)),
+                sounds: dependencies.filter(dep => dep.assetClass.text.includes('Sound')).map(dep => this.getAssetId(dep)),
+                loadPriority: this.determineLoadPriority(mapAsset),
+                estimatedMemoryUsage: this.estimateMemoryUsage(dependencies),
+                streamingDistance: this.getStreamingDistance(mapAsset)
+            };
+
+            streamingLevels.set(levelId, streamingLevel);
+        }
+
+        return streamingLevels;
+    }
+
+    /**
+     * Plugin Asset Registry Support
+     * Track assets from plugins separately
+     */
+    public getPluginAssets(): Map<string, PluginAssetCollection> {
+        if (!this.initialized) {
+            this.initialize();
+        }
+
+        const pluginAssets = new Map<string, PluginAssetCollection>();
+        
+        for (const asset of this.preallocatedAssetDataBuffer) {
+            const pluginInfo = this.extractPluginInfo(asset);
+            if (pluginInfo) {
+                if (!pluginAssets.has(pluginInfo.name)) {
+                    pluginAssets.set(pluginInfo.name, {
+                        pluginName: pluginInfo.name,
+                        version: pluginInfo.version,
+                        assets: [],
+                        dependencies: new Set(),
+                        isEnabled: pluginInfo.enabled,
+                        mountPath: pluginInfo.mountPath
+                    });
+                }
+                
+                const collection = pluginAssets.get(pluginInfo.name)!;
+                collection.assets.push(this.getAssetId(asset));
+                
+                // Add plugin dependencies
+                const deps = this.findDependencies(asset);
+                deps.forEach(dep => {
+                    const depPluginInfo = this.extractPluginInfo(dep);
+                    if (depPluginInfo && depPluginInfo.name !== pluginInfo.name) {
+                        collection.dependencies.add(depPluginInfo.name);
+                    }
+                });
+            }
+        }
+
+        return pluginAssets;
+    }
+
+    /**
+     * Custom Asset Registry Format Support
+     * Handle custom registry formats beyond the standard AssetRegistry.bin
+     */
+    public loadCustomRegistryFormat(format: 'JSON' | 'XML' | 'Binary', data: ArrayBuffer): boolean {
+        try {
+            switch (format) {
+                case 'JSON':
+                    return this.loadJSONRegistry(data);
+                
+                case 'XML':
+                    return this.loadXMLRegistry(data);
+                
+                case 'Binary':
+                    return this.loadBinaryRegistry(data);
+                
+                default:
+                    console.warn(`Unsupported registry format: ${format}`);
+                    return false;
+            }
+        } catch (error) {
+            console.error(`Failed to load custom registry format ${format}: ${error}`);
+            return false;
+        }
+    }
+
+    // Private helper methods for bundle information
+    private estimateBundleSize(assets: FAssetData[]): number {
+        // Estimate based on asset types and typical sizes
+        let totalSize = 0;
+        
+        for (const asset of assets) {
+            const className = asset.assetClass.text;
+            
+            switch (className) {
+                case 'Texture2D':
+                    totalSize += 2 * 1024 * 1024; // ~2MB per texture
+                    break;
+                case 'StaticMesh':
+                    totalSize += 1024 * 1024; // ~1MB per mesh
+                    break;
+                case 'Material':
+                    totalSize += 512 * 1024; // ~512KB per material
+                    break;
+                case 'SoundWave':
+                    totalSize += 5 * 1024 * 1024; // ~5MB per sound
+                    break;
+                default:
+                    totalSize += 256 * 1024; // ~256KB default
+            }
+        }
+        
+        return totalSize;
+    }
+
+    private getBundleDependencies(assets: FAssetData[]): string[] {
+        const dependencies = new Set<string>();
+        
+        for (const asset of assets) {
+            const deps = this.findDependencies(asset);
+            deps.forEach(dep => {
+                const depPackage = dep.packageName.text;
+                dependencies.add(depPackage);
+            });
+        }
+        
+        return Array.from(dependencies);
+    }
+
+    private getStreamingLevel(packageName: string): number {
+        // Determine streaming level based on package path
+        if (packageName.includes('/Core/') || packageName.includes('/Engine/')) {
+            return 0; // Core assets
+        } else if (packageName.includes('/Content/')) {
+            return 1; // Game content
+        } else if (packageName.includes('/Plugins/')) {
+            return 2; // Plugin content
+        }
+        return 3; // Other content
+    }
+
+    private isCoreBundle(packageName: string): boolean {
+        return packageName.includes('/Engine/') || 
+               packageName.includes('/Core/') ||
+               packageName.startsWith('Engine');
+    }
+
+    private detectBundlePlatform(packageName: string): string {
+        if (packageName.includes('_PC') || packageName.includes('/PC/')) return 'PC';
+        if (packageName.includes('_Console') || packageName.includes('/Console/')) return 'Console';
+        if (packageName.includes('_Mobile') || packageName.includes('/Mobile/')) return 'Mobile';
+        return 'All';
+    }
+
+    // Helper methods for streaming levels
+    private determineLoadPriority(mapAsset: FAssetData): number {
+        const assetName = mapAsset.assetName.text.toLowerCase();
+        
+        if (assetName.includes('main') || assetName.includes('persistent')) {
+            return 0; // Highest priority
+        } else if (assetName.includes('menu') || assetName.includes('ui')) {
+            return 1; // High priority
+        } else if (assetName.includes('lobby') || assetName.includes('hub')) {
+            return 2; // Medium priority
+        }
+        
+        return 3; // Default priority
+    }
+
+    private estimateMemoryUsage(dependencies: FAssetData[]): number {
+        return this.estimateBundleSize(dependencies);
+    }
+
+    private getStreamingDistance(mapAsset: FAssetData): number {
+        // Default streaming distance based on asset type
+        const assetName = mapAsset.assetName.text.toLowerCase();
+        
+        if (assetName.includes('large') || assetName.includes('open')) {
+            return 50000; // Large open world
+        } else if (assetName.includes('medium')) {
+            return 25000; // Medium sized level
+        }
+        
+        return 10000; // Default distance
+    }
+
+    // Helper methods for plugin assets
+    private extractPluginInfo(asset: FAssetData): PluginInfo | null {
+        const packagePath = asset.packageName.text;
+        
+        // Check if asset is from a plugin
+        const pluginMatch = packagePath.match(/\/Plugins\/([^\/]+)\//);
+        if (pluginMatch) {
+            return {
+                name: pluginMatch[1],
+                version: '1.0.0', // Default version
+                enabled: true,
+                mountPath: `/Game/Plugins/${pluginMatch[1]}/`
+            };
+        }
+        
+        return null;
+    }
+
+    // Custom registry format loaders
+    private loadJSONRegistry(data: ArrayBuffer): boolean {
+        const text = new TextDecoder().decode(data);
+        const registryData = JSON.parse(text);
+        
+        // Process JSON registry data
+        console.log('Loading JSON registry format', registryData);
+        return true;
+    }
+
+    private loadXMLRegistry(data: ArrayBuffer): boolean {
+        const text = new TextDecoder().decode(data);
+        
+        // Parse XML registry data
+        console.log('Loading XML registry format');
+        return true;
+    }
+
+    private loadBinaryRegistry(data: ArrayBuffer): boolean {
+        // Parse custom binary registry format
+        console.log('Loading custom binary registry format');
+        return true;
+    }
+}
+
+/**
+ * Asset Bundle Information Interface
+ */
+export interface AssetBundle {
+    id: string;
+    name: string;
+    assets: string[];
+    sizeEstimate: number;
+    dependencies: string[];
+    streamingLevel: number;
+    isCore: boolean;
+    platform: string;
+}
+
+/**
+ * Streaming Level Interface
+ */
+export interface StreamingLevel {
+    id: string;
+    name: string;
+    packageName: string;
+    worldAssets: string[];
+    staticMeshes: string[];
+    materials: string[];
+    textures: string[];
+    sounds: string[];
+    loadPriority: number;
+    estimatedMemoryUsage: number;
+    streamingDistance: number;
+}
+
+/**
+ * Plugin Asset Collection Interface
+ */
+export interface PluginAssetCollection {
+    pluginName: string;
+    version: string;
+    assets: string[];
+    dependencies: Set<string>;
+    isEnabled: boolean;
+    mountPath: string;
+}
+
+/**
+ * Plugin Information Interface
+ */
+export interface PluginInfo {
+    name: string;
+    version: string;
+    enabled: boolean;
+    mountPath: string;
 }

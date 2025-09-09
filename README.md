@@ -1344,6 +1344,177 @@ const texture = await parseAsset(textureData, 'UTexture2D');
 const pngData = await convertTexture(texture, 'PNG');
 ```
 
+## ❓ FAQ and Troubleshooting
+
+### Common Issues
+
+#### Build Errors
+**Q: "Cannot find module '@discordjs/collection'" or similar dependency errors**
+```bash
+# Install missing dependencies
+npm install @discordjs/collection aes-js @types/aes-js
+
+# If issues persist, try clean install
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**Q: TypeScript compilation errors**
+```bash
+# Ensure you have the correct TypeScript version
+npm install typescript@^5.2.0
+
+# Check tsconfig.json compatibility
+npx tsc --showConfig
+```
+
+#### Runtime Issues
+**Q: "Decryption failed" or "Invalid AES key" errors**
+```typescript
+// Ensure keys are properly formatted (hex string with 0x prefix)
+await keyManager.submitKey('pak-guid', '0x1234567890ABCDEF...');
+
+// Check if PAK file requires specific key
+const pakInfo = archive.getPakInfo();
+console.log(`Encryption: ${pakInfo.isEncrypted}, GUID: ${pakInfo.encryptionKeyGuid}`);
+```
+
+**Q: Memory issues with large files**
+```typescript
+// Enable streaming for large files
+const archive = await openPakArchive('./large.pak', keyManager, {
+    enableStreaming: true,
+    maxMemoryUsage: 500 * 1024 * 1024 // 500MB limit
+});
+
+// Use batch processing for multiple files
+const files = archive.listFiles('*.uasset').slice(0, 100); // Process in chunks
+```
+
+**Q: Performance issues**
+```typescript
+// Enable performance monitoring
+process.env.UNPAK_PROFILE = 'true';
+
+// Use worker threads for CPU-intensive operations
+const workerPool = new WorkerPool(4); // 4 workers
+const results = await workerPool.processAssets(assets);
+```
+
+#### Game-Specific Issues
+**Q: Fortnite assets not parsing correctly**
+```typescript
+// Use Fortnite-specific parser
+import { FortniteAssetParser } from 'unpak.js';
+const parser = new FortniteAssetParser();
+const asset = await parser.parseAsset(data, 'UFortHeroType');
+```
+
+**Q: UE5 IoStore containers not opening**
+```typescript
+// Specify correct UE version
+const archive = await openIoStoreArchive('./global', keyManager, 5); // UE5
+
+// Check container format
+const info = archive.getContainerInfo();
+console.log(`Version: ${info.version}, Encrypted: ${info.isEncrypted}`);
+```
+
+### Performance Optimization
+
+#### Memory Usage
+```typescript
+// Monitor memory usage
+const monitor = archive.createMemoryMonitor();
+monitor.on('memoryWarning', (usage) => {
+    console.warn(`High memory: ${usage.heapUsed / 1024 / 1024}MB`);
+});
+
+// Configure caching
+archive.configureCache({
+    maxSize: 200 * 1024 * 1024, // 200MB cache
+    ttl: 300000, // 5 minute TTL
+    lruSize: 1000 // Keep 1000 entries
+});
+```
+
+#### Processing Speed
+```typescript
+// Use parallel processing
+const files = archive.listFiles('*.uasset');
+const chunks = chunkArray(files, 10); // Process 10 at a time
+
+const results = await Promise.all(
+    chunks.map(chunk => 
+        Promise.all(chunk.map(file => archive.getFile(file.path)))
+    )
+);
+```
+
+### Development Tips
+
+#### Debugging Asset Parsing
+```typescript
+// Enable verbose logging
+import { logger, LogLevel } from 'unpak.js';
+logger.setLevel(LogLevel.DEBUG);
+
+// Use asset debugger
+import { AssetDebugger } from 'unpak.js/tools';
+const debugger = new AssetDebugger();
+await debugger.analyzeAsset(assetData, 'UTexture2D');
+```
+
+#### Testing with Real Files
+```bash
+# Create test fixtures directory
+mkdir tests/fixtures
+
+# Add sample PAK files (ensure they're not copyrighted)
+# Run integration tests
+npm run test:integration
+```
+
+#### Contributing New Asset Types
+```typescript
+// Extend base asset class
+import { UObject } from 'unpak.js';
+
+export class UCustomAsset extends UObject {
+    deserialize(reader: FAssetArchive): void {
+        super.deserialize(reader);
+        // Custom deserialization logic
+    }
+    
+    export(format: string): Buffer {
+        // Custom export logic
+    }
+}
+
+// Register with asset registry
+AssetRegistry.register('UCustomAsset', UCustomAsset);
+```
+
+### Getting Help
+
+- **GitHub Issues**: Report bugs and request features
+- **GitHub Discussions**: Ask questions and share knowledge  
+- **Discord**: Real-time community support
+- **Documentation**: Comprehensive API reference (coming in beta)
+- **Examples**: Real-world usage examples in `/examples` directory
+
+### Supported Platforms
+
+| Platform | Node.js | Status | Notes |
+|----------|---------|--------|-------|
+| Windows x64 | 18+ | ✅ Full | All features supported |
+| Windows ARM64 | 18+ | ✅ Full | All features supported |
+| macOS Intel | 18+ | ✅ Full | All features supported |
+| macOS Apple Silicon | 18+ | ✅ Full | All features supported |
+| Linux x64 | 18+ | ✅ Full | All features supported |
+| Linux ARM64 | 18+ | ⚠️ Partial | Some native modules may need compilation |
+| Browser | N/A | 🔄 Limited | Basic functionality only, no file system access |
+
 ## 📄 License
 
 MIT License - see [LICENSE](./LICENSE) file for details.

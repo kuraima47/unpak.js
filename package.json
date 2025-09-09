@@ -40,9 +40,9 @@
   },
   "homepage": "https://github.com/kuraima47/unpak.js#readme",
   "devDependencies": {
+    "@types/aes-js": "^3.1.4",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.0",
-    "@types/aes-js": "^3.1.4",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.50.0",

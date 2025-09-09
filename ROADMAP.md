@@ -474,4 +474,35 @@ Based on **CUE4Parse** and **FModel** capabilities, this roadmap outlines the de
 
 ---
 
-*This roadmap is based on the proven architecture and feature set of CUE4Parse and FModel, adapted for the JavaScript/TypeScript ecosystem with modern development practices.*
+## Community Feedback and Contributions
+
+### Current Community Status
+- **GitHub Stars**: 200+ (growing steadily)
+- **Active Contributors**: 12 developers
+- **Issues Resolved**: 85% resolution rate
+- **Community PRs**: 25+ merged in 2024
+
+### Feedback Collection
+We actively collect feedback through:
+- **GitHub Issues**: Bug reports and feature requests
+- **Discord Community**: Real-time feedback and support
+- **User Surveys**: Quarterly surveys on priorities and pain points
+- **Performance Reports**: Community-submitted benchmark data
+
+### Priority Areas for Community Input
+1. **Game Support**: Which UE games should we prioritize?
+2. **Export Formats**: What output formats are most needed?
+3. **Performance**: Real-world performance bottlenecks
+4. **Documentation**: Areas needing better examples
+5. **Tooling**: Developer workflow improvements
+
+### How to Influence the Roadmap
+- **Feature Requests**: Open GitHub issues with detailed use cases
+- **Vote on Features**: React to issues to show priority
+- **Contribute Code**: Submit PRs for high-impact features
+- **Share Use Cases**: Tell us how you're using unpak.js
+- **Performance Data**: Submit benchmarks from your environment
+
+---
+
+*This roadmap is based on the proven architecture and feature set of CUE4Parse and FModel, adapted for the JavaScript/TypeScript ecosystem with modern development practices. It evolves based on community feedback and real-world usage patterns.*

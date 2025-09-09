@@ -86,6 +86,79 @@ This document provides key references for continuing unpak.js development based 
 // Example: Study CUE4Parse UTexture2D implementation
 // Located at: CUE4Parse/UE4/Assets/Exports/Texture/UTexture2D.cs
 // Adapt to: src/ue4/assets/exports/tex/UTexture2D.ts
+
+// Example: CUE4Parse USkeletalMesh reference
+// C# Source: CUE4Parse/UE4/Assets/Exports/SkeletalMesh/USkeletalMesh.cs
+// TypeScript: src/ue4/assets/exports/USkeletalMesh.ts
+```
+
+### Implementation Examples
+
+#### Skeletal Mesh Implementation
+```typescript
+// Following CUE4Parse USkeletalMesh structure
+export class USkeletalMesh extends UObject {
+    public referenceSkeleton: FReferenceSkeleton;
+    public lodRenderData: Array<FSkeletalMeshLODRenderData>;
+    public materials: Array<Lazy<UMaterialInterface>>;
+    
+    // CUE4Parse-style bone lookup
+    public findBoneIndex(boneName: string): number {
+        return this.referenceSkeleton.findBoneIndex(boneName);
+    }
+}
+```
+
+#### Mesh Export Following FModel Patterns
+```typescript
+// Export system based on FModel's capabilities
+export class MeshConverter {
+    // OBJ export similar to FModel mesh export
+    public static convertSkeletalMeshToOBJ(mesh: USkeletalMesh): string {
+        // Implementation follows FModel export logic
+        const lines: string[] = [];
+        lines.push('# Exported from unpak.js');
+        // ... vertex, UV, normal, face export
+        return lines.join('\n');
+    }
+    
+    // glTF export for modern 3D workflows
+    public static convertSkeletalMeshToGLTF(mesh: USkeletalMesh): any {
+        // glTF 2.0 specification compliance
+        return {
+            asset: { version: "2.0", generator: "unpak.js v2.0" },
+            // ... complete glTF structure
+        };
+    }
+}
+```
+
+#### Audio System Enhancement
+```typescript
+// Wwise integration following CUE4Parse audio patterns
+export class UWwiseAudioEngine extends UObject {
+    public events: Array<FWwiseEvent>;
+    public soundBanks: Array<FWwiseSoundBank>;
+    
+    // Event lookup similar to CUE4Parse
+    public findEvent(eventId: number): FWwiseEvent | null {
+        return this.events.find(event => event.eventId === eventId) || null;
+    }
+}
+```
+
+#### Physics Asset Implementation
+```typescript
+// Physics system based on CUE4Parse UPhysicsAsset
+export class UPhysicsAsset extends UObject {
+    public skeletalBodySetups: Array<Lazy<any>>;
+    public constraintSetups: Array<FConstraintSetup>;
+    
+    // CUE4Parse-style physics body lookup
+    public findBodyIndex(boneName: string): number {
+        return this.bodySetupIndexMap.get(boneName) ?? -1;
+    }
+}
 ```
 
 ## 📖 Documentation References

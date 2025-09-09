@@ -17,14 +17,21 @@ export class MemoryKeyProvider implements IKeyProvider {
   }
 
   async addKey(guid: string, key: string | Buffer): Promise<void> {
-    const keyBuffer = KeyUtils.normalizeKey(key);
-    
-    if (!KeyUtils.validateKeyLength(keyBuffer)) {
-      throw new Error(`Invalid key length: ${keyBuffer.length} bytes. Expected 16, 24, or 32 bytes.`);
+    try {
+      const keyBuffer = KeyUtils.normalizeKey(key);
+      
+      if (!KeyUtils.validateKeyLength(keyBuffer)) {
+        throw new Error(`Invalid key length: ${keyBuffer.length} bytes. Expected 16, 24, or 32 bytes.`);
+      }
+      
+      this.keys.set(guid.toLowerCase(), keyBuffer);
+      logger.debug('Added key to memory provider', { guid: guid.toLowerCase(), keyLength: keyBuffer.length });
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('hex string')) {
+        throw new Error(`Invalid key format: ${error.message}`);
+      }
+      throw error;
     }
-    
-    this.keys.set(guid.toLowerCase(), keyBuffer);
-    logger.debug('Added key to memory provider', { guid: guid.toLowerCase(), keyLength: keyBuffer.length });
   }
 
   /**

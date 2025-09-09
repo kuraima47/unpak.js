@@ -14,6 +14,15 @@ export * from './crypto/KeyManager';
 export * from './assets/names/IFName';
 export * from './assets/names/FNamePool';
 
+// Compression system
+export * from './utils/compression/ICompression';
+export * from './utils/compression/CompressionRegistry';
+
+// PAK container support
+export * from './containers/pak/PakStructures';
+export * from './containers/pak/PakParser';
+export * from './containers/pak/PakArchive';
+
 // API layer
 export * from './api/IUnpakAPI';
 
@@ -33,6 +42,7 @@ export const FEATURES = {
   UPLUGIN_PARSING: false, // Phase 8
   BULK_DATA_LAZY: false, // Phase 9
   OODLE_COMPRESSION: false, // Plugin system
+  ZLIB_COMPRESSION: true,
 } as const;
 
 /**
@@ -43,4 +53,14 @@ export function createKeyManager(): import('./crypto/KeyManager').KeyManager {
   const manager = new KeyManager();
   manager.addProvider(new MemoryKeyProvider());
   return manager;
+}
+
+/**
+ * Quick start helper - open a PAK archive
+ */
+export async function openPakArchive(filePath: string, keyManager?: import('./crypto/ICrypto').IKeyManager): Promise<import('./containers/pak/PakArchive').PakArchive> {
+  const { PakArchive } = require('./containers/pak/PakArchive');
+  const archive = new PakArchive(filePath, keyManager);
+  await archive.initialize();
+  return archive;
 }

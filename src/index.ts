@@ -23,6 +23,11 @@ export * from './containers/pak/PakStructures';
 export * from './containers/pak/PakParser';
 export * from './containers/pak/PakArchive';
 
+// IoStore container support
+export * from './containers/iostore/IoStoreStructures';
+export * from './containers/iostore/IoStoreParser';
+export * from './containers/iostore/IoStoreArchive';
+
 // API layer
 export * from './api/IUnpakAPI';
 
@@ -36,8 +41,8 @@ export const SUPPORTED_UE_VERSIONS = ['UE4.26', 'UE4.27', 'UE5.0', 'UE5.1', 'UE5
  */
 export const FEATURES = {
   PAK_READING: true,
-  IOSTORE_READING: false, // Phase 4
-  MULTI_KEY_AES: true,
+  IOSTORE_READING: true, // Phase 4 - NOW COMPLETE
+  MULTI_KEY_AES: true, // Phase 3 - COMPLETE
   ASSET_REGISTRY: false, // Phase 7
   UPLUGIN_PARSING: false, // Phase 8
   BULK_DATA_LAZY: false, // Phase 9
@@ -61,6 +66,16 @@ export function createKeyManager(): import('./crypto/KeyManager').KeyManager {
 export async function openPakArchive(filePath: string, keyManager?: import('./crypto/ICrypto').IKeyManager): Promise<import('./containers/pak/PakArchive').PakArchive> {
   const { PakArchive } = require('./containers/pak/PakArchive');
   const archive = new PakArchive(filePath, keyManager);
+  await archive.initialize();
+  return archive;
+}
+
+/**
+ * Quick start helper - open an IoStore archive
+ */
+export async function openIoStoreArchive(containerPath: string, keyManager?: import('./crypto/ICrypto').IKeyManager, ueVersion?: number): Promise<import('./containers/iostore/IoStoreArchive').IoStoreArchive> {
+  const { IoStoreArchive } = require('./containers/iostore/IoStoreArchive');
+  const archive = new IoStoreArchive(containerPath, keyManager, ueVersion);
   await archive.initialize();
   return archive;
 }

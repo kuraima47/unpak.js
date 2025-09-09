@@ -23,8 +23,9 @@ This is **version 2.0.0-alpha.1** - a complete rewrite of unpak.js with a modern
 ### 🚧 Currently Expanding
 - [x] **Asset Property System**: Core UObject properties with Blueprint support
 - [x] **Registry Support**: AssetRegistry.bin parsing and metadata
-- [x] **Advanced Assets**: Skeletal meshes, animations, particles (partial)
-- [ ] **Enhanced Converters**: 3D mesh export (OBJ, FBX, glTF)
+- [x] **Advanced Assets**: Skeletal meshes, animations, particles (partial) ✅ ENHANCED
+- [x] **3D Mesh Export**: OBJ and glTF format support ✅ NEW
+- [ ] **Enhanced Converters**: FBX export and animation sequences
 - [ ] **Performance**: Optimization for very large files
 
 ### 📋 Comprehensive Roadmap
@@ -203,13 +204,15 @@ npm run lint:fix   # Fix auto-fixable issues
 - **Error Handling**: Comprehensive error hierarchy
 
 ### ⚠️ Known Limitations  
-- **3D Export**: Mesh export to OBJ/FBX/glTF pending (Phase 6)
-- **Skeletal Meshes**: Rigged mesh support in progress (Phase 4)
-- **Animation**: UAnimSequence and UAnimBlueprint partial support
-- **Advanced Audio**: Complete Wwise event system pending (Phase 7)
-- **Oodle**: Requires external plugin for proprietary compression
-- **Performance**: Large file optimization pending (Phase 11)
-- **UI Tools**: Asset browser and preview tools planned (Phase 12)
+- [x] **3D Export**: Basic OBJ and glTF mesh export implemented ✅ NEW
+- [ ] **Advanced 3D Export**: FBX format with full animation support pending
+- [x] **Skeletal Meshes**: Rigged mesh support implemented ✅ NEW
+- [x] **Animation**: UAnimSequence parsing implemented ✅ NEW
+- [ ] **Animation Export**: Complete animation export pipeline pending
+- [ ] **Advanced Audio**: Complete Wwise event system pending (Phase 7)
+- [ ] **Oodle**: Requires external plugin for proprietary compression
+- [ ] **Performance**: Large file optimization pending (Phase 11)
+- [ ] **UI Tools**: Asset browser and preview tools planned (Phase 12)
 
 ## 🤝 Contributing
 

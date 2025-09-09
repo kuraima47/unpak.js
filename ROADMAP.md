@@ -131,8 +131,9 @@ Based on **CUE4Parse** and **FModel** capabilities, this roadmap outlines the de
 - [x] USkeletalMeshComponent prep
 
 ### Expanding Asset Types 🔵
-- [ ] USkeletalMesh - Rigged meshes with bones
-- [ ] UAnimSequence - Animation sequences
+- [x] USkeletalMesh - Rigged meshes with bones ✅ NEW
+- [x] USkeletalMeshComponent - Skeletal mesh rendering component ✅ NEW
+- [x] UAnimSequence - Animation sequences ✅ NEW
 - [ ] UAnimBlueprint - Animation blueprints
 - [ ] UPhysicsAsset - Physics collision
 - [ ] UParticleSystem - Cascade particle effects
@@ -187,10 +188,12 @@ Based on **CUE4Parse** and **FModel** capabilities, this roadmap outlines the de
 - [x] Sound converter (WAV, OGG)
 
 ### Expanding Converters 🔵
+- [x] **3D mesh export** (OBJ, glTF) ✅ NEW  
+- [x] **Mesh statistics** and analysis tools ✅ NEW
 - [ ] Enhanced texture format support (ASTC, BC7, ETC2)
-- [ ] 3D mesh export (OBJ, FBX, glTF)
 - [ ] Animation export (FBX, COLLADA)
 - [ ] Material export (MTL, glTF materials)
+- [ ] FBX mesh export with bones and animations
 
 ### Advanced Export Features ⚪
 - [ ] Level export with lighting

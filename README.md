@@ -15,17 +15,22 @@ This is **version 2.0.0-alpha.1** - a complete rewrite of unpak.js with a modern
 - [x] **IoStore**: Full .utoc/.ucas container support
 - [x] **Cryptography**: Multi-key AES decryption system with caching
 - [x] **Compression**: Zlib/Gzip support + plugin architecture for Oodle
-- [x] **Asset Types**: 25+ UE asset types (UTexture2D, UStaticMesh, USoundWave, etc.)
-- [x] **Converters**: Texture, material, and sound export systems
+- [x] **Asset Types**: 32+ UE asset types (UTexture2D, UStaticMesh, USoundWave, etc.) ✅ EXPANDED
+- [x] **Skeletal Assets**: USkeletalMesh, UAnimSequence, UPhysicsAsset ✅ NEW  
+- [x] **Terrain**: ULandscape with heightmaps and layers ✅ NEW
+- [x] **Particles**: UParticleSystem for Cascade effects ✅ NEW
+- [x] **Enhanced Audio**: UWwiseAudioEngine with 3D spatial audio ✅ NEW
+- [x] **Converters**: Texture, material, sound, and 3D mesh export systems ✅ ENHANCED
 - [x] **Game Support**: Fortnite and Valorant specific modules
-- [x] **Audio**: Wwise integration and multi-format sound support
+- [x] **3D Export**: OBJ and glTF mesh export with skeleton support ✅ NEW
 
 ### 🚧 Currently Expanding
 - [x] **Asset Property System**: Core UObject properties with Blueprint support
 - [x] **Registry Support**: AssetRegistry.bin parsing and metadata
-- [x] **Advanced Assets**: Skeletal meshes, animations, particles (partial) ✅ ENHANCED
-- [x] **3D Mesh Export**: OBJ and glTF format support ✅ NEW
-- [ ] **Enhanced Converters**: FBX export and animation sequences
+- [x] **Advanced Assets**: Skeletal meshes, animations, particles, physics, terrain ✅ COMPLETE
+- [x] **3D Mesh Export**: OBJ and glTF format support ✅ COMPLETE
+- [x] **Enhanced Audio**: Complete Wwise system with 3D spatial audio ✅ COMPLETE  
+- [ ] **Advanced Converters**: FBX export and animation sequences
 - [ ] **Performance**: Optimization for very large files
 
 ### 📋 Comprehensive Roadmap
@@ -204,12 +209,15 @@ npm run lint:fix   # Fix auto-fixable issues
 - **Error Handling**: Comprehensive error hierarchy
 
 ### ⚠️ Known Limitations  
-- [x] **3D Export**: Basic OBJ and glTF mesh export implemented ✅ NEW
+- [x] **3D Export**: Basic OBJ and glTF mesh export implemented ✅ COMPLETE
+- [x] **Skeletal Meshes**: Rigged mesh support implemented ✅ COMPLETE
+- [x] **Animation**: UAnimSequence parsing implemented ✅ COMPLETE
+- [x] **Physics**: UPhysicsAsset collision and constraints ✅ COMPLETE
+- [x] **Terrain**: ULandscape heightmaps and materials ✅ COMPLETE
+- [x] **Particles**: UParticleSystem Cascade effects ✅ COMPLETE
+- [x] **Advanced Audio**: Enhanced Wwise system with 3D audio ✅ COMPLETE
 - [ ] **Advanced 3D Export**: FBX format with full animation support pending
-- [x] **Skeletal Meshes**: Rigged mesh support implemented ✅ NEW
-- [x] **Animation**: UAnimSequence parsing implemented ✅ NEW
 - [ ] **Animation Export**: Complete animation export pipeline pending
-- [ ] **Advanced Audio**: Complete Wwise event system pending (Phase 7)
 - [ ] **Oodle**: Requires external plugin for proprietary compression
 - [ ] **Performance**: Large file optimization pending (Phase 11)
 - [ ] **UI Tools**: Asset browser and preview tools planned (Phase 12)

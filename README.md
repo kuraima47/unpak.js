@@ -236,9 +236,11 @@ All compression and encryption algorithms use standard, publicly available imple
 
 ## 📖 References
 
-- [CUE4Parse](https://github.com/FabianFG/CUE4Parse) - C# Unreal Engine asset parser
-- [FModel](https://fmodel.app/) - Unreal Engine asset explorer
-- [Unreal Engine Documentation](https://docs.unrealengine.com/)
+- **[CUE4Parse](https://github.com/FabianFG/CUE4Parse)** - C# Unreal Engine asset parser (primary architecture reference)
+- **[FModel](https://fmodel.app/)** - Unreal Engine asset explorer (user experience reference)
+- **[Development Reference Guide](./docs/CUE4PARSE_FMODEL_REFERENCE.md)** - Detailed mapping for contributors
+- **[Comprehensive Roadmap](./ROADMAP.md)** - 12-phase development plan based on proven implementations
+- [Unreal Engine Documentation](https://docs.unrealengine.com/) - Official UE4/UE5 documentation
 
 ## 📄 License
 

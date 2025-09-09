@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import assert from "assert";
 import * as _Zlib from "zlib"
 import * as OodleLib from "../oodle/Oodle"

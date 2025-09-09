@@ -4,7 +4,7 @@ import { FAssetArchive } from "../reader/FAssetArchive";
 import { FAssetArchiveWriter } from "../writer/FAssetArchiveWriter";
 import { UnrealMap } from "../../../util/UnrealMap";
 import { Locres } from "../../locres/Locres";
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 
 /**
  * Represents UE4 String Table

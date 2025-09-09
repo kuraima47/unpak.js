@@ -4,7 +4,7 @@ import { FNameMap } from "./FNameMap";
 import { FMappedName, FMappedName_EType, FPackageObjectIndex } from "./AsyncLoading2";
 import { FByteArchive } from "../reader/FByteArchive";
 import { UnrealMap } from "../../util/UnrealMap";
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import { FFilePackageStoreEntry, FIoContainerHeader } from "../io/IoContainerHeader";
 import { FName } from "../objects/uobject/FName";
 import { Pair } from "../../util/Pair";

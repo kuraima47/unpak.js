@@ -2,7 +2,7 @@ import { BankHeader } from "./objects/BankHeader";
 import { AkFolder } from "./objects/AkFolder";
 import { DataIndex } from "./objects/DataIndex";
 import { Hierarchy } from "./objects/Hierarchy";
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import { FArchive } from "../reader/FArchive";
 import { ESectionIdentifier } from "./enums/ESectionIdentifier";
 import { ParserException } from "../../exceptions/Exceptions";

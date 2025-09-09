@@ -19,7 +19,7 @@ import fs from "fs";
 import { InvalidAesKeyException, ParserException } from "../exceptions/Exceptions";
 import { Aes } from "../encryption/aes/Aes";
 import { Lazy } from "../util/Lazy";
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import EventEmitter from "events";
 import { ObjectTypeRegistry } from "../ue4/assets/ObjectTypeRegistry";
 import { UObject } from "../ue4/assets/exports/UObject";
@@ -124,7 +124,7 @@ export class FileProvider extends EventEmitter {
      * @type {?CustomEncryption}
      * @public
      */
-    customEncryption?: CustomEncryption = null
+    customEncryption?: CustomEncryption = undefined
 
     /**
      * Stored AES keys
@@ -175,7 +175,7 @@ export class FileProvider extends EventEmitter {
      */
     constructor(folder: string, game?: Ue4Version, mappingsProvider?: TypeMappingsProvider, config?: IConfig)
 
-    constructor(...args) {
+    constructor(...args: any[]) {
         super()
 
         const folder = args[0]
@@ -305,7 +305,7 @@ export class FileProvider extends EventEmitter {
      * @public
      */
     get gameName(): string {
-        const first = this.files.keyArray()[0]
+        const first = Array.from(this.files.keys())[0]
         const subStr = first ? first.substring(0, first.indexOf("/")) : ""
         return subStr.endsWith("game") ? subStr.substring(0, first.indexOf("game")) : ""
     }

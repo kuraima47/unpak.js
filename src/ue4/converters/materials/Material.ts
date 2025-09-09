@@ -4,7 +4,7 @@ import { ETextureChannel } from "../../assets/enums/ETextureChannel";
 import { EMobileSpecularMask } from "../../assets/enums/EMobileSpecularMask";
 import AdmZip from "adm-zip";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import { UMaterialInstanceConstant } from "../../assets/exports/mats/UMaterialInstanceConstant";
 import { Image } from "../textures/Image";
 

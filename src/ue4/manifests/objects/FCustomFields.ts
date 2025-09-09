@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 import { FArchiveWriter } from "../../writer/FArchiveWriter";
 import { FArchive } from "../../reader/FArchive";
 

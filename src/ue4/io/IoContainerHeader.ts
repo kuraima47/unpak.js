@@ -3,7 +3,7 @@ import { Game } from "../versions/Game";
 import { FMappedName, FMappedName_EType } from "../asyncloading2/AsyncLoading2";
 import { FNameMap } from "../asyncloading2/FNameMap";
 import { Utils } from "../../util/Utils";
-import Collection from "@discordjs/collection";
+import { Collection } from "@discordjs/collection";
 
 type FSourceToLocalizedPackageIdMap = Array<FIoContainerHeaderPackageRedirect>
 type FCulturePackageMap = Collection<String, FSourceToLocalizedPackageIdMap>

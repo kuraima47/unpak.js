@@ -1,57 +1,46 @@
-import { UScriptStruct } from "./ue4/assets/exports/UScriptStruct";
-import { UStruct } from "./ue4/assets/exports/UStruct";
-import { Package } from "./ue4/assets/Package";
-import { UTexture2D } from "./ue4/assets/exports/tex/UTexture2D";
-import { FileProvider } from "./fileprovider/FileProvider";
-import { ReflectionTypeMappingsProvider } from "./ue4/assets/mappings/ReflectionTypeMappingsProvider";
-import { UsmapTypeMappingsProvider } from "./ue4/assets/mappings/UsmapTypeMappingsProvider";
-import { Game, Ue4Version } from "./ue4/versions/Game";
-import { IoPackage } from "./ue4/assets/IoPackage";
-import { PakPackage } from "./ue4/assets/PakPackage";
-import { FGuid } from "./ue4/objects/core/misc/Guid";
-import { Image } from "./ue4/converters/textures/Image";
-import { SoundWave } from "./ue4/converters/sounds/SoundWave";
-import { WwiseAudio } from "./ue4/converters/sounds/WwiseAudio";
-import { Locres } from "./ue4/locres/Locres";
-import { FnLanguage } from "./ue4/locres/FnLanguage";
-import { FArchive } from "./ue4/reader/FArchive";
-import { PakFileReader } from "./ue4/pak/PakFileReader";
-import { FAssetArchive } from "./ue4/assets/reader/FAssetArchive";
-import { Oodle } from "./oodle/Oodle";
-import { FName } from "./ue4/objects/uobject/FName";
+// Core interfaces and types
+export * from './core/io/IReader';
+export * from './core/io/IArchive';
+export * from './core/io/BufferReader';
+export * from './core/logging/Logger';
+export * from './core/errors/UnpakErrors';
 
-// exports for faster and easier imports
-export {
-    // only here so this shit compiles smh
-    Package,
-    UStruct,
-    UScriptStruct,
-    UTexture2D,
-    // file provider
-    FileProvider,
-    FGuid,
-    // mappings
-    ReflectionTypeMappingsProvider,
-    UsmapTypeMappingsProvider,
-    // version
-    Ue4Version,
-    Game,
-    // packages
-    IoPackage,
-    PakPackage,
-    // converters
-    Image,
-    SoundWave,
-    WwiseAudio,
-    // exports
-    Locres,
-    FnLanguage,
-    // readers
-    FArchive,
-    FAssetArchive,
-    PakFileReader,
-    // oodle
-    Oodle,
-    // other
-    FName
+// Crypto system
+export * from './crypto/ICrypto';
+export * from './crypto/CryptoProvider';
+export * from './crypto/KeyManager';
+
+// Asset name system
+export * from './assets/names/IFName';
+export * from './assets/names/FNamePool';
+
+// API layer
+export * from './api/IUnpakAPI';
+
+// Main library version and metadata
+export const VERSION = '2.0.0-alpha.1';
+export const SUPPORTED_FORMATS = ['pak', 'utoc', 'ucas'] as const;
+export const SUPPORTED_UE_VERSIONS = ['UE4.26', 'UE4.27', 'UE5.0', 'UE5.1', 'UE5.2', 'UE5.3'] as const;
+
+/**
+ * Library feature flags
+ */
+export const FEATURES = {
+  PAK_READING: true,
+  IOSTORE_READING: false, // Phase 4
+  MULTI_KEY_AES: true,
+  ASSET_REGISTRY: false, // Phase 7
+  UPLUGIN_PARSING: false, // Phase 8
+  BULK_DATA_LAZY: false, // Phase 9
+  OODLE_COMPRESSION: false, // Plugin system
+} as const;
+
+/**
+ * Quick start helper - creates a basic key manager with memory provider
+ */
+export function createKeyManager(): import('./crypto/KeyManager').KeyManager {
+  const { KeyManager, MemoryKeyProvider } = require('./crypto/KeyManager');
+  const manager = new KeyManager();
+  manager.addProvider(new MemoryKeyProvider());
+  return manager;
 }

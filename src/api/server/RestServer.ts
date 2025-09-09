@@ -113,8 +113,8 @@ export class UnpakRestServer extends EventEmitter {
             }
         } catch (error: any) {
             logger.error('Request processing error', {
-                method,
-                path,
+                method: method,
+                path: path,
                 error: error.message
             });
             this.sendError(res, 500, error.message);

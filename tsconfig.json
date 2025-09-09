@@ -21,32 +21,17 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "jest"]
   },
   "include": [
-    "src/core/**/*",
-    "src/crypto/**/*",
-    "src/assets/**/*",
-    "src/containers/**/*",
-    "src/utils/**/*",
-    "src/api/**/*",
-    "src/index.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "**/*.test.ts",
     "**/*.spec.ts",
-    "src/compression/**/*",
-    "src/encryption/**/*",
-    "src/exceptions/**/*",
-    "src/fileprovider/**/*",
-    "src/fort/**/*",
-    "src/oodle/**/*",
-    "src/ue4/**/*",
-    "src/util/**/*",
-    "src/valorant/**/*",
-    "src/Config.ts",
-    "src/Types.ts"
+    "tests/**/*"
   ]
 }

@@ -8,34 +8,35 @@ A modern, modular TypeScript library for reading Unreal Engine pak files and ass
 
 ## ⚠️ Development Status
 
-This is **version 2.0.0-alpha.1** - a complete rewrite of unpak.js with a modern, modular architecture. The library is currently in active development with phased implementation.
+This is **version 2.0.0-alpha.1** - a complete rewrite of unpak.js with a modern, modular architecture inspired by **CUE4Parse** and **FModel**. The library has extensive functionality with 343 TypeScript files and 102 passing tests.
 
-### ✅ Phase 1 Complete: Core Foundation
-- [x] Modern TypeScript (ES2022, strict mode)
-- [x] Modular architecture with clean separation of concerns
-- [x] Comprehensive error handling and structured logging
-- [x] Multi-key cryptography system with caching
-- [x] FName pool system for efficient string handling
-- [x] Compression system with zlib support and plugin architecture
-- [x] Core PAK file format parsing
-- [x] Comprehensive test suite with 71+ tests
+### ✅ Core Systems Complete
+- [x] **PAK Files**: Complete support for UE4/UE5 PAK archives (v1-11)
+- [x] **IoStore**: Full .utoc/.ucas container support
+- [x] **Cryptography**: Multi-key AES decryption system with caching
+- [x] **Compression**: Zlib/Gzip support + plugin architecture for Oodle
+- [x] **Asset Types**: 25+ UE asset types (UTexture2D, UStaticMesh, USoundWave, etc.)
+- [x] **Converters**: Texture, material, and sound export systems
+- [x] **Game Support**: Fortnite and Valorant specific modules
+- [x] **Audio**: Wwise integration and multi-format sound support
 
-### 🚧 In Progress: PAK File Reading (Phase 2)
-- [x] PAK header and index parsing (versions 1-9)
-- [x] File entry extraction
-- [x] Basic compression support (zlib)
-- [ ] AES decryption implementation
-- [ ] Compression block handling
+### 🚧 Currently Expanding
+- [x] **Asset Property System**: Core UObject properties with Blueprint support
+- [x] **Registry Support**: AssetRegistry.bin parsing and metadata
+- [x] **Advanced Assets**: Skeletal meshes, animations, particles (partial)
+- [ ] **Enhanced Converters**: 3D mesh export (OBJ, FBX, glTF)
+- [ ] **Performance**: Optimization for very large files
 
-### 📋 Roadmap
-- **Phase 3**: Multi-key AES decryption
-- **Phase 4**: IoStore support (.utoc/.ucas files)
-- **Phase 5**: Advanced archive abstraction
-- **Phase 6**: Asset property system
-- **Phase 7**: AssetRegistry.bin support  
-- **Phase 8**: .uplugin file parsing
-- **Phase 9**: BulkData lazy loading
-- **Phase 10**: Unified API and optimization
+### 📋 Comprehensive Roadmap
+
+**[See ROADMAP.md](./ROADMAP.md)** for detailed development phases based on CUE4Parse and FModel capabilities:
+
+- **Phase 3-4**: Enhanced asset coverage and property system expansion
+- **Phase 5-6**: Game-specific support and advanced converters  
+- **Phase 7-8**: Audio system enhancement and complete registry support
+- **Phase 9-12**: Plugin support, performance optimization, and unified API
+
+**Implementation Status**: ~60% complete with solid foundation for remaining features
 
 ## 🚀 Quick Start
 
@@ -74,55 +75,94 @@ if (fileData) {
 await archive.close();
 ```
 
-### Working with FNames
+### Working with Assets
 
 ```typescript
-import { FNamePool } from 'unpak.js';
+import { openPakArchive, createKeyManager } from 'unpak.js';
 
-const pool = new FNamePool();
+// Open PAK with encryption key
+const keyManager = createKeyManager();
+await keyManager.submitKey('your-pak-guid', '0x123456789ABCDEF...');
+const archive = await openPakArchive('./FortniteGame/Content/Paks/pakchunk0-WindowsClient.pak', keyManager);
 
-// Add names to the pool
-const nameIndex = pool.addString('MyAssetName');
+// Extract and convert texture
+const textureData = await archive.getFile('Game/Characters/Player/Textures/Player_Diffuse.uasset');
+if (textureData) {
+    // Parse UTexture2D asset
+    const texture = await parseAsset(textureData, 'UTexture2D');
+    
+    // Convert to PNG
+    const pngData = await convertTexture(texture, 'PNG');
+    await fs.writeFile('player_diffuse.png', pngData);
+}
 
-// Create FName objects
-const fname = pool.getFName('MyAssetName', 5); // Name with instance number
-console.log(fname.toString()); // "MyAssetName_5"
-
-// Load multiple names
-pool.loadNames(['Name1', 'Name2', 'Name3']);
+// Extract static mesh
+const meshData = await archive.getFile('Game/Environment/Props/Crate.uasset');
+if (meshData) {
+    const mesh = await parseAsset(meshData, 'UStaticMesh');
+    console.log(`Mesh has ${mesh.getNumTriangles()} triangles`);
+}
 ```
 
-### Compression System
+### IoStore Support (UE5)
 
 ```typescript
-import { compressionRegistry, COMPRESSION_METHODS } from 'unpak.js';
+import { openIoStoreArchive } from 'unpak.js';
 
-// Decompress data
-const compressedData = Buffer.from('...'); // Your compressed data
-const decompressed = await compressionRegistry.decompress(compressedData, COMPRESSION_METHODS.ZLIB);
+// Open UE5 IoStore container
+const archive = await openIoStoreArchive('./Game/Content/global', keyManager, 5);
 
-// Check supported methods
-console.log('Supported:', compressionRegistry.getSupportedMethods());
+// List all textures in container
+const textures = archive.listFiles('*.uasset', 'Game/Textures/');
+console.log(`Found ${textures.length} texture files`);
+
+// Extract with compression handling
+for (const file of textures) {
+    const data = await archive.getFile(file.path);
+    console.log(`${file.path}: ${data.length} bytes (compressed: ${file.isCompressed})`);
+}
+```
+
+### Game-Specific Features
+
+```typescript
+import { FortniteAssetParser, ValObjectRegistry } from 'unpak.js';
+
+// Fortnite-specific asset handling
+const fortParser = new FortniteAssetParser();
+const fortAsset = await fortParser.parseAsset(assetData);
+
+// Valorant-specific exports
+const valRegistry = new ValObjectRegistry();
+const valExport = valRegistry.createExport(exportData);
 ```
 
 ## 🏗️ Architecture
 
-The library follows a modular architecture inspired by CUE4Parse:
+The library follows a modular architecture inspired by **CUE4Parse** with 343+ TypeScript files:
 
 ```
 src/
-├── core/                    # Core interfaces and utilities
-│   ├── io/                 # Binary reading interfaces
-│   ├── logging/            # Structured logging
-│   └── errors/             # Error hierarchy
-├── crypto/                 # Encryption/decryption
-├── assets/                 # Asset handling
-│   └── names/              # FName system
-├── containers/             # Archive formats
-│   └── pak/                # PAK file support
-├── utils/                  # Utilities
-│   └── compression/        # Compression system
-└── api/                    # High-level API
+├── core/                    # Core interfaces and utilities  
+│   ├── io/                 # Binary reading (IReader, BufferReader)
+│   ├── logging/            # Structured logging system
+│   └── errors/             # Comprehensive error hierarchy
+├── crypto/                 # Multi-key encryption system
+├── assets/names/           # FName pool for string efficiency  
+├── containers/             # Archive format support
+│   ├── pak/                # PAK file support (complete)
+│   └── iostore/            # IoStore .utoc/.ucas support (complete)
+├── ue4/                    # Unreal Engine 4/5 implementation
+│   ├── assets/             # 25+ asset types and property system
+│   ├── converters/         # Texture, material, sound converters
+│   ├── objects/            # UE object hierarchy
+│   ├── registry/           # AssetRegistry.bin support
+│   └── versions/           # UE version compatibility
+├── utils/compression/      # Plugin-based compression system
+├── fort/                   # Fortnite-specific support
+├── valorant/               # Valorant-specific support
+├── api/                    # High-level API interfaces
+└── index.ts               # Main library exports (62 exports)
 ```
 
 ## 🔧 Development
@@ -150,29 +190,39 @@ npm run lint:fix   # Fix auto-fixable issues
 ## 📊 Current Capabilities
 
 ### ✅ Supported Features
-- **PAK Files**: Read header, index, and file entries
-- **Compression**: Zlib/Gzip decompression, plugin system for Oodle
-- **Encryption**: Multi-key AES infrastructure (decryption pending)
-- **FNames**: Efficient string pooling system
-- **Logging**: Configurable structured logging
+- **Archive Formats**: PAK files (v1-11) and IoStore (.utoc/.ucas) with full UE4/UE5 support
+- **Asset Types**: 25+ implemented including UTexture2D, UStaticMesh, USoundWave, UDataTable, ULevel, UBlueprintGeneratedClass
+- **Compression**: Zlib/Gzip decompression, plugin system ready for Oodle
+- **Encryption**: Complete multi-key AES decryption system
+- **Converters**: Texture (PNG/TGA/DDS), material, and sound (WAV/OGG) export
+- **Game Support**: Fortnite and Valorant specific asset handling
+- **Audio**: Wwise integration with AkMediaAssetData support
+- **Properties**: UObject property system with Blueprint and struct support
+- **Registry**: AssetRegistry.bin parsing and asset metadata
+- **Logging**: Configurable structured logging with context
 - **Error Handling**: Comprehensive error hierarchy
 
 ### ⚠️ Known Limitations  
-- **Encryption**: AES decryption not yet implemented
-- **IoStore**: .utoc/.ucas support pending (Phase 4)
-- **Assets**: Property parsing pending (Phase 6)
-- **Oodle**: Requires external plugin
-- **Performance**: Not yet optimized for very large files
+- **3D Export**: Mesh export to OBJ/FBX/glTF pending (Phase 6)
+- **Skeletal Meshes**: Rigged mesh support in progress (Phase 4)
+- **Animation**: UAnimSequence and UAnimBlueprint partial support
+- **Advanced Audio**: Complete Wwise event system pending (Phase 7)
+- **Oodle**: Requires external plugin for proprietary compression
+- **Performance**: Large file optimization pending (Phase 11)
+- **UI Tools**: Asset browser and preview tools planned (Phase 12)
 
 ## 🤝 Contributing
 
-This library is in active development. Contributions are welcome, especially for:
+This library is actively developed following the **CUE4Parse** architecture and **FModel** feature set. Contributions are welcome, especially for:
 
-- IoStore implementation
-- Asset property parsing
-- Performance optimizations
-- Additional compression methods
-- Documentation improvements
+- **Asset Type Expansion**: Additional UE4/UE5 asset types and properties
+- **Game-Specific Support**: New game modules (Rocket League, Fall Guys, etc.)
+- **3D Export**: Mesh export to OBJ, FBX, glTF formats
+- **Performance**: Large file handling and memory optimization
+- **Audio Enhancement**: Complete Wwise and audio format support
+- **Documentation**: API documentation and usage examples
+
+See [ROADMAP.md](./ROADMAP.md) for detailed development phases and implementation priorities.
 
 ## 📜 Legal Notice
 

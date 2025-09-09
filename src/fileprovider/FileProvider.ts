@@ -316,7 +316,7 @@ export class FileProvider extends EventEmitter {
      * @returns {?GameFile} The game file or null if it wasn't found
      * @public
      */
-    findGameFile(filePath: string): GameFile {
+    findGameFile(filePath: string): GameFile | undefined {
         return this.files.get(this.fixPath(filePath))
     }
 
@@ -345,7 +345,7 @@ export class FileProvider extends EventEmitter {
     loadGameFile(filePath: string): Package
 
     /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
-    loadGameFile(x?: any) {
+    loadGameFile(x?: any): Package | null {
         try {
             if (x instanceof GameFile) {
                 if (x.ioPackageId != null)
@@ -354,7 +354,7 @@ export class FileProvider extends EventEmitter {
                     throw new Error("The provided file is not a package file")
                 const uasset = this.saveGameFile(x)
                 const uexp = this.saveGameFile(x.uexp)
-                const ubulk = x.hasUbulk() ? this.saveGameFile(x.ubulk) : null
+                const ubulk = x.hasUbulk() ? this.saveGameFile(x.ubulk!) : null
                 return new PakPackage(uasset, uexp, ubulk, x.path, this, this.versions)
             } else if (typeof x === "string") {
                 const path = this.fixPath(x)
@@ -394,9 +394,10 @@ export class FileProvider extends EventEmitter {
                 return new IoPackage(ioBuffer, x, storeEntry, this.globalPackageStore.value, this, this.versions)
             }
         } catch (e) {
-            console.error(`Failed to load package ${x.toString()}`)
+            console.error(`Failed to load package ${x?.toString() || 'unknown'}`)
             console.error(e)
         }
+        return null
     }
 
     /**
@@ -405,7 +406,7 @@ export class FileProvider extends EventEmitter {
      * @returns {?UObject} The object that matched your args or null
      * @public
      */
-    loadObject<T extends UObject>(objectPath: string | FSoftObjectPath): T {
+    loadObject<T extends UObject>(objectPath: string | FSoftObjectPath): T | null {
         if (objectPath == null || objectPath === "None") return null;
         let packagePath: string = objectPath as any
         if (objectPath instanceof FSoftObjectPath) {
@@ -447,10 +448,10 @@ export class FileProvider extends EventEmitter {
      * @returns {?Locres} The parsed locres or null if not found
      * @public
      */
-    loadLocres(ln: FnLanguage)
+    loadLocres(ln: FnLanguage): Locres | null
 
     /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
-    loadLocres(x?: any) {
+    loadLocres(x?: any): Locres | null {
         try {
             if (x instanceof GameFile) {
                 if (!x.isLocres())
@@ -459,7 +460,8 @@ export class FileProvider extends EventEmitter {
                 return new Locres(locres, x.path, this.getLocresLanguageByPath(x.path))
             } else if (typeof x === "string") {
                 // basically String.replaceAll() but it doesnt exist in js yet lol
-                if (FnLanguage[x.toUpperCase().split("-").join("_")] != null) {
+                const langKey = x.toUpperCase().split("-").join("_") as keyof typeof FnLanguage;
+                if (FnLanguage[langKey] != null) {
                     const files = this.files
                         .filter(it => {
                             const path = it.path.toLowerCase()
@@ -468,7 +470,7 @@ export class FileProvider extends EventEmitter {
                                 && path.endsWith(".locres")
                         })
                     if (!files.size) return null
-                    let first: Locres = null
+                    let first: Locres | null = null
                     for (const file of files.values()) {
                         try {
                             const f = first
@@ -500,6 +502,7 @@ export class FileProvider extends EventEmitter {
             console.error(`Failed to load locres ${x instanceof GameFile ? x.path : x}`)
             console.error(e)
         }
+        return null
     }
 
     /**
@@ -529,10 +532,10 @@ export class FileProvider extends EventEmitter {
      * @returns {?AssetRegistry} The parsed asset registry or null
      * @public
      */
-    loadAssetRegistry(file: GameFile): AssetRegistry
+    loadAssetRegistry(file: GameFile): AssetRegistry | null
 
     /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
-    loadAssetRegistry(x: any) {
+    loadAssetRegistry(x: any): AssetRegistry | null {
         try {
             if (x instanceof GameFile) {
                 if (!x.isAssetRegistry())
@@ -553,6 +556,7 @@ export class FileProvider extends EventEmitter {
             console.error(e)
             console.error(`Failed to load asset registry ${x instanceof GameFile ? x.path : x}`)
         }
+        return null
     }
 
     /**
@@ -583,8 +587,8 @@ export class FileProvider extends EventEmitter {
                     map.set(x.path, uasset)
                     const uexp = this.saveGameFile(x.uexp)
                     map.set(x.uexp.path, uexp)
-                    const ubulk = x.hasUbulk() ? this.saveGameFile(x.ubulk) : null
-                    if (ubulk)
+                    const ubulk = x.hasUbulk() && x.ubulk ? this.saveGameFile(x.ubulk) : null
+                    if (ubulk && x.ubulk)
                         map.set(x.ubulk.path, ubulk)
                 }
             } catch (e) {

@@ -38,6 +38,18 @@ export * from './ue4/assets/exports/mats/UDecalMaterial';
 // Enhanced texture formats (Phase 6 continuation)
 export * from './ue4/converters/textures/EnhancedFormats';
 
+// NEW ROADMAP IMPLEMENTATIONS (Phase 6, 11, 12)
+// FBX Export and Enhanced Converters (Phase 6)
+export * from './ue4/converters/FBXConverter';
+
+// Performance Optimization Tools (Phase 11)
+export * from './ue4/performance/IncrementalParser';
+export * from './ue4/performance/AssetParsingBenchmark';
+
+// Enterprise API Features (Phase 12)
+export * from './api/server/RestServer';
+export * from './api/monitoring/AssetMonitor';
+
 // Plugin support (Phase 9 start)
 export * from './ue4/assets/plugins/UPlugin';
 
@@ -61,6 +73,15 @@ export const FEATURES = {
   ENHANCED_TEXTURE_FORMATS: true, // Phase 6 - NOW ENHANCED ✅
   MEDIA_ASSETS: true, // Phase 4 - NOW ADDED ✅
   DECAL_MATERIALS: true, // Phase 4 - NOW ADDED ✅
+  
+  // NEW ROADMAP FEATURES IMPLEMENTED ✅
+  FBX_EXPORT: true, // Phase 6 - NEW: Complete FBX export with animations ✅
+  INCREMENTAL_PARSING: true, // Phase 11 - NEW: Large file processing ✅
+  ASSET_BENCHMARKING: true, // Phase 11 - NEW: Performance profiling ✅
+  REST_API_SERVER: true, // Phase 12 - NEW: Web service interface ✅
+  REAL_TIME_MONITORING: true, // Phase 12 - NEW: Asset change monitoring ✅
+  
+  // Future features
   BULK_DATA_LAZY: false, // Phase 10 - Future
   OODLE_COMPRESSION: false, // Plugin system
   ZLIB_COMPRESSION: true,

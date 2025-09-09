@@ -39,7 +39,10 @@ export class UnpakWebInterface extends EventEmitter {
 
         this.server = createServer((req, res) => {
             this.handleRequest(req, res).catch(error => {
-                logger.error('Web interface request error', { error: error.message });
+                logger.error('Web interface request error', { 
+                    error: error.message,
+                    stack: error.stack 
+                });
                 this.sendError(res, 500, 'Internal server error');
             });
         });
@@ -114,7 +117,11 @@ export class UnpakWebInterface extends EventEmitter {
                 this.sendError(res, 404, 'Page not found');
             }
         } catch (error: any) {
-            logger.error('Web interface error', { path, error: error.message });
+            logger.error('Web interface error', { 
+                path: path, 
+                error: error.message,
+                stack: error.stack 
+            });
             this.sendError(res, 500, error.message);
         }
     }

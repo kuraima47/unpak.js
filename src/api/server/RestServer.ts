@@ -36,7 +36,7 @@ export class UnpakRestServer extends EventEmitter {
 
         this.server = createServer((req, res) => {
             this.handleRequest(req, res).catch(error => {
-                logger.error('Request handling error', { error: error.message });
+                logger.error('Request handling error', error.message);
                 this.sendError(res, 500, 'Internal server error');
             });
         });
@@ -112,10 +112,9 @@ export class UnpakRestServer extends EventEmitter {
                 this.sendError(res, 404, 'Endpoint not found');
             }
         } catch (error: any) {
-            logger.error('Request processing error', {
+            logger.error('Request processing error', error.message, {
                 method: method,
-                path: path,
-                error: error.message
+                path: path
             });
             this.sendError(res, 500, error.message);
         }

@@ -1,19 +1,52 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "ES2022",
     "module": "commonjs",
-    "esModuleInterop": true,
+    "lib": ["ES2022"],
     "moduleResolution": "node",
-    "sourceMap": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
     "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "declaration": true,
+    "declarationMap": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "declaration": true
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "lib": [
-    "es2020"
-  ],
   "include": [
-    "./src/"
+    "src/core/**/*",
+    "src/crypto/**/*",
+    "src/assets/**/*",
+    "src/containers/**/*",
+    "src/utils/**/*",
+    "src/api/**/*",
+    "src/index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "src/compression/**/*",
+    "src/encryption/**/*",
+    "src/exceptions/**/*",
+    "src/fileprovider/**/*",
+    "src/fort/**/*",
+    "src/oodle/**/*",
+    "src/ue4/**/*",
+    "src/util/**/*",
+    "src/valorant/**/*",
+    "src/Config.ts",
+    "src/Types.ts"
   ]
 }

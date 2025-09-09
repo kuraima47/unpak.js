@@ -31,6 +31,19 @@ export * from './containers/iostore/IoStoreArchive';
 // API layer
 export * from './api/IUnpakAPI';
 
+// Enhanced asset types (Phase 4 continuation)
+export * from './ue4/assets/exports/UMediaSource';
+export * from './ue4/assets/exports/mats/UDecalMaterial';
+
+// Enhanced texture formats (Phase 6 continuation)
+export * from './ue4/converters/textures/EnhancedFormats';
+
+// Plugin support (Phase 9 start)
+export * from './ue4/assets/plugins/UPlugin';
+
+// Enhanced asset registry (Phase 8 continuation)
+export * from './ue4/registry/EnhancedAssetRegistry';
+
 // Main library version and metadata
 export const VERSION = '2.0.0-alpha.1';
 export const SUPPORTED_FORMATS = ['pak', 'utoc', 'ucas'] as const;
@@ -41,11 +54,14 @@ export const SUPPORTED_UE_VERSIONS = ['UE4.26', 'UE4.27', 'UE5.0', 'UE5.1', 'UE5
  */
 export const FEATURES = {
   PAK_READING: true,
-  IOSTORE_READING: true, // Phase 4 - NOW COMPLETE
-  MULTI_KEY_AES: true, // Phase 3 - COMPLETE
-  ASSET_REGISTRY: false, // Phase 7
-  UPLUGIN_PARSING: false, // Phase 8
-  BULK_DATA_LAZY: false, // Phase 9
+  IOSTORE_READING: true, // Phase 2 - COMPLETE
+  MULTI_KEY_AES: true, // Phase 2 - COMPLETE
+  ASSET_REGISTRY: true, // Phase 8 - NOW ENHANCED ✅
+  UPLUGIN_PARSING: true, // Phase 9 - NOW ADDED ✅
+  ENHANCED_TEXTURE_FORMATS: true, // Phase 6 - NOW ENHANCED ✅
+  MEDIA_ASSETS: true, // Phase 4 - NOW ADDED ✅
+  DECAL_MATERIALS: true, // Phase 4 - NOW ADDED ✅
+  BULK_DATA_LAZY: false, // Phase 10 - Future
   OODLE_COMPRESSION: false, // Plugin system
   ZLIB_COMPRESSION: true,
 } as const;

@@ -54,6 +54,7 @@
     "typescript": "^5.2.0"
   },
   "dependencies": {
-    "long": "^5.2.3"
+    "long": "^5.2.3",
+    "reflect-metadata": "^0.2.2"
   }
 }

@@ -30,7 +30,11 @@ This is **version 2.0.0-alpha.1** - a complete rewrite of unpak.js with a modern
 - [x] **Advanced Assets**: Skeletal meshes, animations, particles, physics, terrain ✅ COMPLETE
 - [x] **3D Mesh Export**: OBJ and glTF format support ✅ COMPLETE
 - [x] **Enhanced Audio**: Complete Wwise system with 3D spatial audio ✅ COMPLETE  
-- [ ] **Advanced Converters**: FBX export and animation sequences
+- [x] **Animation Blueprints**: UAnimBlueprint support for skeletal animation control ✅ NEW
+- [x] **Font Assets**: UFont support with character mapping and text rendering ✅ NEW  
+- [x] **Niagara Particles**: UNiagaraSystem for modern UE5 particle effects ✅ NEW
+- [x] **Enhanced Converters**: glTF material export and advanced Wwise audio conversion ✅ NEW
+- [ ] **Advanced Export**: FBX format with full animation support
 - [ ] **Performance**: Optimization for very large files
 
 ### 📋 Comprehensive Roadmap
@@ -197,12 +201,12 @@ npm run lint:fix   # Fix auto-fixable issues
 
 ### ✅ Supported Features
 - **Archive Formats**: PAK files (v1-11) and IoStore (.utoc/.ucas) with full UE4/UE5 support
-- **Asset Types**: 25+ implemented including UTexture2D, UStaticMesh, USoundWave, UDataTable, ULevel, UBlueprintGeneratedClass
+- **Asset Types**: 30+ implemented including UTexture2D, UStaticMesh, USoundWave, UDataTable, ULevel, UBlueprintGeneratedClass, UAnimBlueprint, UFont, UNiagaraSystem
 - **Compression**: Zlib/Gzip decompression, plugin system ready for Oodle
 - **Encryption**: Complete multi-key AES decryption system
-- **Converters**: Texture (PNG/TGA/DDS), material, and sound (WAV/OGG) export
+- **Converters**: Enhanced texture (PNG/TGA/DDS), material (glTF/MTL), and sound (WAV/OGG) export with 3D audio support
 - **Game Support**: Fortnite and Valorant specific asset handling
-- **Audio**: Wwise integration with AkMediaAssetData support
+- **Audio**: Complete Wwise integration with 3D spatial audio and multi-format support
 - **Properties**: UObject property system with Blueprint and struct support
 - **Registry**: AssetRegistry.bin parsing and asset metadata
 - **Logging**: Configurable structured logging with context

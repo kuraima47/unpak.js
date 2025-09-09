@@ -1,5 +1,3 @@
-import { FArchive } from "../../reader/FArchive";
-
 /**
  * FNameEntry
  */
@@ -27,11 +25,11 @@ export class FNameEntry {
 
     /**
      * Creates an instance using an UE4 Reader
-     * @param {FArchive} Ar UE4 Reader to use
+     * @param {any} Ar UE4 Reader to use
      * @constructor
      * @public
      */
-    constructor(Ar: FArchive)
+    constructor(Ar: any)
 
     /**
      * Creates an instance using values
@@ -45,7 +43,7 @@ export class FNameEntry {
 
     /** DO NOT USE THIS CONSTRUCTOR, THIS IS FOR THE LIBRARY */
     constructor(x: any, y?: any, z?: any) {
-        if (x instanceof FArchive) {
+        if (x && typeof x.readString === 'function' && typeof x.readUInt16 === 'function') {
             this.name = x.readString()
             this.nonCasePreservingHash = x.readUInt16()
             this.casePreservingHash = x.readUInt16()
@@ -113,9 +111,9 @@ export class FName {
      */
     constructor(nameMap?: FNameEntry[], index?: number, num?: number) {
         if (index != null) {
-            this.nameMap = nameMap
+            this.nameMap = nameMap || [new FNameEntry("None", 0, 0)]
             this.index = index
-            this.num = num
+            this.num = num || 0
         }
     }
 
@@ -190,7 +188,7 @@ export class FName {
      * @public
      * @static
      */
-    static getByNameMap(text: string, nameMap: FNameEntry[]): FName {
+    static getByNameMap(text: string, nameMap: FNameEntry[]): FName | null {
         const nameEntry = nameMap.find(f => f.name === text)
         return nameEntry ? new FName(nameMap, nameMap.indexOf(nameEntry), 0) : null
     }

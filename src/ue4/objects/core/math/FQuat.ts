@@ -1,5 +1,4 @@
 import { IStructType } from "../../../assets/objects/UScriptStruct";
-import { FArchive } from "../../../reader/FArchive";
 import { FArchiveWriter } from "../../../writer/FArchiveWriter";
 
 /**
@@ -37,11 +36,11 @@ export class FQuat implements IStructType {
 
     /**
      * Creates an instance using an UE4 Reader
-     * @param {FArchive} Ar Reader to use
+     * @param {any} Ar Reader to use
      * @constructor
      * @public
      */
-    constructor(Ar: FArchive)
+    constructor(Ar: any)
 
     /**
      * Creates an instance using XYZW values
@@ -55,9 +54,9 @@ export class FQuat implements IStructType {
     constructor(x: number, y: number, z: number, w: number)
 
     /** DO NOT USE THIS CONSTRUCTOR, THIS IS FOR THE LIBRARY */
-    constructor(...args) {
+    constructor(...args: any[]) {
         const arg = args[0]
-        if (arg instanceof FArchive) {
+        if (arg && typeof arg.readFloat32 === 'function') {
             this.x = arg.readFloat32()
             this.y = arg.readFloat32()
             this.z = arg.readFloat32()

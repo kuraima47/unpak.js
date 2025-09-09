@@ -1,5 +1,3 @@
-import { StringBuilder } from "./StringBuilder";
-
 export class Utils {
     static replaceAll(str: string, value1: string, value2: string) {
         while (str.includes(value1))
@@ -21,17 +19,18 @@ export class Utils {
     }
 
     static pathAppend(str1: string, str2: string, strLength: number = str2.length) {
-        const data = new StringBuilder(str1)
+        let data = str1
         const dataNum = data.length
         if (dataNum > 0 && data[dataNum - 1] !== '/' && data[dataNum - 1] !== '\\') {
-            data.append('/')
+            data += '/'
         }
         if (strLength > 0) {
             const start = (str2[0] === '/' || str2[0] === '\\') ? 1 : 0
-            data.append(str2, start, Math.min(str1.length, strLength))
+            const length = Math.min(str2.length - start, strLength - start)
+            data += str2.substr(start, length)
             //data.append(str2, 0, min(str1.length, strLength))
         }
-        return data.toString()
+        return data
     }
 
     static isAligned(value: number, alignment: number) {

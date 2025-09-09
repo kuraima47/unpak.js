@@ -11,9 +11,9 @@ export class UnrealArray<T> extends Array<T> {
      * @param {any} init Method to call
      * @example new UnrealArray(69, (i) => new SomeIndexClass(i))
      */
-    constructor(length: number, init: (index: number) => T) {
+    constructor(length?: number, init?: (index: number) => T) {
         super()
-        if (length > 0 && init) {
+        if (length && length > 0 && init) {
             for (let i = 0; i < length; ++i) {
                 this.push(init(i))
             }

@@ -1,6 +1,5 @@
 import { FArchive } from "../../../reader/FArchive";
 import { FArchiveWriter } from "../../../writer/FArchiveWriter";
-import { sprintf } from "sprintf-js";
 import { Utils } from "../../../../util/Utils";
 import { IStructType } from "../../../assets/objects/UScriptStruct"
 
@@ -261,7 +260,8 @@ export class FColor implements IStructType {
      * @public
      */
     toHex() {
-        return sprintf("%02X%02X%02X%02X", this.r, this.g, this.b, this.a)
+        const toHex = (n: number) => n.toString(16).padStart(2, '0').toUpperCase()
+        return `${toHex(this.r)}${toHex(this.g)}${toHex(this.b)}${toHex(this.a)}`
     }
 
     /**

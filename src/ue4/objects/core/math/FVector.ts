@@ -317,7 +317,7 @@ export class FVector implements IStructType {
      * @returns {boolean} Result
      * @public
      */
-    equals(other?: any)
+    equals(other?: any): boolean
 
     /**
      * Checks for equality to another FVector and a tolerance
@@ -326,7 +326,7 @@ export class FVector implements IStructType {
      * @returns {boolean} Result
      * @public
      */
-    equals(v: FVector, tolerance: number)
+    equals(v: FVector, tolerance: number): boolean
 
     /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
     equals(x?: any, y?: any) {
@@ -339,7 +339,7 @@ export class FVector implements IStructType {
             if (!(x instanceof FVector)) return false
             return this.x === x.x
                 && this.y === x.y
-                && this.z === x.y
+                && this.z === x.z
         }
     }
 

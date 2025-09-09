@@ -1,13 +1,17 @@
-import { FArchive } from "../../../reader/FArchive";
 import { FArchiveWriter } from "../../../writer/FArchiveWriter";
 
 export class FMeshUVFloat {
     public u: number
     public v: number
 
-    public constructor(Ar: FArchive = null) {
-        this.u = Ar.readFloat32()
-        this.v = Ar.readFloat32()
+    public constructor(Ar?: any) {
+        if (Ar) {
+            this.u = Ar.readFloat32()
+            this.v = Ar.readFloat32()
+        } else {
+            this.u = 0
+            this.v = 0
+        }
     }
 
     public serialize(Ar: FArchiveWriter) {

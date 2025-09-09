@@ -1,5 +1,4 @@
 import { FCustomVersion } from "../objects/core/serialization/CustomVersion";
-import Collection from "@discordjs/collection";
 import { Game, Ue4Version } from "./Game";
 import { VER_UE4_DETERMINE_BY_GAME } from "./Versions";
 
@@ -35,17 +34,17 @@ export class VersionContainer {
 
     public explicitVer = false
     public customVersions?: FCustomVersion[]
-    public readonly options = new Collection<string, boolean>()
-    private readonly optionsOverrides?: Collection<string, boolean>
+    public readonly options = new Map<string, boolean>()
+    private readonly optionsOverrides?: Map<string, boolean>
 
     constructor(game: number = Game.GAME_UE4(Game.LATEST_SUPPORTED_UE4_VERSION),
                 ver: number = VER_UE4_DETERMINE_BY_GAME,
-                customVersions: FCustomVersion[] = null,
-                optionOverrides: Collection<string, boolean> = null) {
-        this.optionsOverrides = optionOverrides
+                customVersions: FCustomVersion[] | null = null,
+                optionOverrides: Map<string, boolean> | null = null) {
+        this.optionsOverrides = optionOverrides || undefined
         this.game = game
         this.ver = ver
-        this.customVersions = customVersions
+        this.customVersions = customVersions || undefined
     }
 
     private initOptions(): void {

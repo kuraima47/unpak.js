@@ -48,4 +48,3 @@ export class FSkelMeshSection {
         this.bDisabled = Ar.readBoolean();
     }
 }
-}

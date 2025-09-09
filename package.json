@@ -40,6 +40,7 @@
   },
   "homepage": "https://github.com/kuraima47/unpak.js#readme",
   "devDependencies": {
+    "@types/aes-js": "^3.1.4",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -54,6 +55,8 @@
     "typescript": "^5.2.0"
   },
   "dependencies": {
+    "@discordjs/collection": "^2.1.1",
+    "aes-js": "^3.1.2",
     "long": "^5.2.3",
     "reflect-metadata": "^0.2.2"
   }

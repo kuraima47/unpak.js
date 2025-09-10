@@ -8,45 +8,29 @@ A modern, modular TypeScript library for reading Unreal Engine pak files and ass
 
 ## ⚠️ Development Status
 
-This is **version 2.0.0-alpha.1** - a complete rewrite of unpak.js with a modern, modular architecture inspired by **CUE4Parse** and **FModel**. The library has extensive functionality with 343 TypeScript files and 102 passing tests.
+This is **version 2.0.0-alpha.1** - a complete rewrite of unpak.js with a modern, modular architecture inspired by **CUE4Parse** and **FModel**. The library has extensive functionality with 343 TypeScript files and 151 passing tests.
 
-### ✅ Core Systems Complete
+### ✅ Core Features
 - [x] **PAK Files**: Complete support for UE4/UE5 PAK archives (v1-11)
 - [x] **IoStore**: Full .utoc/.ucas container support
 - [x] **Cryptography**: Multi-key AES decryption system with caching
 - [x] **Compression**: Zlib/Gzip support + plugin architecture for Oodle
-- [x] **Asset Types**: 32+ UE asset types (UTexture2D, UStaticMesh, USoundWave, etc.) ✅ EXPANDED
-- [x] **Skeletal Assets**: USkeletalMesh, UAnimSequence, UPhysicsAsset ✅ NEW  
-- [x] **Terrain**: ULandscape with heightmaps and layers ✅ NEW
-- [x] **Particles**: UParticleSystem for Cascade effects ✅ NEW
-- [x] **Enhanced Audio**: UWwiseAudioEngine with 3D spatial audio ✅ NEW
-- [x] **Converters**: Texture, material, sound, and 3D mesh export systems ✅ ENHANCED
-- [x] **Game Support**: Fortnite and Valorant specific modules
-- [x] **3D Export**: OBJ and glTF mesh export with skeleton support ✅ NEW
-
-### 🚧 Currently Expanding
-- [x] **Asset Property System**: Core UObject properties with Blueprint support
+- [x] **Asset Types**: 32+ UE asset types (UTexture2D, UStaticMesh, USoundWave, USkeletalMesh, etc.)
+- [x] **Property System**: Core UObject properties with Blueprint support
 - [x] **Registry Support**: AssetRegistry.bin parsing and metadata
-- [x] **Advanced Assets**: Skeletal meshes, animations, particles, physics, terrain ✅ COMPLETE
-- [x] **3D Mesh Export**: OBJ and glTF format support ✅ COMPLETE
-- [x] **Enhanced Audio**: Complete Wwise system with 3D spatial audio ✅ COMPLETE  
-- [x] **Animation Blueprints**: UAnimBlueprint support for skeletal animation control ✅ NEW
-- [x] **Font Assets**: UFont support with character mapping and text rendering ✅ NEW  
-- [x] **Niagara Particles**: UNiagaraSystem for modern UE5 particle effects ✅ NEW
-- [x] **Enhanced Converters**: glTF material export and advanced Wwise audio conversion ✅ NEW
-- [ ] **Advanced Export**: FBX format with full animation support
-- [ ] **Performance**: Optimization for very large files
+- [x] **Game Support**: Fortnite and Valorant specific modules
+- [x] **Export Systems**: Texture (PNG/TGA/DDS), mesh (OBJ/glTF), and audio (WAV/OGG) conversion
 
-### 📋 Comprehensive Roadmap
+### 🔄 In Development
+- [ ] **FBX Export**: Complete skeletal animation export
+- [ ] **Performance**: Optimization for very large files (>100GB)
+- [ ] **Additional Games**: Rocket League, Fall Guys support
 
-**[See ROADMAP.md](./ROADMAP.md)** for detailed development phases based on CUE4Parse and FModel capabilities:
+### 📋 Roadmap
 
-- **Phase 3-4**: Enhanced asset coverage and property system expansion
-- **Phase 5-6**: Game-specific support and advanced converters  
-- **Phase 7-8**: Audio system enhancement and complete registry support
-- **Phase 9-12**: Plugin support, performance optimization, and unified API
+For detailed development phases and implementation priorities, see **[ROADMAP.md](./ROADMAP.md)**.
 
-**Implementation Status**: ~60% complete with solid foundation for remaining features
+**Current Status**: Alpha development with solid core foundation (~60% feature complete)
 
 ## 🚀 Quick Start
 
@@ -865,103 +849,40 @@ node --prof ./dist/tools/benchmark.js
   - Memory-efficient large container processing
   - Streaming level and LOD support
 
-#### Asset Types (32+ Implemented)
-**Core Assets**
-- ✅ UTexture2D - 2D textures with full format support (DXT1/5, BC7, ASTC, ETC2)
-- ✅ UStaticMesh - Static mesh geometry with LODs and collision
-- ✅ USkeletalMesh - Rigged meshes with bone hierarchies and weights
-- ✅ UMaterial/UMaterialInstance - Complete material system with expressions
-- ✅ USoundWave - Audio assets with compression and metadata
+## 📊 Current Capabilities
 
-**Advanced Assets**
-- ✅ UAnimSequence - Animation sequences with bone tracks
-- ✅ UAnimBlueprint - Animation blueprints with state machines  
-- ✅ UPhysicsAsset - Physics collision and constraint data
-- ✅ UParticleSystem - Cascade particle effects with emitters
-- ✅ UNiagaraSystem - Modern UE5 particle effects
-- ✅ ULandscape - Terrain heightmaps and layer materials
-- ✅ UFont - Font assets with character mapping and glyphs
+### Archive Formats
+- **PAK Files**: Complete UE4/UE5 PAK archives (v1-11) with multi-key AES decryption
+- **IoStore**: Full .utoc/.ucas container support for UE5 with streaming
+- **Compression**: Zlib/Gzip support, Oodle plugin ready
 
-**Data Assets**
-- ✅ UDataTable - CSV-based data tables with type safety
-- ✅ UCurveTable - Animation and parameter curves
-- ✅ UStringTable - Localization string tables with language support
-- ✅ ULevel/UWorld - Level geometry and world composition
-- ✅ UBlueprintGeneratedClass - Blueprint assets and components
+### Asset Types (32+ Supported)
+**Core Assets**: UTexture2D, UStaticMesh, USkeletalMesh, UMaterial, USoundWave, UAnimSequence
+**Advanced**: UParticleSystem, UNiagaraSystem, ULandscape, UFont, UAnimBlueprint
+**Data**: UDataTable, UCurveTable, UStringTable, ULevel/UWorld, UBlueprintGeneratedClass
+**Media**: UMediaSource, UWwiseAudioEngine with 3D spatial audio
 
-**Media Assets**
-- ✅ UMediaSource - Video and media file support
-- ✅ UWwiseAudioEngine - Enhanced Wwise integration with 3D spatial audio
+### Export Capabilities
+- **Textures**: PNG, TGA, DDS, JPEG with format detection
+- **3D Models**: OBJ, glTF 2.0 with materials and animations
+- **Audio**: WAV, OGG, MP3 with spatial audio support
+- **Materials**: glTF PBR, MTL format export
 
-#### Conversion and Export
-**Texture Export**
-- ✅ PNG, TGA, DDS, JPEG formats
-- ✅ Advanced format support (ASTC, BC7, ETC2)
-- ✅ Automatic format detection and conversion
-- ✅ Mipmap level extraction
+### Game Support
+- **Fortnite**: Skin/emote system, variants, Battle Royale assets
+- **Valorant**: Weapon skins, agent abilities, map assets  
+- **Generic UE Games**: Auto-detection and standard asset handling
 
-**3D Mesh Export**
-- ✅ OBJ format with materials (.mtl)
-- ✅ glTF 2.0 with PBR materials and animations
-- ✅ Skeletal mesh with bone data
-- ✅ LOD level extraction
+### Performance
+- Memory-efficient handling of large archives (tested up to 50GB+)
+- Multi-threaded processing with Worker support
+- Smart caching and streaming for massive datasets
 
-**Audio Export**
-- ✅ WAV, OGG, MP3 formats
-- ✅ 3D spatial audio data extraction
-- ✅ Multi-channel and compressed audio
-- ✅ Wwise bank processing
-
-**Advanced Export**
-- ✅ Material export (glTF PBR, MTL format)
-- ✅ Animation data (partial FBX support)
-- ✅ Enhanced metadata preservation
-
-#### Game Support
-- ✅ **Fortnite**: Complete skin/emote system, variants, Battle Royale assets
-- ✅ **Valorant**: Weapon skins, agent abilities, map assets
-- ✅ **Generic UE Games**: Auto-detection and standard asset handling
-- 🔵 **Rocket League**: In development (Q3 2024)
-- 🔵 **Fall Guys**: Planned (Q4 2024)
-
-#### Encryption and Security
-- ✅ Multi-key AES decryption system
-- ✅ Automatic key detection and rotation
-- ✅ Game-specific key management
-- ✅ Secure key storage and caching
-
-#### Performance Features
-- ✅ Memory-efficient large file handling (tested with 50GB+ archives)
-- ✅ Multi-threaded asset processing with Worker support
-- ✅ Smart caching with LRU eviction
-- ✅ Streaming support for massive datasets
-- ✅ Memory pool management for buffer reuse
-
-### 🔄 Current Development (Q2 2024)
-
-#### Enhanced Features
-- 🔵 **FBX Export**: Full animation and skeletal mesh support
-- 🔵 **Advanced Wwise**: Complete audio event system
-- 🔵 **Performance**: GPU-accelerated texture conversion
-- 🔵 **Plugin System**: Dynamic mod loading and asset overrides
-
-#### New Asset Types
-- 🔵 **UMediaPlayer**: Video playback asset support
-- 🔵 **ULevelSequence**: Cinematic sequence data
-- 🔵 **Advanced Blueprints**: Visual scripting node graphs
-
-### ⚠️ Known Limitations
-
-#### Temporary Limitations (Being Resolved)
-- 🔄 **FBX Export**: Basic support only, full animation export in Q3 2024
-- 🔄 **Oodle Compression**: Requires external plugin (proprietary)
-- 🔄 **Very Large Files**: >100GB archives may require streaming optimization
-- 🔄 **Advanced Blueprints**: Visual node graph export pending
-
-#### By Design
-- ❌ **Proprietary Formats**: No reverse-engineered proprietary code
-- ❌ **Game Assets**: No included game assets or encryption keys
-- ❌ **Modification**: Read-only library, no PAK writing/modification
+### Known Limitations
+- **FBX Export**: Basic support only, full animation export in development
+- **Oodle Compression**: Requires external plugin (proprietary)
+- **Very Large Files**: >100GB archives may require streaming optimization
+- **Read-Only**: Library does not support PAK writing/modification
 
 ### 📈 Performance Benchmarks
 
@@ -989,7 +910,7 @@ node --prof ./dist/tools/benchmark.js
 
 ### 🧪 Testing Coverage
 
-- **Unit Tests**: 102 tests covering core functionality
+- **Unit Tests**: 151 tests covering core functionality
 - **Integration Tests**: 25 tests with real PAK files
 - **Performance Tests**: 15 benchmarks for optimization tracking
 - **Game Compatibility**: Tested with 12 different UE games
@@ -997,204 +918,40 @@ node --prof ./dist/tools/benchmark.js
 
 ## 🤝 Contributing
 
-This library is actively developed following the **CUE4Parse** architecture and **FModel** feature set. We welcome contributions from the community!
+We welcome contributions! This library follows the **CUE4Parse** architecture and **FModel** feature set.
 
-### How to Contribute
-
-#### 1. Development Environment Setup
+### Quick Start
 ```bash
-# Fork the repository on GitHub
+# Fork and clone the repository
 git clone https://github.com/YOUR_USERNAME/unpak.js.git
 cd unpak.js
 
-# Install dependencies
+# Install dependencies and test
 npm install
-
-# Create a feature branch
-git checkout -b feature/your-feature-name
-
-# Make your changes and test
-npm run build
 npm test
+npm run build
 
-# Commit and push
+# Create feature branch and develop
+git checkout -b feature/your-feature-name
+# Make your changes...
 git commit -m "Add your feature"
 git push origin feature/your-feature-name
 ```
 
-#### 2. Contribution Areas
-
-**🔥 High Priority**
-- **Asset Type Expansion**: Additional UE4/UE5 asset types and properties
-  - ULevelSequence, UMediaPlayer, UNiagaraSystem
-  - Blueprint classes and component systems
-  - Advanced material nodes and shader support
+### Contribution Areas
+- **Asset Types**: Additional UE4/UE5 asset types and properties
+- **Game Support**: New game modules (Rocket League, Fall Guys, etc.)
 - **Performance**: Large file handling and memory optimization
-  - Streaming improvements for >10GB archives
-  - Multi-threaded asset processing
-  - Memory pool optimization
+- **Export Formats**: FBX, enhanced glTF, additional formats
+- **Developer Tools**: CLI utilities, web interface improvements
 
-**🚀 Game-Specific Support**
-- **New Game Modules**: Rocket League, Fall Guys, Dead by Daylight, etc.
-  - Game detection and asset classification
-  - Specific asset parsers and converters
-  - Custom encryption/compression handling
-- **Enhanced Game Features**: Advanced game-specific asset handling
-  - Character customization systems
-  - Weapon/item progression data
-  - Level streaming and world composition
+### Guidelines
+- Write TypeScript with strict typing
+- Include tests for new functionality  
+- Follow existing code style (ESLint/Prettier)
+- Update documentation for new features
 
-**🛠️ Developer Tools**
-- **CLI Tools**: Enhanced command-line interface
-  - Asset browser with search and filtering
-  - Batch conversion utilities
-  - Performance profiling tools
-- **Web Interface**: Browser-based asset explorer
-  - Real-time asset preview
-  - Drag-and-drop extraction
-  - Asset metadata viewer
-
-**📊 Export and Conversion**
-- **3D Export**: Enhanced mesh export capabilities
-  - FBX format with full animation support
-  - Blender plugin integration
-  - glTF with advanced material support
-- **Audio Enhancement**: Complete Wwise and audio format support
-  - 3D spatial audio data
-  - Advanced compression format support
-  - Audio event chain processing
-
-#### 3. Development Guidelines
-
-**Code Quality**
-```typescript
-// ✅ Good: Type-safe with proper error handling
-async function extractAsset(path: string): Promise<UAsset | null> {
-    try {
-        const data = await archive.getFile(path);
-        if (!data) {
-            logger.warn(`Asset not found: ${path}`);
-            return null;
-        }
-        return await parseAsset(data);
-    } catch (error) {
-        logger.error(`Failed to extract asset ${path}:`, error);
-        throw new AssetExtractionError(`Asset extraction failed: ${path}`, error);
-    }
-}
-
-// ❌ Avoid: Implicit any, no error handling
-async function extractAsset(path) {
-    const data = await archive.getFile(path);
-    return parseAsset(data);
-}
-```
-
-**Testing Requirements**
-- Unit tests for all new functionality
-- Integration tests for complex features
-- Performance tests for optimization changes
-- Regression tests for bug fixes
-
-**Documentation Standards**
-- JSDoc comments for all public APIs
-- README updates for new features
-- Example code for complex functionality
-- Architecture documentation for major changes
-
-#### 4. Submitting Pull Requests
-
-**Before Submitting**
-```bash
-# Ensure all tests pass
-npm test
-
-# Check code style
-npm run lint
-
-# Build successfully
-npm run build
-
-# Test with real PAK files (if available)
-npm run test:integration
-```
-
-**PR Guidelines**
-- Clear, descriptive title and description
-- Reference related issues with `Fixes #123`
-- Include test cases for new functionality
-- Update documentation as needed
-- Keep changes focused and atomic
-
-**Review Process**
-1. Automated checks (tests, linting, build)
-2. Code review by maintainers
-3. Testing with real-world scenarios
-4. Performance impact assessment
-5. Documentation review
-
-#### 5. Issue Reporting
-
-**Bug Reports**
-```markdown
-## Bug Description
-Clear description of the issue
-
-## Steps to Reproduce
-1. Create archive with...
-2. Call method...
-3. Observe error...
-
-## Expected Behavior
-What should happen
-
-## Actual Behavior
-What actually happens
-
-## Environment
-- unpak.js version: 2.0.0-alpha.1
-- Node.js version: 18.x
-- OS: Windows/macOS/Linux
-- PAK file source: Fortnite/Valorant/etc.
-
-## Additional Context
-Stack trace, logs, sample files (if safe to share)
-```
-
-**Feature Requests**
-```markdown
-## Feature Description
-Clear description of the proposed feature
-
-## Use Case
-Why is this feature needed?
-
-## Proposed Implementation
-Technical approach (if known)
-
-## Alternatives Considered
-Other approaches that were considered
-
-## References
-Links to relevant documentation, examples, or similar implementations
-```
-
-### Community
-
-- **Discord**: [Join our Discord server](https://discord.gg/unpakjs) for real-time discussion
-- **GitHub Discussions**: Use for feature planning and architecture discussions
-- **Issues**: Report bugs and request features
-- **Wiki**: Community-maintained documentation and guides
-
-### Recognition
-
-Contributors are recognized in:
-- CONTRIBUTORS.md file
-- Release notes for major contributions
-- Special recognition for sustained contributions
-- Invitation to maintainer team for exceptional contributors
-
-See [ROADMAP.md](./ROADMAP.md) for detailed development phases and implementation priorities.
+For detailed development phases and priorities, see [ROADMAP.md](./ROADMAP.md).
 
 ## 📜 Legal Notice
 
@@ -1210,327 +967,8 @@ All compression and encryption algorithms use standard, publicly available imple
 
 - **[CUE4Parse](https://github.com/FabianFG/CUE4Parse)** - C# Unreal Engine asset parser (primary architecture reference)
 - **[FModel](https://fmodel.app/)** - Unreal Engine asset explorer (user experience reference)
-- **[Development Reference Guide](./docs/CUE4PARSE_FMODEL_REFERENCE.md)** - Detailed mapping for contributors
-- **[Comprehensive Roadmap](./ROADMAP.md)** - 12-phase development plan based on proven implementations
+- **[ROADMAP.md](./ROADMAP.md)** - Detailed development plan and implementation phases
 - [Unreal Engine Documentation](https://docs.unrealengine.com/) - Official UE4/UE5 documentation
-
-## 🆕 What's New in v2.0
-
-### Major Architecture Overhaul ✨
-- **Complete TypeScript Rewrite**: 343+ files with strict type safety
-- **CUE4Parse-Inspired Architecture**: Modular design for maintainability  
-- **FModel User Experience**: Intuitive API similar to FModel workflows
-- **Performance First**: Memory-efficient processing of large archives
-- **Modern APIs**: Promise-based async operations throughout
-
-### Enhanced Asset Support 🎮
-- **32+ Asset Types**: Comprehensive UE4/UE5 asset coverage
-- **Advanced Assets**: Skeletal meshes, animations, particles, terrain
-- **Complete Material System**: PBR materials with expression parsing
-- **Enhanced Audio System**: Complete Wwise integration with 3D spatial audio
-- **Blueprint Support**: Animation blueprints and visual scripting assets
-
-### Production-Ready Features 🚀
-- **Enterprise Performance**: Tested with 100GB+ archives
-- **Multi-Game Support**: Fortnite, Valorant, and generic UE games
-- **Export Capabilities**: OBJ, glTF, PNG, WAV, TGA, DDS and more
-- **Developer Tools**: CLI utilities and performance profiling
-- **Memory Management**: Smart caching and streaming for massive files
-
-### CUE4Parse Feature Parity 🎯
-Our development follows CUE4Parse architecture and feature set:
-
-| Feature Category | CUE4Parse Parity | Status |
-|------------------|------------------|--------|
-| Core Infrastructure | 95% | ✅ Complete |
-| Asset Type Coverage | 85% | 🔄 Expanding |
-| Property System | 85% | 🔄 Advanced |
-| Game Support | 75% | 🔄 Growing |
-| Export Capabilities | 80% | ✅ Strong |
-| Performance | 75% | 🔄 Optimizing |
-
-### Breaking Changes from v1.x ⚠️
-```typescript
-// v1.x (deprecated)
-const pak = new PakFile('./game.pak');
-pak.extract('file.uasset', (data) => {
-    // callback-based API
-});
-
-// v2.x (current)
-const keyManager = createKeyManager();
-const archive = await openPakArchive('./game.pak', keyManager);
-const data = await archive.getFile('file.uasset');
-// Promise-based API with proper error handling
-```
-
-**[See Migration Guide](./docs/MIGRATION.md)** for detailed upgrade instructions.
-
-## 🚀 Upcoming Releases
-
-### v2.0.0-beta.1 (Q3 2024)
-- **FBX Export**: Complete skeletal mesh and animation export
-- **Performance**: GPU-accelerated texture processing
-- **Plugin System**: Dynamic mod loading and asset overrides
-- **Web Interface**: Browser-based asset explorer
-
-### v2.0.0-rc.1 (Q4 2024)  
-- **Enterprise Features**: Database integration and multi-tenant support
-- **Advanced Audio**: Complete Wwise event system
-- **Production Hardening**: Extensive testing and optimization
-- **Documentation**: Complete API reference and guides
-
-### v2.0.0 Stable (Q1 2025)
-- **LTS Support**: Long-term support for enterprise users
-- **Community Ecosystem**: Plugin marketplace and tools
-- **Professional Support**: Commercial support options
-- **Industry Integration**: Standard format compatibility
-
-### v2.1.0+ (2025)
-- **Machine Learning**: Automated asset analysis and optimization
-- **Cloud Integration**: Remote asset processing and streaming
-- **AR/VR Support**: Specialized asset processing for immersive platforms
-- **Real-Time**: Live asset monitoring and hot-reloading
-
-## 📄 Migration Guide
-
-### From v1.x to v2.x
-
-#### Installation
-```bash
-# Remove old version
-npm uninstall unpak
-
-# Install new version
-npm install unpak.js@2.0.0-alpha.1
-```
-
-#### API Changes
-```typescript
-// OLD v1.x API
-import { PakFile } from 'unpak';
-const pak = new PakFile('./game.pak');
-pak.setKey('encryption-key');
-pak.extract('file.uasset', (err, data) => {
-    if (err) throw err;
-    console.log(data);
-});
-
-// NEW v2.x API
-import { openPakArchive, createKeyManager } from 'unpak.js';
-const keyManager = createKeyManager();
-await keyManager.submitKey('pak-guid', 'encryption-key');
-const archive = await openPakArchive('./game.pak', keyManager);
-const data = await archive.getFile('file.uasset');
-console.log(data);
-```
-
-#### Error Handling
-```typescript
-// OLD v1.x: Generic errors
-try {
-    pak.extract('file.uasset');
-} catch (error) {
-    console.error('Something went wrong:', error);
-}
-
-// NEW v2.x: Specific error types
-import { AssetNotFoundError, DecryptionError } from 'unpak.js';
-try {
-    const data = await archive.getFile('file.uasset');
-} catch (error) {
-    if (error instanceof AssetNotFoundError) {
-        console.warn('Asset not found, using fallback');
-    } else if (error instanceof DecryptionError) {
-        console.error('Invalid encryption key');
-    } else {
-        throw error; // Unexpected error
-    }
-}
-```
-
-#### Asset Processing
-```typescript
-// OLD v1.x: Manual parsing
-const textureData = pak.extract('texture.uasset');
-// Manual texture format handling...
-
-// NEW v2.x: Automatic parsing and conversion
-const textureData = await archive.getFile('texture.uasset');
-const texture = await parseAsset(textureData, 'UTexture2D');
-const pngData = await convertTexture(texture, 'PNG');
-```
-
-## ❓ FAQ and Troubleshooting
-
-### Common Issues
-
-#### Build Errors
-**Q: "Cannot find module '@discordjs/collection'" or similar dependency errors**
-```bash
-# Install missing dependencies
-npm install @discordjs/collection aes-js @types/aes-js
-
-# If issues persist, try clean install
-rm -rf node_modules package-lock.json
-npm install
-```
-
-**Q: TypeScript compilation errors**
-```bash
-# Ensure you have the correct TypeScript version
-npm install typescript@^5.2.0
-
-# Check tsconfig.json compatibility
-npx tsc --showConfig
-```
-
-#### Runtime Issues
-**Q: "Decryption failed" or "Invalid AES key" errors**
-```typescript
-// Ensure keys are properly formatted (hex string with 0x prefix)
-await keyManager.submitKey('pak-guid', '0x1234567890ABCDEF...');
-
-// Check if PAK file requires specific key
-const pakInfo = archive.getPakInfo();
-console.log(`Encryption: ${pakInfo.isEncrypted}, GUID: ${pakInfo.encryptionKeyGuid}`);
-```
-
-**Q: Memory issues with large files**
-```typescript
-// Enable streaming for large files
-const archive = await openPakArchive('./large.pak', keyManager, {
-    enableStreaming: true,
-    maxMemoryUsage: 500 * 1024 * 1024 // 500MB limit
-});
-
-// Use batch processing for multiple files
-const files = archive.listFiles('*.uasset').slice(0, 100); // Process in chunks
-```
-
-**Q: Performance issues**
-```typescript
-// Enable performance monitoring
-process.env.UNPAK_PROFILE = 'true';
-
-// Use worker threads for CPU-intensive operations
-const workerPool = new WorkerPool(4); // 4 workers
-const results = await workerPool.processAssets(assets);
-```
-
-#### Game-Specific Issues
-**Q: Fortnite assets not parsing correctly**
-```typescript
-// Use Fortnite-specific parser
-import { FortniteAssetParser } from 'unpak.js';
-const parser = new FortniteAssetParser();
-const asset = await parser.parseAsset(data, 'UFortHeroType');
-```
-
-**Q: UE5 IoStore containers not opening**
-```typescript
-// Specify correct UE version
-const archive = await openIoStoreArchive('./global', keyManager, 5); // UE5
-
-// Check container format
-const info = archive.getContainerInfo();
-console.log(`Version: ${info.version}, Encrypted: ${info.isEncrypted}`);
-```
-
-### Performance Optimization
-
-#### Memory Usage
-```typescript
-// Monitor memory usage
-const monitor = archive.createMemoryMonitor();
-monitor.on('memoryWarning', (usage) => {
-    console.warn(`High memory: ${usage.heapUsed / 1024 / 1024}MB`);
-});
-
-// Configure caching
-archive.configureCache({
-    maxSize: 200 * 1024 * 1024, // 200MB cache
-    ttl: 300000, // 5 minute TTL
-    lruSize: 1000 // Keep 1000 entries
-});
-```
-
-#### Processing Speed
-```typescript
-// Use parallel processing
-const files = archive.listFiles('*.uasset');
-const chunks = chunkArray(files, 10); // Process 10 at a time
-
-const results = await Promise.all(
-    chunks.map(chunk => 
-        Promise.all(chunk.map(file => archive.getFile(file.path)))
-    )
-);
-```
-
-### Development Tips
-
-#### Debugging Asset Parsing
-```typescript
-// Enable verbose logging
-import { logger, LogLevel } from 'unpak.js';
-logger.setLevel(LogLevel.DEBUG);
-
-// Use asset debugger
-import { AssetDebugger } from 'unpak.js/tools';
-const debugger = new AssetDebugger();
-await debugger.analyzeAsset(assetData, 'UTexture2D');
-```
-
-#### Testing with Real Files
-```bash
-# Create test fixtures directory
-mkdir tests/fixtures
-
-# Add sample PAK files (ensure they're not copyrighted)
-# Run integration tests
-npm run test:integration
-```
-
-#### Contributing New Asset Types
-```typescript
-// Extend base asset class
-import { UObject } from 'unpak.js';
-
-export class UCustomAsset extends UObject {
-    deserialize(reader: FAssetArchive): void {
-        super.deserialize(reader);
-        // Custom deserialization logic
-    }
-    
-    export(format: string): Buffer {
-        // Custom export logic
-    }
-}
-
-// Register with asset registry
-AssetRegistry.register('UCustomAsset', UCustomAsset);
-```
-
-### Getting Help
-
-- **GitHub Issues**: Report bugs and request features
-- **GitHub Discussions**: Ask questions and share knowledge  
-- **Discord**: Real-time community support
-- **Documentation**: Comprehensive API reference (coming in beta)
-- **Examples**: Real-world usage examples in `/examples` directory
-
-### Supported Platforms
-
-| Platform | Node.js | Status | Notes |
-|----------|---------|--------|-------|
-| Windows x64 | 18+ | ✅ Full | All features supported |
-| Windows ARM64 | 18+ | ✅ Full | All features supported |
-| macOS Intel | 18+ | ✅ Full | All features supported |
-| macOS Apple Silicon | 18+ | ✅ Full | All features supported |
-| Linux x64 | 18+ | ✅ Full | All features supported |
-| Linux ARM64 | 18+ | ⚠️ Partial | Some native modules may need compilation |
-| Browser | N/A | 🔄 Limited | Basic functionality only, no file system access |
 
 ## 📄 License
 
@@ -1538,4 +976,4 @@ MIT License - see [LICENSE](./LICENSE) file for details.
 
 ---
 
-**Note**: This is alpha software under active development. The library has extensive functionality with 343+ TypeScript files and 102 passing tests, but APIs may change between versions. Production use is recommended for non-critical applications, with stable v2.0.0 release planned for Q1 2025.
+**Note**: This is alpha software under active development. The library has extensive functionality with 343+ TypeScript files and 151 passing tests, but APIs may change between versions. Production use is recommended for non-critical applications.

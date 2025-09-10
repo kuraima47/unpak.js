@@ -1182,6 +1182,26 @@ git push origin feature/your-feature-name
 
 For detailed development phases and priorities, see [ROADMAP.md](./ROADMAP.md).
 
+## 📦 Publishing and Release
+
+For maintainers and contributors working on releases:
+
+- **[PACKAGING_AND_RELEASE.md](./docs/PACKAGING_AND_RELEASE.md)** - Complete guide for packaging and publishing to npm
+- **[RELEASE_QUICK_START.md](./docs/RELEASE_QUICK_START.md)** - Quick reference for release commands
+- **[CHANGELOG.md](./docs/CHANGELOG.md)** - Release history and breaking changes
+
+### Release Commands
+```bash
+# Patch release (bug fixes)
+npm run release:patch
+
+# Minor release (new features)
+npm run release:minor
+
+# Alpha release (development)
+npm run release:alpha
+```
+
 ## 📜 Legal Notice
 
 This library is a clean-room implementation inspired by CUE4Parse architecture but contains no proprietary code. It does not include:

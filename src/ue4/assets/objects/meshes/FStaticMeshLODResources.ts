@@ -38,6 +38,10 @@ export class FStaticMeshLODResources {
     public isLODCookedOut = false
     public inlined = false
 
+    // Additional properties for converter compatibility
+    public indices: number[] = [];
+    public numVertices: number = 0;
+
     public get skipLod(): boolean {
         return this.vertexBuffer == null
             || this.indexBuffer == null

@@ -156,6 +156,7 @@ export interface IPerformanceReport {
     cpu: {
         peak: ICPUUsage;
         average: ICPUUsage;
+        current: ICPUUsage;
         samples: ICPUUsage[];
     };
     
@@ -503,6 +504,7 @@ export class PerformanceProfiler extends EventEmitter {
             cpu: {
                 peak: this.getPeakCPU(),
                 average: this.getAverageCPU(),
+                current: this.cpuSamples[this.cpuSamples.length - 1] || this.getEmptyCPUUsage(),
                 samples: this.cpuSamples
             },
             io: {

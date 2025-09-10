@@ -15,7 +15,7 @@ import {
     VER_UE4_STATIC_MESH_STORE_NAV_COLLISION
 } from "../../versions/Versions";
 import { ParserException } from "../../../exceptions/Exceptions";
-import { Game } from "../../../index";
+import { Game } from "../../../ue4/versions/Game";
 import { EFRenderingObjectVersion, FRenderingObjectVersion } from "../../versions/FRenderingObjectVersion";
 import { FAssetArchiveWriter } from "../writer/FAssetArchiveWriter";
 import { FStaticMeshLODResources } from "../objects/meshes/FStaticMeshLODResources";

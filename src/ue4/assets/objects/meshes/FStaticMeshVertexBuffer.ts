@@ -74,4 +74,17 @@ export class FStaticMeshVertexBuffer {
         buffer.uv = uv
         return buffer
     }
+
+    /**
+     * Compatibility property to provide vertex data for converters
+     */
+    public get data(): Array<any> {
+        return this.uv.map((item, index) => ({
+            position: { x: 0, y: 0, z: 0 }, // Would need position buffer for real data
+            normal: item.normal && item.normal.length > 0 ? 
+                { x: item.normal[0].x, y: item.normal[0].y, z: item.normal[0].z } : 
+                { x: 0, y: 1, z: 0 },
+            uvs: item.uv ? item.uv.map(uv => ({ u: uv.u, v: uv.v })) : []
+        }));
+    }
 }

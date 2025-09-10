@@ -134,14 +134,14 @@ export class FStore {
         const offset = this.ansiStringOffsets[idx]
         let length = 0
         while (this.ansiStrings[offset + length] !== 0) ++length
-        return Buffer.from(this.ansiStrings, offset, length).toString("utf-8")
+        return this.ansiStrings.subarray(offset, offset + length).toString("utf-8")
     }
 
     getWideString(idx: number): string {
         const offset = this.wideStringOffsets[idx]
         var length = 0
         while (this.wideStrings[offset + length] !== 0 && this.wideStrings[offset + length + 1] !== 0) length += 2
-        return Buffer.from(this.wideStrings, offset, length).toString("utf16le")
+        return this.wideStrings.subarray(offset, offset + length).toString("utf16le")
     }
 }
 

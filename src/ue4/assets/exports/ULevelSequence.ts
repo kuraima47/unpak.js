@@ -1,7 +1,7 @@
-import { FPackageIndex } from '../objects/ObjectResource';
+import { FPackageIndex } from '../../objects/uobject/ObjectResource';
 import { UObject } from '../exports/UObject';
 import { FAssetArchive } from '../reader/FAssetArchive';
-import { UProperty } from '../objects/UProperty';
+import { UProperty } from '../../../util/decorators/UProperty';
 
 /**
  * ULevelSequence - Level sequence assets for cinematics
@@ -24,8 +24,12 @@ export class ULevelSequence extends UObject {
     @UProperty()
     public DirectorBlueprint: FPackageIndex | null = null;
 
-    constructor(Ar: FAssetArchive, validPos: number) {
-        super(Ar, validPos);
+    constructor(Ar?: FAssetArchive, validPos?: number) {
+        super();
+        if (Ar) {
+            // Initialize from archive if provided
+            // Additional initialization code would go here
+        }
     }
 
     /**

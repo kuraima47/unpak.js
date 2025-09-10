@@ -1,8 +1,8 @@
-import { FPackageIndex } from '../objects/ObjectResource';
+import { FPackageIndex } from '../../objects/uobject/ObjectResource';
 import { UObject } from '../exports/UObject';
 import { FAssetArchive } from '../reader/FAssetArchive';
-import { UProperty } from '../objects/UProperty';
-import { FSoftObjectPath } from '../objects/uobject/SoftObjectPath';
+import { UProperty } from '../../../util/decorators/UProperty';
+import { FSoftObjectPath } from '../../objects/uobject/SoftObjectPath';
 
 /**
  * UMediaPlayer - Media player assets for video/audio playback
@@ -43,8 +43,12 @@ export class UMediaPlayer extends UObject {
     @UProperty()
     public VideoOutputSampleFormat: string | null = null;
 
-    constructor(Ar: FAssetArchive, validPos: number) {
-        super(Ar, validPos);
+    constructor(Ar?: FAssetArchive, validPos?: number) {
+        super();
+        if (Ar) {
+            // Initialize from archive if provided
+            // Additional initialization code would go here
+        }
     }
 
     /**
@@ -124,8 +128,12 @@ export class UMediaPlayerSource extends UObject {
     @UProperty()
     public MediaOptions: Map<string, string> | null = null;
 
-    constructor(Ar: FAssetArchive, validPos: number) {
-        super(Ar, validPos);
+    constructor(Ar?: FAssetArchive, validPos?: number) {
+        super();
+        if (Ar) {
+            // Initialize from archive if provided
+            // Additional initialization code would go here
+        }
     }
 
     /**

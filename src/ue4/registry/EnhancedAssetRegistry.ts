@@ -1,8 +1,8 @@
-import { AssetRegistry } from "../AssetRegistry";
-import { FAssetData } from "../objects/FAssetData";
-import { FDependsNode } from "../objects/FDependsNode";
-import { FAssetPackageData } from "../objects/FAssetPackageData";
-import { FName } from "../../objects/uobject/FName";
+import { AssetRegistry } from "./AssetRegistry";
+import { FAssetData } from "./objects/FAssetData";
+import { FDependsNode } from "./objects/FDependsNode";
+import { FAssetPackageData } from "./objects/FAssetPackageData";
+import { FName } from "../objects/uobject/FName";
 
 /**
  * Enhanced Asset Registry features for Phase 8 continuation

@@ -452,12 +452,11 @@ export class FArc {
 }
 
 class ResolvedExportObject extends ResolvedObject {
-    exportIndex: number
     exportMapEntry: FExportMapEntry
     exportObject: Lazy<UObject>
 
     constructor(exportIndex: number, pkg: IoPackage) {
-        super(pkg)
+        super(pkg, exportIndex)
         this.exportIndex = exportIndex
         this.exportMapEntry = pkg.exportMap[exportIndex]
         this.exportObject = pkg.exportsLazy[exportIndex]

@@ -54,13 +54,6 @@ export class PakPackage extends Package {
     ubulk?: Buffer | null = null
 
     /**
-     * Name of package file
-     * @type {string}
-     * @public
-     */
-    fileName: string
-
-    /**
      * File provider
      * @type {?FileProvider}
      * @public

@@ -1,7 +1,7 @@
 import { FArchive } from "../../../reader/FArchive";
 import { EFRenderingObjectVersion, FRenderingObjectVersion } from "../../../versions/FRenderingObjectVersion";
 import { FArchiveWriter } from "../../../writer/FArchiveWriter";
-import { Game } from "../../../../index";
+import { Game } from "../../../../ue4/versions/Game";
 
 export class FStaticMeshSection {
     public materialIndex: number

@@ -237,6 +237,11 @@ function rgbBufferToImage(rgb: Buffer, width: number, height: number, config?: I
     return img.toBuffer("image/png", { compressionLevel: 3 })
 }
 
+/**
+ * Image smoothing quality options
+ */
+type ImageSmoothingQuality = "low" | "medium" | "high";
+
 export interface ImageConfig {
     /**
      * - Whether to use image smoothing for canvas image or not

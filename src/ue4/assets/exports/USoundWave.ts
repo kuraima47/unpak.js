@@ -282,6 +282,43 @@ export class USoundWave extends USoundBase {
     get isStreaming() {
         return this.bStreaming || this.LoadingBehavior !== ESoundWaveLoadingBehavior.ForceInline
     }
+
+    /**
+     * Get sample rate
+     * @returns {number} Sample rate
+     * @public
+     */
+    getSampleRate(): number {
+        return this.SampleRate;
+    }
+
+    /**
+     * Get number of channels
+     * @returns {number} Number of channels
+     * @public
+     */
+    getNumChannels(): number {
+        return this.NumChannels;
+    }
+
+    /**
+     * Get duration in seconds
+     * @returns {number} Duration
+     * @public
+     */
+    getDuration(): number {
+        return this.Duration || 0;
+    }
+
+    /**
+     * Get raw audio data (stub implementation)
+     * @returns {Buffer} Raw audio data
+     * @public
+     */
+    getRawAudioData(): Buffer {
+        // TODO: Implement proper raw audio data extraction
+        return Buffer.alloc(0);
+    }
 }
 
 /**

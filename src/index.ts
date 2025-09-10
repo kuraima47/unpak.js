@@ -88,6 +88,9 @@ export const VERSION = '2.0.0-alpha.1';
 export const SUPPORTED_FORMATS = ['pak', 'utoc', 'ucas'] as const;
 export const SUPPORTED_UE_VERSIONS = ['UE4.26', 'UE4.27', 'UE5.0', 'UE5.1', 'UE5.2', 'UE5.3'] as const;
 
+// Export Game class for version checking
+export { Game } from './ue4/versions/Game';
+
 /**
  * Library feature flags
  */

@@ -24,8 +24,12 @@ export class ULevelSequence extends UObject {
     @UProperty()
     public DirectorBlueprint: FPackageIndex | null = null;
 
-    constructor(Ar: FAssetArchive, validPos: number) {
-        super(Ar, validPos);
+    constructor(Ar?: FAssetArchive, validPos?: number) {
+        super();
+        if (Ar) {
+            // Initialize from archive if provided
+            // Additional initialization code would go here
+        }
     }
 
     /**

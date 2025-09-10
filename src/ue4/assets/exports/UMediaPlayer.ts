@@ -43,8 +43,12 @@ export class UMediaPlayer extends UObject {
     @UProperty()
     public VideoOutputSampleFormat: string | null = null;
 
-    constructor(Ar: FAssetArchive, validPos: number) {
-        super(Ar, validPos);
+    constructor(Ar?: FAssetArchive, validPos?: number) {
+        super();
+        if (Ar) {
+            // Initialize from archive if provided
+            // Additional initialization code would go here
+        }
     }
 
     /**
@@ -124,8 +128,12 @@ export class UMediaPlayerSource extends UObject {
     @UProperty()
     public MediaOptions: Map<string, string> | null = null;
 
-    constructor(Ar: FAssetArchive, validPos: number) {
-        super(Ar, validPos);
+    constructor(Ar?: FAssetArchive, validPos?: number) {
+        super();
+        if (Ar) {
+            // Initialize from archive if provided
+            // Additional initialization code would go here
+        }
     }
 
     /**

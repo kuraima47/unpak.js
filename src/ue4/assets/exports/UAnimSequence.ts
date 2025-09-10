@@ -5,6 +5,7 @@ import { UnrealArray } from "../../../util/UnrealArray";
 import { FVector } from "../../objects/core/math/FVector";
 import { FQuat } from "../../objects/core/math/FQuat";
 import { FTransform } from "../../objects/core/math/FTransform";
+import { FNameDummy } from "../../objects/uobject/FName";
 
 /**
  * Animation track data for a single bone
@@ -58,7 +59,8 @@ export class FFloatCurve {
     }
 
     public serialize(Ar: FAssetArchive): void {
-        Ar.writeFName(this.name);
+        const nameObj = new FNameDummy(this.name, 0);
+        Ar.writeFName(nameObj);
         Ar.writeInt32(this.keys.length);
         for (const key of this.keys) {
             Ar.writeFloat(key.time);

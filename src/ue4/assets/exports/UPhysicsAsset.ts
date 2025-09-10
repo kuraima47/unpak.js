@@ -63,7 +63,7 @@ export class FKAggregateGeom {
 export class FRigidBodyBase {
     public boneName: string = "";
     public pos: FVector = new FVector();
-    public quat: FQuat = new FQuat();
+    public quat: FQuat = new FQuat(0, 0, 0, 1);
     public bFixed: boolean = false;
     public enableCollision: boolean = true;
     public collisionReponse: number = 1; // ECR_Block

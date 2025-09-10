@@ -2,7 +2,7 @@ import { UObject } from "./UObject";
 import { FAssetArchive } from "../reader/FAssetArchive";
 import { Lazy } from "../../../util/Lazy";
 import { FVector } from "../../objects/core/math/FVector";
-import { FColor } from "../../objects/core/misc/FColor";
+import { FColor } from "../../objects/core/math/FColor";
 
 /**
  * Particle emitter data structure

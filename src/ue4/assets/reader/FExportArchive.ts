@@ -13,12 +13,6 @@ import { Game } from "../../versions/Game";
  */
 export class FExportArchive extends FAssetArchive {
     /**
-     * Buffer to read
-     * @type {Buffer}
-     * @public
-     */
-    public data!: Buffer
-    /**
      * UObject of this reader
      * @type {UObject}
      * @public

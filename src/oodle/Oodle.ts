@@ -104,7 +104,7 @@ export class Oodle {
             //const start = Date.now()
             const sourcePointer = src.subarray(srcOff || 0, (srcOff || 0) + (srcLen || src.length))
             const dstPointer = dst!.subarray(dstOff || 0, (dstOff || 0) + (dstLen as number))
-            const resultCode = this.oodleLib.OodleLZ_Decompress(
+            const resultCode = Oodle.oodleLib!.OodleLZ_Decompress(
                 sourcePointer, srcLen || src.length,
                 dstPointer, dstLen as number,
                 0, 0, INTEGER_MAX_VALUE,
@@ -139,7 +139,7 @@ export class Oodle {
         const dstLength = srcLength + 65536
         const sourcePointer = uncompressed.subarray(0, srcLength)
         const dstPointer = Buffer.allocUnsafe(dstLength)
-        const resultCode = this.oodleLib.OodleLZ_Compress(
+        const resultCode = Oodle.oodleLib!.OodleLZ_Compress(
             compressor,
             sourcePointer, srcLength,
             dstPointer, compressionLevel,
@@ -197,7 +197,7 @@ export class Oodle {
                 })
             }
         } catch (e) {
-            throw new OodleException(e)
+            throw new OodleException(e instanceof Error ? e.message : String(e))
         }
     }
 }

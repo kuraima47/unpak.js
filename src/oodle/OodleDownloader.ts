@@ -19,7 +19,7 @@ export class OodleDownloader {
      * @static
      */
     private static async lzmaGet(url: string): Promise<Buffer> {
-        return lzma.decompress((await axios.get(url, { responseType: "arraybuffer" })).data)
+        return lzma.decompress((await axios.get(url, { responseType: "arraybuffer" })).data) as Buffer
     }
 
     /**
@@ -31,10 +31,12 @@ export class OodleDownloader {
      */
     public static async download(path: string): Promise<void> {
         const index = (await this.lzmaGet(OodleDownloader.CDN_INDEX_URL)).toString()
-        let oodleUrl: string
+        let oodleUrl: string | undefined
         for (const line of index.split("\r\n")) {
-            if (line.includes(this.OODLE_FILE_NAME))
+            if (line.includes(this.OODLE_FILE_NAME)) {
                 oodleUrl = this.CDN_BASE_URL + line.split(",")[0]
+                break
+            }
         }
         if (!oodleUrl)
             throw new OodleException(`Cannot find ${this.OODLE_FILE_NAME} in CDN index.`)

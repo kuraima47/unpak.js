@@ -72,7 +72,7 @@ export * from './ue4/assets/plugins/UPlugin';
 
 // NEW: Enterprise Features (Phase 12) ✅ IMPLEMENTED
 export * from './enterprise/DatabaseIntegration';
-export * from './enterprise/MultiTenantManager';
+// Note: MultiTenantManager already exported from ./api/tenancy/MultiTenantManager above
 
 // NEW: Performance Optimization (Phase 11) ✅ IMPLEMENTED  
 export * from './performance/WorkerThreads';

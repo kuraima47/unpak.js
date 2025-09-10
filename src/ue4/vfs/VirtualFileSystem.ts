@@ -332,22 +332,9 @@ export class VirtualFileSystem {
 
     private async loadFromArchive(archive: IArchive, filePath: string): Promise<Buffer | null> {
         try {
-            const file = archive.getFile(filePath);
-            if (!file) {
-                return null;
-            }
-
-            // Simulate async loading for real archives
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    try {
-                        const data = archive.readFile(file);
-                        resolve(data);
-                    } catch (error) {
-                        resolve(null);
-                    }
-                }, 0);
-            });
+            // Use getFile directly as it already returns Promise<Buffer | null>
+            const data = await archive.getFile(filePath);
+            return data;
         } catch (error) {
             return null;
         }

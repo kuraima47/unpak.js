@@ -44,7 +44,7 @@ Based on **CUE4Parse** and **FModel** capabilities, this roadmap outlines the de
 - [x] Development tooling (ESLint, Prettier, Jest)
 
 ### Test Coverage
-- ✅ 102 tests covering all core functionality
+- ✅ 151 tests covering all core functionality
 - ✅ Buffer operations and memory efficiency
 - ✅ Error handling and edge cases
 
@@ -90,11 +90,11 @@ Based on **CUE4Parse** and **FModel** capabilities, this roadmap outlines the de
 - [x] Enum and struct property support
 
 ### Expanding Property Types 🔵
-- [x] Blueprint property support enhancement ✅ ENHANCED
-- [x] Delegate and multicast delegate properties ✅ COMPLETE
-- [x] Interface property support ✅ COMPLETE
-- [x] Enhanced array and map property handling ✅ ENHANCED
-- [x] Instanced property support ✅ ENHANCED
+- [x] Blueprint property support enhancement
+- [x] Delegate and multicast delegate properties
+- [x] Interface property support
+- [x] Enhanced array and map property handling
+- [x] Instanced property support
 
 ### Advanced Properties ⚪
 - [ ] Blueprint graph serialization
@@ -134,24 +134,23 @@ Based on **CUE4Parse** and **FModel** capabilities, this roadmap outlines the de
 - [x] USkeletalMeshComponent prep
 
 ### Expanding Asset Types 🔵
-- [x] USkeletalMesh - Rigged meshes with bones ✅ COMPLETE
-- [x] USkeletalMeshComponent - Skeletal mesh rendering component ✅ COMPLETE
-- [x] UAnimSequence - Animation sequences ✅ COMPLETE
-- [x] UPhysicsAsset - Physics collision and constraints ✅ COMPLETE
-- [x] UParticleSystem - Cascade particle effects ✅ COMPLETE
-- [x] UWwiseAudioEngine - Enhanced Wwise integration ✅ COMPLETE
-- [x] ULandscape - Terrain and heightmaps ✅ COMPLETE
-- [x] UAnimBlueprint - Animation blueprints ✅ NEW
-- [x] UFont - Font assets with character mapping ✅ NEW
-- [x] UNiagaraSystem - Niagara particle effects ✅ NEW
-- [x] UMediaSource - Video and media assets ✅ NEW
+- [x] USkeletalMesh - Rigged meshes with bones
+- [x] USkeletalMeshComponent - Skeletal mesh rendering component
+- [x] UAnimSequence - Animation sequences
+- [x] UPhysicsAsset - Physics collision and constraints
+- [x] UParticleSystem - Cascade particle effects
+- [x] UWwiseAudioEngine - Enhanced Wwise integration
+- [x] ULandscape - Terrain and heightmaps
+- [x] UAnimBlueprint - Animation blueprints
+- [x] UFont - Font assets with character mapping
+- [x] UNiagaraSystem - Niagara particle effects
+- [x] UMediaSource - Video and media assets
 
 ### Advanced Asset Types ⚪
-- [x] ULandscape - Terrain and heightmaps ✅ COMPLETE
-- [x] UMediaSource - Video and media assets ✅ NEW
-- [x] UDecalMaterial - Decal material support ✅ NEW
-- [x] UPostProcessMaterial - Post-process effects ✅ NEW
-- [ ] UFont - Font assets and glyph data
+- [x] UDecalMaterial - Decal material support
+- [x] UPostProcessMaterial - Post-process effects
+- [ ] Advanced Blueprint graph serialization
+- [ ] Custom struct serialization
 
 ---
 

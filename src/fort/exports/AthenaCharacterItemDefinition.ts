@@ -18,6 +18,6 @@ export class AthenaCharacterItemDefinition extends AthenaCosmeticItemDefinition 
     public RequiredCosmeticItems: AthenaCosmeticItemDefinition[] | null = null
     public Gender: EFortCustomGender | null = null
     @UProperty({ skipNext: 1 })
-    public FeedbackBank: FSoftObjectPath = null
+    public FeedbackBank: FSoftObjectPath | null = null
     //public Map<GameplayTag, AthenaCharacterTaggedPartsList> TaggedPartsOverride;
 }

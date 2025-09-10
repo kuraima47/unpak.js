@@ -106,8 +106,9 @@ export class Compression {
                       compressedBuffer: Buffer, compressedBufferOff: number, compressedSize: number): void {
         if (!this.handlers.size) this.init()
         const handler = this.handlers.get(formatName)
-        if (!handler)
+        if (!handler) {
             throw new Error(`Unknown compression method ${formatName}`)
+        }
         handler.decompress(uncompressedBuffer, uncompressedBufferOff,
             uncompressedSize, compressedBuffer, compressedBufferOff, compressedSize)
     }

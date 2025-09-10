@@ -345,7 +345,7 @@ export class FileProvider extends EventEmitter {
     loadGameFile(filePath: string): Package | null
 
     /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
-    loadGameFile(x?: any): Package | null {
+    loadGameFile(x?: any): Package | IoPackage | null {
         try {
             if (x instanceof GameFile) {
                 if (x.ioPackageId != null) {

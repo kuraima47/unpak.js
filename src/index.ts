@@ -53,8 +53,17 @@ export * from './api/monitoring/AssetMonitor';
 // NEW: Web Interface (Phase 12) ✅
 export * from './api/web/UnpakWebInterface';
 
+// NEW: Database Integration (Phase 12) ✅
+export * from './api/database/UnpakDatabaseProvider';
+
+// NEW: Multi-Tenant Support (Phase 12) ✅
+export * from './api/tenancy/MultiTenantManager';
+
 // Plugin support (Phase 9 start)
 export * from './ue4/assets/plugins/UPlugin';
+
+// NEW: Blueprint Plugin Support (Phase 9) ✅
+export * from './ue4/assets/plugins/BlueprintPlugin';
 
 // Enhanced asset registry (Phase 8 continuation)
 export * from './ue4/registry/EnhancedAssetRegistry';
@@ -89,6 +98,13 @@ export const FEATURES = {
   WEB_INTERFACE: true, // Phase 12 - NEW: FModel-like web interface ✅
   ENHANCED_WWISE_AUDIO: true, // Phase 7 - NEW: Advanced audio system ✅
   ENHANCED_ASSET_REGISTRY: true, // Phase 8 - NEW: Complete metadata support ✅
+  
+  // NEW: Enterprise Features (Phase 12) ✅
+  DATABASE_INTEGRATION: true, // Phase 12 - NEW: Database support for enterprise ✅
+  MULTI_TENANT_SUPPORT: true, // Phase 12 - NEW: Multi-tenant architecture ✅
+  
+  // NEW: Advanced Plugin Features (Phase 9) ✅
+  BLUEPRINT_PLUGIN_SUPPORT: true, // Phase 9 - NEW: Blueprint plugin parsing ✅
   
   // Future features
   BULK_DATA_LAZY: false, // Phase 10 - Future

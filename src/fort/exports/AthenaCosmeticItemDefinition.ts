@@ -13,21 +13,21 @@ import { UProperty } from "../../util/decorators/UProperty";
 
 export class AthenaCosmeticItemDefinition extends FortAccountItemDefinition {
     public bIsShuffleTile: boolean = false
-    public bIsOwnedByCampaignHero: boolean = null
-    public bHasMoreThanOneCharacterPartVariant: boolean = null
-    public bHideIfNotOwned: boolean = null
-    public bInitializedConfiguredDynamicInstallBundles: boolean = null
-    public bDynamicInstallBundlesError: boolean = null
-    public bDynamicInstallBundlesCancelled: boolean = null
-    public bDynamicInstallBundlesComplete: boolean = null
-    public DynamicInstallBundlesUpdateStartTime: number = null
-    public DynamicInstallBundleRequestRefCount: number = null
-    public DynamicInstallBundleRequestRetryCount: number = null
-    public VariantUnlockType: EVariantUnlockType = null
-    public PreviewPawnRotationOffset: FRotator = null
-    public FoleyLibraries: FPackageIndex[] /*FoleySoundLibrary[]*/ = null
-    public DisallowedCosmeticTags: FGameplayTagContainer = null
-    public MetaTags: FGameplayTagContainer = null
+    public bIsOwnedByCampaignHero: boolean | null = null
+    public bHasMoreThanOneCharacterPartVariant: boolean | null = null
+    public bHideIfNotOwned: boolean | null = null
+    public bInitializedConfiguredDynamicInstallBundles: boolean | null = null
+    public bDynamicInstallBundlesError: boolean | null = null
+    public bDynamicInstallBundlesCancelled: boolean | null = null
+    public bDynamicInstallBundlesComplete: boolean | null = null
+    public DynamicInstallBundlesUpdateStartTime: number | null = null
+    public DynamicInstallBundleRequestRefCount: number | null = null
+    public DynamicInstallBundleRequestRetryCount: number | null = null
+    public VariantUnlockType: EVariantUnlockType | null = null
+    public PreviewPawnRotationOffset: FRotator | null = null
+    public FoleyLibraries: FPackageIndex[] /*FoleySoundLibrary[]*/ | null = null
+    public DisallowedCosmeticTags: FGameplayTagContainer | null = null
+    public MetaTags: FGameplayTagContainer | null = null
     public VariantChannelsToNeverSendToMCP: FGameplayTag[] = null
     public ReactivePreviewDrivers: UnrealMap<CosmeticVariantInfo, FSoftObjectPath> = null
     public MaterialOverrides: AthenaCosmeticMaterialOverride[] = null

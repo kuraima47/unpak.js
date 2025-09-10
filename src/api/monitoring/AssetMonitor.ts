@@ -179,9 +179,8 @@ export class AssetMonitor extends EventEmitter {
             this.emit('directoryWatchStarted', { path: directoryPath });
 
         } catch (error: any) {
-            logger.error('Failed to watch directory', {
-                directoryPath: directoryPath,
-                error: error.message
+            logger.error('Failed to watch directory', error.message, {
+                directoryPath: directoryPath
             });
             throw error;
         }
@@ -203,10 +202,9 @@ export class AssetMonitor extends EventEmitter {
             try {
                 await this.processFileSystemEvent(eventType, filePath);
             } catch (error: any) {
-                logger.error('Error processing filesystem event', {
+                logger.error('Error processing filesystem event', error.message, {
                     eventType: eventType,
-                    filePath: filePath,
-                    error: error.message
+                    filePath: filePath
                 });
             } finally {
                 this.debounceTimers.delete(debounceKey);
@@ -262,9 +260,8 @@ export class AssetMonitor extends EventEmitter {
                 }
 
             } catch (error: any) {
-                logger.error('Failed to reload archive', {
-                    path: monitoredArchive.path,
-                    error: error.message
+                logger.error('Failed to reload archive', error.message, {
+                    path: monitoredArchive.path
                 });
 
                 this.emit('archiveReloadFailed', {
@@ -374,9 +371,8 @@ export class AssetMonitor extends EventEmitter {
             });
 
         } catch (error: any) {
-            logger.error('Failed to index archive assets', {
-                archive: monitoredArchive.path,
-                error: error.message
+            logger.error('Failed to index archive assets', error.message, {
+                archive: monitoredArchive.path
             });
         }
     }
@@ -432,9 +428,8 @@ export class AssetMonitor extends EventEmitter {
             logger.debug('Started watching archive file', { archivePath });
 
         } catch (error: any) {
-            logger.error('Failed to watch archive file', {
-                archivePath: archivePath,
-                error: error.message
+            logger.error('Failed to watch archive file', error.message, {
+                archivePath: archivePath
             });
         }
     }

@@ -15,7 +15,15 @@
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "clean": "rimraf dist",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm run build",
+    "release:patch": "bash scripts/release.sh patch",
+    "release:minor": "bash scripts/release.sh minor", 
+    "release:major": "bash scripts/release.sh major",
+    "release:alpha": "bash scripts/release.sh alpha",
+    "release:beta": "bash scripts/release.sh beta",
+    "package:check": "npm pack --dry-run",
+    "package:test": "npm pack && tar -tzf *.tgz",
+    "version:check": "npm view unpak.js versions --json"
   },
   "repository": {
     "url": "https://github.com/kuraima47/unpak.js.git",

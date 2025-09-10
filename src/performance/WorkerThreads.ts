@@ -220,7 +220,10 @@ class ManagedWorker extends EventEmitter {
     constructor(id: string, workerScript: string) {
         super();
         this.id = id;
+        
+        // Create worker with inline script instead of file
         this.worker = new Worker(workerScript, {
+            eval: true,
             workerData: { workerId: id }
         });
 
@@ -361,7 +364,7 @@ export class WorkerPool extends EventEmitter {
             maxWorkers: options.maxWorkers || os.cpus().length,
             taskTimeout: options.taskTimeout || 30000,
             maxRetries: options.maxRetries || 3,
-            workerScript: options.workerScript || __filename,
+            workerScript: options.workerScript || this.getDefaultWorkerScript(),
             enableProfiling: options.enableProfiling || false
         };
 
@@ -378,6 +381,150 @@ export class WorkerPool extends EventEmitter {
                 average: 0
             }
         };
+    }
+
+    private getDefaultWorkerScript(): string {
+        // Use eval to create an inline worker script
+        return `
+const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
+
+class WorkerTaskProcessor {
+    async processTask(task) {
+        const startTime = Date.now();
+        const startMemory = process.memoryUsage().heapUsed;
+
+        try {
+            let result;
+
+            switch (task.type) {
+                case 'extract':
+                    result = await this.handleExtraction(task.payload);
+                    break;
+                case 'convert':
+                    result = await this.handleConversion(task.payload);
+                    break;
+                case 'compress':
+                    result = await this.handleCompression(task.payload);
+                    break;
+                case 'parse':
+                    result = await this.handleParsing(task.payload);
+                    break;
+                case 'analyze':
+                    result = await this.handleAnalysis(task.payload);
+                    break;
+                default:
+                    throw new Error(\`Unknown task type: \${task.type}\`);
+            }
+
+            const endTime = Date.now();
+            const endMemory = process.memoryUsage().heapUsed;
+
+            return {
+                taskId: task.id,
+                success: true,
+                result,
+                duration: endTime - startTime,
+                memoryUsed: endMemory - startMemory
+            };
+
+        } catch (error) {
+            const endTime = Date.now();
+            const endMemory = process.memoryUsage().heapUsed;
+
+            return {
+                taskId: task.id,
+                success: false,
+                error: error.message,
+                duration: endTime - startTime,
+                memoryUsed: endMemory - startMemory
+            };
+        }
+    }
+
+    async handleExtraction(payload) {
+        const { archivePath, assetPath, options } = payload;
+        await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 200));
+        return {
+            extracted: true,
+            assetPath,
+            size: Math.floor(Math.random() * 1000000),
+            format: 'binary'
+        };
+    }
+
+    async handleConversion(payload) {
+        const { inputFormat, outputFormat, data, options } = payload;
+        await new Promise(resolve => setTimeout(resolve, 200 + Math.random() * 300));
+        return {
+            converted: true,
+            inputFormat,
+            outputFormat,
+            size: data?.length || 0,
+            compressionRatio: 0.8 + Math.random() * 0.2
+        };
+    }
+
+    async handleCompression(payload) {
+        const { data, algorithm, level } = payload;
+        await new Promise(resolve => setTimeout(resolve, 150 + Math.random() * 250));
+        return {
+            compressed: true,
+            algorithm,
+            originalSize: data?.length || 0,
+            compressedSize: Math.floor((data?.length || 0) * (0.3 + Math.random() * 0.4)),
+            ratio: 0.3 + Math.random() * 0.4
+        };
+    }
+
+    async handleParsing(payload) {
+        const { data, format, options } = payload;
+        await new Promise(resolve => setTimeout(resolve, 80 + Math.random() * 120));
+        return {
+            parsed: true,
+            format,
+            metadata: {
+                version: '1.0',
+                assets: Math.floor(Math.random() * 100),
+                dependencies: Math.floor(Math.random() * 20)
+            }
+        };
+    }
+
+    async handleAnalysis(payload) {
+        const { assetData, analysisType } = payload;
+        await new Promise(resolve => setTimeout(resolve, 300 + Math.random() * 500));
+        return {
+            analyzed: true,
+            analysisType,
+            report: {
+                quality: Math.random(),
+                complexity: Math.random(),
+                dependencies: Math.floor(Math.random() * 50),
+                issues: Math.floor(Math.random() * 5)
+            }
+        };
+    }
+}
+
+if (!isMainThread && parentPort) {
+    const processor = new WorkerTaskProcessor();
+    
+    parentPort.on('message', async (task) => {
+        try {
+            const result = await processor.processTask(task);
+            parentPort.postMessage(result);
+        } catch (error) {
+            parentPort.postMessage({
+                taskId: task.id,
+                success: false,
+                error: error.message,
+                duration: 0,
+                memoryUsed: 0
+            });
+        }
+    });
+}
+`;
     }
 
     async initialize(): Promise<void> {

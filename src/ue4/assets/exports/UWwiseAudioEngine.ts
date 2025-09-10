@@ -148,6 +148,11 @@ export class UWwiseAudioEngine extends UObject {
     // Event management
     public loadedEvents: Map<number, FWwiseEvent> = new Map();
     public playingEvents: Array<number> = [];
+
+    // Additional properties for compatibility
+    public defaultSampleRate: number = 44100;
+    public defaultBufferSize: number = 1024;
+    public compressionQuality: number = 0.8;
     public eventCallbacks: Map<number, Array<any>> = new Map();
     
     // Media management  

@@ -18,6 +18,10 @@ export interface IArchive {
   getFileInfo(path: string): IFileEntry | null;
   listFiles(pattern?: string): IFileEntry[];
   
+  // Compatibility aliases
+  getFileList?(): IFileEntry[];
+  readFile?(path: string): Promise<Buffer | null>;
+  
   // Metadata
   getVersion(): number;
   getMountPoint(): string;

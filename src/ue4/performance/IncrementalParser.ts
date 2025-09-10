@@ -143,10 +143,7 @@ export class IncrementalParser extends EventEmitter {
 
                     return result;
                 } catch (error: any) {
-                    logger.error('Error processing item', {
-                        index: context.totalIndex,
-                        error: error.message
-                    });
+                    logger.error('Error processing item', error, { index: context.totalIndex });
                     
                     if (options.failFast) {
                         throw error;
@@ -389,7 +386,7 @@ export class LargeArchiveProcessor extends IncrementalParser {
         files: string[],
         archive: any,
         processor: (filePath: string, data: Buffer, context: ProcessingContext) => Promise<T>
-    ): Promise<T[]> {
+    ): Promise<(T | null)[]> {
         return this.processIncrementally(
             files,
             async (filePath, context) => {
@@ -402,10 +399,7 @@ export class LargeArchiveProcessor extends IncrementalParser {
                     
                     return await processor(filePath, data, context);
                 } catch (error: any) {
-                    logger.error('Error processing archive file', {
-                        filePath,
-                        error: error.message
-                    });
+                    logger.error('Error processing archive file', error, { filePath });
                     throw error;
                 }
             },

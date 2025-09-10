@@ -8,16 +8,15 @@ import { VER_UE4_DEPRECATE_UMG_STYLE_ASSETS, VER_UE4_RENAME_CROUCHMOVESCHARACTER
 
 export class FDistanceFieldVolumeData {
     public distanceFieldVolume: number[] // TArray<Float16>
-    public size: FIntVector
-    public localBoundingBox: FBox
-    public meshWasClosed: Boolean
-    public builtAsIfTwoSided: Boolean
-    public meshWasPlane: Boolean
+    public size!: FIntVector
+    public localBoundingBox!: FBox
+    public meshWasClosed!: Boolean
+    public builtAsIfTwoSided!: Boolean
+    public meshWasPlane!: Boolean
     // 4.16+
-    public compressedDistanceFieldVolume: Buffer
-    public distanceMinMax: FVector2D
-
-    public constructor(Ar: FArchive = null) {
+    public compressedDistanceFieldVolume!: Buffer
+    public distanceMinMax!: FVector2D
+    public constructor(Ar: FArchive | null = null) {
         if (Ar != null) {
             if (Ar.game >= Game.GAME_UE4(16)) {
                 this.compressedDistanceFieldVolume = Ar.read(Ar.readInt32())

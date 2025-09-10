@@ -16,7 +16,7 @@ export class FTTTrackBase {
      * @type {FName}
      * @public
      */
-    public TrackName: FName = null
+    public TrackName: FName | null = null
 
     /**
      * bIsExternalCurve
@@ -36,14 +36,14 @@ export class FTTEventTrack extends FTTTrackBase {
      * @type {FName}
      * @public
      */
-    public FunctionName: FName = null
+    public FunctionName: FName | null = null
 
     /**
      * CurveKeys
      * @type {Array<UCurveFloat>}
      * @public
      */
-    public CurveKeys: UCurveFloat[] = null
+    public CurveKeys: UCurveFloat[] | null = null
 }
 
 /**
@@ -56,7 +56,7 @@ export class FTTPropertyTrack extends FTTTrackBase {
      * @type {FName}
      * @public
      */
-    public PropertyName: FName = null
+    public PropertyName: FName | null = null
 }
 
 /**
@@ -69,7 +69,7 @@ export class FTTFloatTrack extends FTTPropertyTrack {
      * @type {UCurveFloat}
      * @public
      */
-    public CurveFloat: UCurveFloat = null
+    public CurveFloat: UCurveFloat | null = null
 }
 
 /**
@@ -82,7 +82,7 @@ export class FTTVectorTrack extends FTTPropertyTrack {
      * @type {FPackageIndex}
      * @public
      */
-    public CurveVector: FPackageIndex = null
+    public CurveVector: FPackageIndex | null = null
 }
 
 /**
@@ -95,7 +95,7 @@ export class FTTLinearColorTrack extends FTTPropertyTrack {
      * @type {FPackageIndex}
      * @public
      */
-    public CurveLinearColor: FPackageIndex = null
+    public CurveLinearColor: FPackageIndex | null = null
 }
 
 /**
@@ -115,7 +115,7 @@ export class UTimelineTemplate extends UObject {
      * @type {ETimelineLengthMode}
      * @public
      */
-    public LengthMode: ETimelineLengthMode = null
+    public LengthMode: ETimelineLengthMode | null = null
 
     /**
      * bAutoPlay
@@ -150,75 +150,75 @@ export class UTimelineTemplate extends UObject {
      * @type {Array<FTTEventTrack>}
      * @public
      */
-    public EventTracks: FTTEventTrack[] = null
+    public EventTracks: FTTEventTrack[] | null = null
 
     /**
      * FloatTracks
      * @type {Array<FTTFloatTrack>}
      * @public
      */
-    public FloatTracks: FTTFloatTrack[] = null
+    public FloatTracks: FTTFloatTrack[] | null = null
 
     /**
      * VectorTracks
      * @type {Array<FTTVectorTrack>}
      * @public
      */
-    public VectorTracks: FTTVectorTrack[] = null
+    public VectorTracks: FTTVectorTrack[] | null = null
 
     /**
      * LinearColorTracks
      * @type {Array<FTTLinearColorTrack>}
      * @public
      */
-    public LinearColorTracks: FTTLinearColorTrack[] = null
+    public LinearColorTracks: FTTLinearColorTrack[] | null = null
 
     /**
      * MetaDataArray
      * @type {Array<FBPVariableMetaDataEntry>}
      * @public
      */
-    public MetaDataArray: FBPVariableMetaDataEntry[] = null
+    public MetaDataArray: FBPVariableMetaDataEntry[] | null = null
 
     /**
      * TimelineGuid
      * @type {FGuid}
      * @public
      */
-    public TimelineGuid: FGuid = null
+    public TimelineGuid: FGuid | null = null
 
     /**
      * TimelineTickGroup
      * @type {ETickingGroup}
      * @public
      */
-    public TimelineTickGroup: ETickingGroup = null
+    public TimelineTickGroup: ETickingGroup | null = null
 
     /**
      * VariableName
      * @type {FName}
      * @public
      */
-    public VariableName: FName = null
+    public VariableName: FName | null = null
 
     /**
      * DirectionPropertyName
      * @type {FName}
      * @public
      */
-    public DirectionPropertyName: FName = null
+    public DirectionPropertyName: FName | null = null
 
     /**
      * UpdateFunctionName
      * @type {FName}
      * @public
      */
-    public UpdateFunctionName: FName = null
+    public UpdateFunctionName: FName | null = null
 
     /**
      * FinishedFunctionName
      * @type {FName}
      * @public
      */
-    public FinishedFunctionName: FName = null
+    public FinishedFunctionName: FName | null = null
 }

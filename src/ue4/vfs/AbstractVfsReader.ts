@@ -5,7 +5,7 @@ import { FByteArchive } from "../reader/FByteArchive";
 
 export abstract class AbstractVfsReader {
     public path: string
-    public versions: VersionContainer
+    public versions!: VersionContainer
     public name: string
 
     protected constructor(path: string, versions: VersionContainer) {

@@ -15,28 +15,28 @@ export class ULevel_Properties extends UObject {
      * @type {FPackageIndex}
      * @public
      */
-    public /*World*/ OwningWorld: FPackageIndex = null
+    public /*World*/ OwningWorld: FPackageIndex | null = null
 
     /**
      * Model
      * @type {FPackageIndex}
      * @public
      */
-    public Model: FPackageIndex = null
+    public Model: FPackageIndex | null = null
 
     /**
      * ModelComponents
      * @type {Array<FPackageIndex>}
      * @public
      */
-    public ModelComponents: FPackageIndex[] = null
+    public ModelComponents: FPackageIndex[] | null = null
 
     /**
      * ActorCluster
      * @type {FPackageIndex}
      * @public
      */
-    public ActorCluster: FPackageIndex = null
+    public ActorCluster: FPackageIndex | null = null
 
     /**
      * NumTextureStreamingUnbuiltComponents
@@ -57,28 +57,28 @@ export class ULevel_Properties extends UObject {
      * @type {FPackageIndex}
      * @public
      */
-    public LevelScriptActor: FPackageIndex = null
+    public LevelScriptActor: FPackageIndex | null = null
 
     /**
      * NavListStart
      * @type {FPackageIndex}
      * @public
      */
-    public NavListStart: FPackageIndex = null
+    public NavListStart: FPackageIndex | null = null
 
     /**
      * NavListEnd
      * @type {FPackageIndex}
      * @public
      */
-    public NavListEnd: FPackageIndex = null
+    public NavListEnd: FPackageIndex | null = null
 
     /**
      * NavDataChunks
      * @type {Array<FPackageIndex>}
      * @public
      */
-    public NavDataChunks: FPackageIndex[] = null
+    public NavDataChunks: FPackageIndex[] | null = null
 
     /**
      * LightmapTotalSize
@@ -99,35 +99,35 @@ export class ULevel_Properties extends UObject {
      * @type {Array<FVector>}
      * @public
      */
-    public StaticNavigableGeometry: FVector[] = null
+    public StaticNavigableGeometry: FVector[] | null = null
 
     /**
      * StreamingTextureGuids
      * @type {FGuid}
      * @public
      */
-    public StreamingTextureGuids: FGuid = null
+    public StreamingTextureGuids: FGuid | null = null
 
     /**
      * LevelBuildDataId
      * @type {FGuid}
      * @public
      */
-    public LevelBuildDataId: FGuid = null
+    public LevelBuildDataId: FGuid | null = null
 
     /**
      * MapBuildData
      * @type {FPackageIndex}
      * @public
      */
-    public MapBuildData: FPackageIndex = null
+    public MapBuildData: FPackageIndex | null = null
 
     /**
      * LightBuildLevelOffset
      * @type {FIntVector}
      * @public
      */
-    public LightBuildLevelOffset: FIntVector = null
+    public LightBuildLevelOffset: FIntVector | null = null
 
     /**
      * bIsLightingScenario
@@ -162,7 +162,7 @@ export class ULevel_Properties extends UObject {
      * @type {FPackageIndex}
      * @public
      */
-    public WorldSettings: FPackageIndex = null
+    public WorldSettings: FPackageIndex | null = null
 
     /**
      * AssetUserData
@@ -170,6 +170,6 @@ export class ULevel_Properties extends UObject {
      * @public
      */
     @UProperty({ skipNext: 1 })
-    public AssetUserData: FPackageIndex[] = null
+    public AssetUserData: FPackageIndex[] | null = null
     //public DestroyedReplicatedStaticActors: FReplicatedStaticActorDestructionInfo[]
 }

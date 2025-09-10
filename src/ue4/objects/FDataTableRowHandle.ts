@@ -12,15 +12,13 @@ export class FDataTableRowHandle {
      * @type {UDataTable}
      * @public
      */
-    public DataTable: UDataTable
-
+    public DataTable!: UDataTable
     /**
      * RowName
      * @type {FName}
      * @public
      */
-    public RowName: FName
-
+    public RowName!: FName
     /**
      * Gets row
      * @returns {UObject} Row

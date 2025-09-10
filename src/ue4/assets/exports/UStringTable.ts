@@ -88,7 +88,7 @@ export class UStringTable extends UObject {
      * @returns {any} Json
      * @public
      */
-    toJson(locres: Locres = null): any {
+    toJson(locres: Locres | null = null): any {
         const obj = {}
         obj["tableNamespace"] = this.tableNamespace
         obj["entries"] = {}

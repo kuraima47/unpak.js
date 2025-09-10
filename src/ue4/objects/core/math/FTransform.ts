@@ -15,24 +15,21 @@ export class FTransform implements IStructType {
      * @public
      */
     @UProperty({ name: "rotation" })
-    public rotation: FQuat
-
+    public rotation!: FQuat
     /**
      * Translation value
      * @type {FVector}
      * @public
      */
     @UProperty({ name: "translation" })
-    public translation: FVector
-
+    public translation!: FVector
     /**
      * Scale 3D value
      * @type {FVector}
      * @public
      */
     @UProperty({ name: "Scale3D" })
-    public scale3D: FVector
-
+    public scale3D!: FVector
     /**
      * Creates an empty instance
      * @constructor

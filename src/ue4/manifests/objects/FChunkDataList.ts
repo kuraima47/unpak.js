@@ -12,8 +12,7 @@ export class FChunkDataList {
      * @type {Array<FChunkInfo>}
      * @public
      */
-    public chunkList: FChunkInfo[]
-
+    public chunkList!: FChunkInfo[]
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use

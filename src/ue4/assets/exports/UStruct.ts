@@ -17,7 +17,7 @@ export class UStruct extends UObject {
      * @type {Lazy<UStruct>}
      * @public
      */
-    superStruct: Lazy<UStruct> = null
+    superStruct: Lazy<UStruct> | null = null
 
     /**
      * Children of struct
@@ -386,7 +386,7 @@ export class FArrayProperty extends FPropertySerialized {
      * @type {?FPropertySerialized}
      * @public
      */
-    inner?: FPropertySerialized = null
+    inner?: FPropertySerialized | null = null
 
     /**
      * Deserializes this
@@ -482,14 +482,14 @@ export class FEnumProperty extends FPropertySerialized {
      * @type {FNumericProperty}
      * @public
      */
-    underlyingProp: FNumericProperty = null
+    underlyingProp: FNumericProperty | null = null
 
     /**
      * enum
      * @type {FPackageIndex}
      * @public
      */
-    enum: FPackageIndex = null
+    enum: FPackageIndex | null = null
 
     /**
      * Deserializes this
@@ -573,14 +573,14 @@ export class FMapProperty extends FPropertySerialized {
      * @type {FPropertySerialized}
      * @public
      */
-    keyProp: FPropertySerialized = null
+    keyProp: FPropertySerialized | null = null
 
     /**
      * valueProp
      * @type {FPropertySerialized}
      * @public
      */
-    valueProp: FPropertySerialized = null
+    valueProp: FPropertySerialized | null = null
 
     /**
      * Deserializes this
@@ -691,7 +691,7 @@ export class FSetProperty extends FPropertySerialized {
      * @type {FPropertySerialized}
      * @public
      */
-    elementProp: FPropertySerialized = null
+    elementProp: FPropertySerialized | null = null
 
     /**
      * Deserializes this

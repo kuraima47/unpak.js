@@ -79,7 +79,7 @@ export class GameFile {
      * @type {FIoChunkId}
      * @public
      */
-    ioChunkId?: FIoChunkId = null
+    ioChunkId?: FIoChunkId | null = null
 
     /**
      * Creates an instance
@@ -132,7 +132,7 @@ export class GameFile {
      * @type {?GameFile}
      * @public
      */
-    ubulk?: GameFile = null
+    ubulk?: GameFile | null = null
 
     /**
      * Gets extension of this file

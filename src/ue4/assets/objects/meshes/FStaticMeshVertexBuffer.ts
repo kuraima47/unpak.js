@@ -6,15 +6,14 @@ import { FStaticMeshUVItem } from "./FStaticMeshUVItem";
 import { ParserException } from "../../../../exceptions/Exceptions";
 
 export class FStaticMeshVertexBuffer {
-    public stripFlags: FStripDataFlags
+    public stripFlags!: FStripDataFlags
     public numTexCoords: number
     public stride: number
     public numVertices: number
     public useFullPrecisionUVs: boolean
     public useHighPrecisionTangentBasis: boolean
-    public uv: FStaticMeshUVItem[]
-
-    public constructor(Ar: FArchive = null) {
+    public uv!: FStaticMeshUVItem[]
+    public constructor(Ar: FArchive | null = null) {
         if (Ar != null) {
             this.stripFlags = new FStripDataFlags(Ar, VER_UE4_STATIC_SKELETAL_MESH_SERIALIZATION_FIX)
             this.numTexCoords = Ar.readInt32()

@@ -14,8 +14,7 @@ export class FMaterialCachedParameters {
      * @public
      */
     @UProperty({ arrayDim: 5 })
-    public Entries: FMaterialCachedParameterEntry[]
-
+    public Entries!: FMaterialCachedParameterEntry[]
     /**
      * Scalar values
      * @type {Array<number>}
@@ -28,8 +27,7 @@ export class FMaterialCachedParameters {
      * @type {Array<FLinearColor>}
      * @public
      */
-    public VectorValues: FLinearColor[]
-
+    public VectorValues!: FLinearColor[]
     /**
      * Texture values
      * @type {Array<FPackageIndex>}
@@ -75,15 +73,13 @@ export class FMaterialCachedParameterEntry {
      * @type {Array<FMaterialParameterInfo>}
      * @public
      */
-    public ParameterInfos: FMaterialParameterInfo[]
-
+    public ParameterInfos!: FMaterialParameterInfo[]
     /**
      * Expression guids
      * @type {Array<FGuid>}
      * @public
      */
-    public ExpressionGuids: FGuid[]
-
+    public ExpressionGuids!: FGuid[]
     /**
      * Overrides
      * @type {Array<boolean>}

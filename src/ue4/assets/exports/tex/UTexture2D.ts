@@ -67,8 +67,7 @@ export class FTexturePlatformData {
      * @type {Array<FTexture2DMipMap>}
      * @public
      */
-    public mips: FTexture2DMipMap[]
-
+    public mips!: FTexture2DMipMap[]
     /**
      * Whether virtual
      * @type {boolean}
@@ -186,8 +185,7 @@ export class FTexture2DMipMap {
      * @type {FByteBulkData}
      * @public
      */
-    public data: FByteBulkData
-
+    public data!: FByteBulkData
     /**
      * X Size
      * @type {number}
@@ -305,35 +303,35 @@ export class UTexture2D extends UTexture {
      * @type {?ETextureAddress}
      * @public
      */
-    @UProperty() public AddressX?: ETextureAddress = null
+    @UProperty() public AddressX?: ETextureAddress | null = null
 
     /**
      * Y Address
      * @type {?ETextureAddress}
      * @public
      */
-    @UProperty() public AddressY?: ETextureAddress = null
+    @UProperty() public AddressY?: ETextureAddress | null = null
 
     /**
      * Imported size
      * @type {?FIntPoint}
      * @public
      */
-    @UProperty() public ImportedSize?: FIntPoint = null
+    @UProperty() public ImportedSize?: FIntPoint | null = null
 
     /**
      * 1st flag
      * @type {FStripDataFlags}
      * @public
      */
-    public flag1: FStripDataFlags = null
+    public flag1: FStripDataFlags | null = null
 
     /**
      * 2nd flag
      * @type {FStripDataFlags}
      * @public
      */
-    public flag2: FStripDataFlags = null
+    public flag2: FStripDataFlags | null = null
 
     /**
      * Whether cooked

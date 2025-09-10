@@ -36,15 +36,13 @@ export class FSectionEvaluationData {
      * @type {FFrameNumber}
      * @public
      */
-    public ForcedTime: FFrameNumber
-
+    public ForcedTime!: FFrameNumber
     /**
      * Additional flags for evaluating this section
      * @type {ESectionEvaluationFlags}
      * @public
      */
-    public Flags: ESectionEvaluationFlags
-
+    public Flags!: ESectionEvaluationFlags
     /**
      * Creates an instance using values
      * @param {number} implIndex Impl index to use
@@ -70,8 +68,7 @@ export class FMovieSceneSegment implements IStructType {
      * @type {TRange<FFrameNumber>}
      * @public
      */
-    public range: TRange<FFrameNumber>
-
+    public range!: TRange<FFrameNumber>
     /**
      * id
      * @type {number}

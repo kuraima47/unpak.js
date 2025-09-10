@@ -13,8 +13,7 @@ export class FMovieSceneFrameRange implements IStructType {
      * @type {TRange<number>}
      * @public
      */
-    public value: TRange<number>
-
+    public value!: TRange<number>
     /**
      * Creates an instance using UE4 Reader or TRange<number>
      * @param {FArchive | TRange<number>} arg Value to use

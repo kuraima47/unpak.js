@@ -23,8 +23,7 @@ export class FExpressionInput implements IStructType {
      * @type {FName}
      * @public
      */
-    public inputName: FName
-
+    public inputName!: FName
     /**
      * mask
      * @type {number}
@@ -65,8 +64,7 @@ export class FExpressionInput implements IStructType {
      * @type {FName}
      * @public
      */
-    public expressionName: FName
-
+    public expressionName!: FName
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use
@@ -177,8 +175,7 @@ export class FMaterialInput<T> extends FExpressionInput {
      * @type {any}
      * @public
      */
-    public constant: T
-
+    public constant!: T
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use

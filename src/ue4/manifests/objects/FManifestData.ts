@@ -16,36 +16,31 @@ export class FManifestData {
      * @type {FManifestHeader}
      * @public
      */
-    public header: FManifestHeader
-
+    public header!: FManifestHeader
     /**
      * Meta
      * @type {FManifestMeta}
      * @public
      */
-    public meta: FManifestMeta
-
+    public meta!: FManifestMeta
     /**
      * Chunk data list
      * @type {FChunkDataList}
      * @public
      */
-    public chunkDataList: FChunkDataList
-
+    public chunkDataList!: FChunkDataList
     /**
      * File manifest list
      * @type {FFileManifestList}
      * @public
      */
-    public fileManifestList: FFileManifestList
-
+    public fileManifestList!: FFileManifestList
     /**
      * Custom fields
      * @type {FCustomFields}
      * @public
      */
-    public customFields: FCustomFields
-
+    public customFields!: FCustomFields
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use

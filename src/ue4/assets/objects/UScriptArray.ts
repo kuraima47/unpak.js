@@ -13,7 +13,7 @@ export class UScriptArray {
      * @type {?FPropertyTag}
      * @public
      */
-    innerTag: FPropertyTag = null
+    innerTag: FPropertyTag | null = null
 
     /**
      * Content of this array

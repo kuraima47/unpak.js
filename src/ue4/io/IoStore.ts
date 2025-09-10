@@ -291,7 +291,7 @@ export class FIoOffsetAndLength {
      * @constructor
      * @public
      */
-    constructor(Ar: FArchive = null) {
+    constructor(Ar: FArchive | null = null) {
         this.offsetAndLength = Buffer.alloc(5 + 5)
         if (Ar) Ar.readToBuffer(this.offsetAndLength)
     }
@@ -764,7 +764,7 @@ export class FIoStoreReader extends AbstractAesVfsReader {
      * @type {?Buffer}
      * @private
      */
-    private decryptionKey?: Buffer = null
+    private decryptionKey?: Buffer | null = null
 
     /**
      * containerFileHandles

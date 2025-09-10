@@ -13,8 +13,7 @@ export class FFilePackageStoreEntry {
     public exportBundleCount: number = 0
     public importedPackages: bigint[]
 
-    // public shaderMapHashes: Buffer[]
-
+    // public shaderMapHashes!: Buffer[]
     public constructor(Ar: FArchive) {
         if (Ar.game >= Game.GAME_UE5_BASE) {
             this.exportCount = Ar.readInt32()
@@ -77,14 +76,13 @@ export class FIoContainerHeader {
 
     public containerId: bigint
     public packageIds: bigint[]
-    public storeEntries: FFilePackageStoreEntry[]
+    public storeEntries!: FFilePackageStoreEntry[]
     public optionalSegmentPackageIds: bigint[] = null
-    public optionalSegmentStoreEntries: FFilePackageStoreEntry[] = null
+    public optionalSegmentStoreEntries: FFilePackageStoreEntry[] | null = null
     public redirectsNameMap = new FNameMap()
-    public localizedPackages?: FIoContainerHeaderLocalizedPackage[] = null
-    public culturePackageMap?: FCulturePackageMap = null
-    public packageRedirects: FIoContainerHeaderPackageRedirect[]
-
+    public localizedPackages?: FIoContainerHeaderLocalizedPackage[] | null = null
+    public culturePackageMap?: FCulturePackageMap | null = null
+    public packageRedirects!: FIoContainerHeaderPackageRedirect[]
     public constructor(Ar: FArchive) {
         let version = Ar.game >= Game.GAME_UE5_BASE ? EIoContainerHeaderVersion.Initial : EIoContainerHeaderVersion.BeforeVersionWasAdded
         if (version == EIoContainerHeaderVersion.Initial) {

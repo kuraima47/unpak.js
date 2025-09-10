@@ -9,8 +9,7 @@ export class FGameplayTag {
      * @type {FName}
      * @public
      */
-    public TagName: FName
-
+    public TagName!: FName
     /**
      * Creates an instance using FName
      * @param {FName} TagName Tag name to use

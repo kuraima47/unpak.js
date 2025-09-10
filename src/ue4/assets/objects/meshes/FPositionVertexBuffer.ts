@@ -3,7 +3,7 @@ import { FArchive } from "../../../reader/FArchive";
 import { ParserException } from "../../../../exceptions/Exceptions";
 
 export class FPositionVertexBuffer {
-    public verts: FVector[]
+    public verts!: FVector[]
     public stride: number
     public numVertices: number
 

@@ -15,15 +15,13 @@ export class FByteBulkData {
      * @type {FByteBulkDataHeader}
      * @public
      */
-    public header: FByteBulkDataHeader
-
+    public header!: FByteBulkDataHeader
     /**
      * Data of this FByteBulkData
      * @type {Buffer}
      * @public
      */
-    public data: Buffer
-
+    public data!: Buffer
     /**
      * Whether bulk data is loaded
      * @type {boolean}

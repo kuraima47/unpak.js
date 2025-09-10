@@ -55,21 +55,21 @@ export class PropertyType {
      * @type {?PropertyType}
      * @public
      */
-    innerType: PropertyType = null
+    innerType: PropertyType | null = null
 
     /**
      * Value type of this property
      * @type {?PropertyType}
      * @public
      */
-    valueType: PropertyType = null
+    valueType: PropertyType | null = null
 
     /**
      * Struct class of this property
      * @type {?Lazy<any>}
      * @public
      */
-    structClass: Lazy<any> = null
+    structClass: Lazy<any> | null = null
 
     /**
      * Enum class

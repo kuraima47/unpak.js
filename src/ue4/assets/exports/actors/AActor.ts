@@ -44,7 +44,7 @@ export enum ENetRole {
 }
 
 export class FTickFunction {
-    public TickGroup: ETickingGroup = null
+    public TickGroup: ETickingGroup | null = null
     public EndTickGroupETickingGroup = null
     public bTickEvenWhenPaused: boolean = null
     public bCanEverTick: boolean = null
@@ -57,7 +57,7 @@ export class FActorTickFunction extends FTickFunction {
 }
 
 export class AActor extends UObject {
-    public PrimaryActorTick: FActorTickFunction = null
+    public PrimaryActorTick: FActorTickFunction | null = null
     public bNetTemporary = null
     public bNetStartup = null
     public bOnlyRelevantToOwner = null
@@ -97,12 +97,12 @@ export class AActor extends UObject {
     public CustomTimeDilation: number = null
     //public FRepAttachment AttachmentReplication = null
     @UProperty({ skipPrevious: 1 })
-    public Owner: Lazy<AActor> = null
-    public NetDriverName: FName = null
-    public Role: ENetRole = null
-    public NetDormancy: ENetDormancy = null
-    public SpawnCollisionHandlingMethod: ESpawnActorCollisionHandlingMethod = null
-    public AutoReceiveInput: EAutoReceiveInput = null
+    public Owner: Lazy<AActor> | null = null
+    public NetDriverName: FName | null = null
+    public Role: ENetRole | null = null
+    public NetDormancy: ENetDormancy | null = null
+    public SpawnCollisionHandlingMethod: ESpawnActorCollisionHandlingMethod | null = null
+    public AutoReceiveInput: EAutoReceiveInput | null = null
     public InputPriority: number = null
     public InputComponent: FPackageIndex /*InputComponent*/ = null
     public NetCullDistanceSquared: number = null
@@ -111,28 +111,28 @@ export class AActor extends UObject {
     public MinNetUpdateFrequency: number = null
     public NetPriority: number = null
     public Instigator: FPackageIndex /*Pawn*/ = null
-    public Children: Lazy<AActor>[] = null
-    public RootComponent: Lazy<USceneComponent> = null
+    public Children: Lazy<AActor>[] | null = null
+    public RootComponent: Lazy<USceneComponent> | null = null
     public ControllingMatineeActors: FPackageIndex[] /*MatineeActor[]*/ = null
-    public Layers: FName[] = null
+    public Layers: FName[] | null = null
     public ParentComponent: FPackageIndex /*WeakObjectProperty ChildActorComponent*/ = null
-    public Tags: FName[] = null
-    public OnTakeAnyDamage: FMulticastScriptDelegate = null
-    public OnTakePointDamage: FMulticastScriptDelegate = null
-    public OnTakeRadialDamage: FMulticastScriptDelegate = null
-    public OnActorBeginOverlap: FMulticastScriptDelegate = null
-    public OnActorEndOverlap: FMulticastScriptDelegate = null
-    public OnBeginCursorOver: FMulticastScriptDelegate = null
-    public OnEndCursorOver: FMulticastScriptDelegate = null
-    public OnClicked: FMulticastScriptDelegate = null
-    public OnReleased: FMulticastScriptDelegate = null
-    public OnInputTouchBegin: FMulticastScriptDelegate = null
-    public OnInputTouchEnd: FMulticastScriptDelegate = null
-    public OnInputTouchEnter: FMulticastScriptDelegate = null
-    public OnInputTouchLeave: FMulticastScriptDelegate = null
-    public OnActorHit: FMulticastScriptDelegate = null
-    public OnDestroyed: FMulticastScriptDelegate = null
-    public OnEndPlay: FMulticastScriptDelegate = null
-    public InstanceComponents: Lazy<UActorComponent>[] = null
-    public BlueprintCreatedComponents: Lazy<UActorComponent>[] = null
+    public Tags: FName[] | null = null
+    public OnTakeAnyDamage: FMulticastScriptDelegate | null = null
+    public OnTakePointDamage: FMulticastScriptDelegate | null = null
+    public OnTakeRadialDamage: FMulticastScriptDelegate | null = null
+    public OnActorBeginOverlap: FMulticastScriptDelegate | null = null
+    public OnActorEndOverlap: FMulticastScriptDelegate | null = null
+    public OnBeginCursorOver: FMulticastScriptDelegate | null = null
+    public OnEndCursorOver: FMulticastScriptDelegate | null = null
+    public OnClicked: FMulticastScriptDelegate | null = null
+    public OnReleased: FMulticastScriptDelegate | null = null
+    public OnInputTouchBegin: FMulticastScriptDelegate | null = null
+    public OnInputTouchEnd: FMulticastScriptDelegate | null = null
+    public OnInputTouchEnter: FMulticastScriptDelegate | null = null
+    public OnInputTouchLeave: FMulticastScriptDelegate | null = null
+    public OnActorHit: FMulticastScriptDelegate | null = null
+    public OnDestroyed: FMulticastScriptDelegate | null = null
+    public OnEndPlay: FMulticastScriptDelegate | null = null
+    public InstanceComponents: Lazy<UActorComponent>[] | null = null
+    public BlueprintCreatedComponents: Lazy<UActorComponent>[] | null = null
 }

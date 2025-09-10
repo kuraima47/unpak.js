@@ -7,7 +7,7 @@ import { FArchiveWriter } from "../../writer/FArchiveWriter";
 export class FPackedNormal {
     public data: number
 
-    public constructor(Ar: FArchive = null) {
+    public constructor(Ar: FArchive | null = null) {
         if (Ar != null) {
             this.data = Ar.readUInt32()
             if (Ar.game >= Game.GAME_UE4(20))
@@ -44,7 +44,7 @@ export class FPackedRGBA16N {
     public z: number
     public w: number
 
-    public constructor(Ar: FArchive = null) {
+    public constructor(Ar: FArchive | null = null) {
         if (Ar != null) {
             this.x = Ar.readUInt16()
             this.y = Ar.readUInt16()

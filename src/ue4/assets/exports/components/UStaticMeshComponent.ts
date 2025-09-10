@@ -45,8 +45,8 @@ export class UStaticMeshComponent extends UMeshComponent {
     public PreviousLODLevel: number = null
     public MinLOD: number = null
     public SubDivisionStepSize: number = null
-    public StaticMesh: Lazy<UStaticMesh>
-    public WireframeColorOverride: FColor = null
+    public StaticMesh!: Lazy<UStaticMesh>
+    public WireframeColorOverride: FColor | null = null
     public bEvaluateWorldPositionOffset: boolean = null
     public bOverrideWireframeColor: boolean = null
     public bOverrideMinLod: boolean = null
@@ -66,6 +66,6 @@ export class UStaticMeshComponent extends UMeshComponent {
     public StreamingDistanceMultiplier: number = null
     //public List<FStaticMeshComponentLODInfo> LODData = null
     @UProperty({ skipPrevious: 1 })
-    public StreamingTextureData: FStreamingTextureBuildInfo[] = null
-    public LightmassSettings: FLightmassPrimitiveSettings = null
+    public StreamingTextureData: FStreamingTextureBuildInfo[] | null = null
+    public LightmassSettings: FLightmassPrimitiveSettings | null = null
 }

@@ -16,6 +16,7 @@
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "strictPropertyInitialization": false,
     "declaration": true,
     "declarationMap": true,
     "experimentalDecorators": true,

@@ -32,21 +32,19 @@ export class PakFileReader extends AbstractAesVfsReader {
      * @type {FArchive}
      * @public
      */
-    public Ar: FArchive
-
+    public Ar!: FArchive
     /**
      * Info about pak
      * @type {FPakInfo}
      * @public
      */
-    public pakInfo: FPakInfo
-
+    public pakInfo!: FPakInfo
     /**
      * Aes key for pak
      * @type {?Buffer}
      * @public
      */
-    public aesKey: Buffer = null
+    public aesKey: Buffer | null = null
 
     /**
      * Creates an instance
@@ -307,7 +305,7 @@ export class PakFileReader extends AbstractAesVfsReader {
         let uncompressedSize: number = null
         let size: number = null
         let encrypted: boolean = null
-        let compressionBlocks: FPakCompressedBlock[] = null
+        let compressionBlocks: FPakCompressedBlock[] | null = null
 
         const value = Ar.readUInt32()
 

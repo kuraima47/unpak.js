@@ -143,8 +143,7 @@ export class PixelFormatInfo {
     public x360AlignX: number
     public x360AlignY: number
     public float: boolean
-    public pixelFormat: PixelFormat
-
+    public pixelFormat!: PixelFormat
     constructor(
         blockSizeX: number,
         blockSizeY: number,

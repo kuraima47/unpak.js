@@ -22,7 +22,7 @@ export class FPropertyTag {
      * @type {FProperty}
      * @public
      */
-    prop: FProperty = null
+    prop: FProperty | null = null
 
     /**
      * Type of property
@@ -99,7 +99,7 @@ export class FPropertyTag {
      * @type {?FGuid}
      * @public
      */
-    structGuid?: FGuid = null
+    structGuid?: FGuid | null = null
 
     /**
      * Whether if the property has a guid or not
@@ -115,14 +115,14 @@ export class FPropertyTag {
      * @public
      * @see {hasPropertyGuid}
      */
-    propertyGuid?: FGuid = null
+    propertyGuid?: FGuid | null = null
 
     /**
      * Type data
      * @type {PropertyType}
      * @public
      */
-    typeData: PropertyType = null
+    typeData: PropertyType | null = null
 
     /**
      * Creates an instance using FName

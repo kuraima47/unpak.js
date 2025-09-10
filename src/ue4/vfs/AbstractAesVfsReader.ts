@@ -11,8 +11,8 @@ export abstract class AbstractAesVfsReader extends AbstractVfsReader {
     public abstract get encryptionKeyGuid(): FGuid
 
     public length: number = 0
-    public customEncryption?: CustomEncryption = null
-    public aesKey?: Buffer = null
+    public customEncryption?: CustomEncryption | null = null
+    public aesKey?: Buffer | null = null
 
     public abstract get isEncrypted(): boolean
 

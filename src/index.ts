@@ -70,8 +70,12 @@ export * from './ue4/assets/exports/UMediaPlayer';
 // Plugin support (Phase 9 start)
 export * from './ue4/assets/plugins/UPlugin';
 
-// NEW: Blueprint Plugin Support (Phase 9) ✅
-export * from './ue4/assets/plugins/BlueprintPlugin';
+// NEW: Enterprise Features (Phase 12) ✅ IMPLEMENTED
+export * from './enterprise/DatabaseIntegration';
+export * from './enterprise/MultiTenantManager';
+
+// NEW: Performance Optimization (Phase 11) ✅ IMPLEMENTED  
+export * from './performance/WorkerThreads';
 
 // Enhanced asset registry (Phase 8 continuation)
 export * from './ue4/registry/EnhancedAssetRegistry';

@@ -49,22 +49,19 @@ export class FRichCurveKey implements IStructType {
      * @type {ERichCurveInterpMode}
      * @public
      */
-    public interpMode: ERichCurveInterpMode
-
+    public interpMode!: ERichCurveInterpMode
     /**
      * Mode for tangents at this key
      * @type {ERichCurveTangentMode}
      * @public
      */
-    public tangentMode: ERichCurveTangentMode
-
+    public tangentMode!: ERichCurveTangentMode
     /**
      * If either tangent at this key is 'weighted'
      * @type {ERichCurveTangentWeightMode}
      * @public
      */
-    public tangentWeightMode: ERichCurveTangentWeightMode
-
+    public tangentWeightMode!: ERichCurveTangentWeightMode
     /**
      * Time at this key
      * @type {number}

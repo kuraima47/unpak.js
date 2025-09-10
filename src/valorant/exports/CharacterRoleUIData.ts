@@ -3,7 +3,7 @@ import { FText } from "../../ue4/objects/core/i18n/Text";
 import { FPackageIndex } from "../../ue4/objects/uobject/ObjectResource";
 
 export class CharacterRoleUIData extends UObject {
-    DisplayName: FText = null
-    Description: FText = null
-    DisplayIcon: FPackageIndex = null
+    DisplayName: FText | null = null
+    Description: FText | null = null
+    DisplayIcon: FPackageIndex | null = null
 }

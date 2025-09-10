@@ -127,15 +127,13 @@ export class TEvaluationTreeEntryContainer<T> {
      * @type {Array<FEntry>}
      * @public
      */
-    public entries: FEntry[]
-
+    public entries!: FEntry[]
     /**
      * items
      * @type {Array<any>}
      * @public
      */
-    public items: T[]
-
+    public items!: T[]
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use
@@ -193,8 +191,7 @@ export class FMovieSceneEvaluationTreeNodeHandle {
      * @type {FEvaluationTreeEntryHandle}
      * @public
      */
-    public childrenHandle: FEvaluationTreeEntryHandle
-
+    public childrenHandle!: FEvaluationTreeEntryHandle
     /**
      * index
      * @type {number}
@@ -252,29 +249,25 @@ export class FMovieSceneEvaluationTreeNode implements IStructType {
      * @type {TRange<number>}
      * @public
      */
-    public range: TRange<number>
-
+    public range!: TRange<number>
     /**
      * parent
      * @type {FMovieSceneEvaluationTreeNodeHandle}
      * @public
      */
-    public parent: FMovieSceneEvaluationTreeNodeHandle
-
+    public parent!: FMovieSceneEvaluationTreeNodeHandle
     /**
      * childrenId
      * @type {FEvaluationTreeEntryHandle}
      * @public
      */
-    public childrenId: FEvaluationTreeEntryHandle
-
+    public childrenId!: FEvaluationTreeEntryHandle
     /**
      * dataId
      * @type {FEvaluationTreeEntryHandle}
      * @public
      */
-    public dataId: FEvaluationTreeEntryHandle
-
+    public dataId!: FEvaluationTreeEntryHandle
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use
@@ -360,15 +353,13 @@ export class FMovieSceneEvaluationTree {
      * @type {FMovieSceneEvaluationTreeNode}
      * @public
      */
-    public rootNode: FMovieSceneEvaluationTreeNode
-
+    public rootNode!: FMovieSceneEvaluationTreeNode
     /**
      * childNodes
      * @type {TEvaluationTreeEntryContainer<FMovieSceneEvaluationTreeNode>}
      * @public
      */
-    public childNodes: TEvaluationTreeEntryContainer<FMovieSceneEvaluationTreeNode>
-
+    public childNodes!: TEvaluationTreeEntryContainer<FMovieSceneEvaluationTreeNode>
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use
@@ -426,8 +417,7 @@ export class TMovieSceneEvaluationTree<T> extends FMovieSceneEvaluationTree {
      * @type {TEvaluationTreeEntryContainer<any>}
      * @public
      */
-    public data: TEvaluationTreeEntryContainer<T>
-
+    public data!: TEvaluationTreeEntryContainer<T>
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use

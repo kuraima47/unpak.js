@@ -13,8 +13,7 @@ export class FSmartName implements IStructType {
      * @type {FName}
      * @public
      */
-    public displayName: FName
-
+    public displayName!: FName
     /**
      * Creates an instance using an UE4 Reader or FName
      * @param {FArchive | FName} arg Value to use

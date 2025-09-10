@@ -14,8 +14,7 @@ export class FNiagaraVariableBase implements IStructType {
      * @type {FName}
      * @public
      */
-    public name: FName
-
+    public name!: FName
     /**
      * typeDef
      * @type {FStructFallback}

@@ -7,22 +7,22 @@ import { UnrealMap } from "../../util/UnrealMap";
 import { FTransform } from "../../ue4/objects/core/math/FTransform";
 
 export class MarshalledVFXAuthoredData {
-    public NiagaraVFX: MarshalledVFXData[]
-    public CascadeVFX: MarshalledVFXData[]
+    public NiagaraVFX!: MarshalledVFXData[]
+    public CascadeVFX!: MarshalledVFXData[]
     public NameReplacements: UnrealMap<FName, ParameterNameMapping>;
 }
 
 export class MarshalledVFXData {
-    public ParameterGroups: FGameplayTagContainer
-    public Type: EFXType
-    public Asset: FSoftObjectPath
-    public AttachAtBone: FName
-    public RelativeOffset: FTransform
-    public EffectIdTag: FGameplayTag
+    public ParameterGroups!: FGameplayTagContainer
+    public Type!: EFXType
+    public Asset!: FSoftObjectPath
+    public AttachAtBone!: FName
+    public RelativeOffset!: FTransform
+    public EffectIdTag!: FGameplayTag
     public bAutoActivate: boolean
 }
 
 export class ParameterNameMapping {
-    public CascadeName: FName
-    public NiagaraName: FName
+    public CascadeName!: FName
+    public NiagaraName!: FName
 }

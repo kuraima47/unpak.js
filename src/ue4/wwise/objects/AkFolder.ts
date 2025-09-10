@@ -5,8 +5,7 @@ export class AkFolder {
     public readonly offset: number
     public readonly id: number
     public name: string
-    public entries: AkEntry[]
-
+    public entries!: AkEntry[]
     constructor(Ar: FArchive) {
         this.offset = Ar.readUInt32()
         this.id = Ar.readUInt32()

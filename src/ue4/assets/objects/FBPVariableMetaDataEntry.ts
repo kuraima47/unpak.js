@@ -9,8 +9,7 @@ export class FBPVariableMetaDataEntry {
      * @type {FName}
      * @public
      */
-    public DataKey: FName
-
+    public DataKey!: FName
     /**
      * Data value
      * @type {string}

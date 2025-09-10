@@ -9,12 +9,12 @@ import { ParserException } from "../../exceptions/Exceptions";
 import { AkEntry } from "./objects/AkEntry";
 
 export class WwiseReader {
-    public header: BankHeader
-    public folders: AkFolder[]
+    public header!: BankHeader
+    public folders!: AkFolder[]
     public initialization: string[]
-    public wemIndexes: DataIndex[]
-    public wemSounds: Buffer[]
-    public hierarchy: Hierarchy[]
+    public wemIndexes!: DataIndex[]
+    public wemSounds!: Buffer[]
+    public hierarchy!: Hierarchy[]
     public idToString: Collection<number, string>
     public platform: string
     public wwiseEncodedMedias: Collection<string, Buffer>

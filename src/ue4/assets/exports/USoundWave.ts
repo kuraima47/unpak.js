@@ -35,14 +35,14 @@ export class USoundWave extends USoundBase {
      * @type {ESoundwaveSampleRateSettings}
      * @public
      */
-    @UProperty() public SampleRateQuality: ESoundwaveSampleRateSettings = null
+    @UProperty() public SampleRateQuality: ESoundwaveSampleRateSettings | null = null
 
     /**
      * Sound group
      * @type {ESoundGroup}
      * @public
      */
-    @UProperty() public SoundGroup: ESoundGroup = null
+    @UProperty() public SoundGroup: ESoundGroup | null = null
 
     /**
      * Whether looped
@@ -70,7 +70,7 @@ export class USoundWave extends USoundBase {
      * @type {ESoundWaveLoadingBehavior}
      * @public
      */
-    @UProperty() public LoadingBehavior: ESoundWaveLoadingBehavior = null
+    @UProperty() public LoadingBehavior: ESoundWaveLoadingBehavior | null = null
 
     /**
      * Whether mature
@@ -112,14 +112,14 @@ export class USoundWave extends USoundBase {
      * @type {Array<FSoundWaveSpectralTimeData>}
      * @public
      */
-    @UProperty() public CookedSpectralTimeData: FSoundWaveSpectralTimeData[] = null
+    @UProperty() public CookedSpectralTimeData: FSoundWaveSpectralTimeData[] | null = null
 
     /**
      * Cooked envelope time data
      * @type {Array<FSoundWaveEnvelopeTimeData>}
      * @public
      */
-    @UProperty() public CookedEnvelopeTimeData: FSoundWaveEnvelopeTimeData[] = null
+    @UProperty() public CookedEnvelopeTimeData: FSoundWaveEnvelopeTimeData[] | null = null
 
     /**
      * Initial chunk size
@@ -175,7 +175,7 @@ export class USoundWave extends USoundBase {
      * @type {Array<FSubtitleCue>}
      * @public
      */
-    @UProperty() public Subtitles: FSubtitleCue[] = null
+    @UProperty() public Subtitles: FSubtitleCue[] | null = null
 
     /**
      * Curves
@@ -203,7 +203,7 @@ export class USoundWave extends USoundBase {
      * @type {FByteBulkData}
      * @public
      */
-    public rawData: FByteBulkData = null
+    public rawData: FByteBulkData | null = null
 
     /**
      * GUID used to uniquely identify this node so it can be found in the DDC
@@ -217,14 +217,14 @@ export class USoundWave extends USoundBase {
      * @type {FFormatContainer}
      * @public
      */
-    public compressedFormatData: FFormatContainer = null
+    public compressedFormatData: FFormatContainer | null = null
 
     /**
      * The streaming derived data for this sound on this platform
      * @type {FStreamedAudioPlatformData}
      * @public
      */
-    public runningPlatformData: FStreamedAudioPlatformData = null
+    public runningPlatformData: FStreamedAudioPlatformData | null = null
 
     /**
      * Deserializes this
@@ -339,7 +339,7 @@ class FSoundWaveSpectralTimeData {
      * @public
      */
     @UProperty()
-    public Data: FSoundWaveSpectralDataEntry[] = null
+    public Data: FSoundWaveSpectralDataEntry[] | null = null
 
     /**
      * Seconds
@@ -402,7 +402,7 @@ class FSubtitleCue {
      * @public
      */
     @UProperty()
-    public Text: FText = null
+    public Text: FText | null = null
 
     /**
      * Time
@@ -429,8 +429,7 @@ class FStreamedAudioChunk {
      * @type {FByteBulkData}
      * @public
      */
-    public data: FByteBulkData
-
+    public data!: FByteBulkData
     /**
      * Data size
      * @type {number}
@@ -516,15 +515,13 @@ class FStreamedAudioPlatformData {
      * @type {FName}
      * @public
      */
-    public audioFormat: FName
-
+    public audioFormat!: FName
     /**
      * Chunks
      * @type {Array<FStreamedAudioChunk>}
      * @public
      */
-    public chunks: FStreamedAudioChunk[]
-
+    public chunks!: FStreamedAudioChunk[]
     /**
      * Creates an instance using an UE4 Asset Reader
      * @param {FAssetArchive} Ar UE4 Reader to use

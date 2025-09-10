@@ -44,14 +44,14 @@ export class PakPackage extends Package {
      * @type {?Buffer}
      * @public
      */
-    uexp?: Buffer = null
+    uexp?: Buffer | null = null
 
     /**
      * UBULK data
      * @type {?Buffer}
      * @public
      */
-    ubulk?: Buffer = null
+    ubulk?: Buffer | null = null
 
     /**
      * Name of package file
@@ -65,7 +65,7 @@ export class PakPackage extends Package {
      * @type {?FileProvider}
      * @public
      */
-    provider?: FileProvider = null
+    provider?: FileProvider | null = null
 
     /**
      * Information about package
@@ -115,7 +115,7 @@ export class PakPackage extends Package {
      * @constructor
      * @public
      */
-    constructor(uasset: Buffer, uexp: Buffer = null, ubulk: Buffer = null, name: string, provider: FileProvider = null, versions: VersionContainer = VersionContainer.DEFAULT) {
+    constructor(uasset: Buffer, uexp: Buffer | null = null, ubulk: Buffer | null = null, name: string, provider: FileProvider | null = null, versions: VersionContainer = VersionContainer.DEFAULT) {
         super(name, provider, versions)
         this.uasset = uasset
         this.uexp = uexp
@@ -494,8 +494,7 @@ export class PakPackage extends Package {
 }
 
 class ResolvedExportObject extends ResolvedObject {
-    public export: FObjectExport
-
+    public export!: FObjectExport
     public constructor(exportIndex: number, pkg: PakPackage) {
         super(pkg, exportIndex)
         this.export = pkg.exportMap[exportIndex]
@@ -524,8 +523,7 @@ class ResolvedExportObject extends ResolvedObject {
 
 /** Fallback if we cannot resolve the export in another package */
 class ResolvedImportObject extends ResolvedObject {
-    public _import: FObjectImport
-
+    public _import!: FObjectImport
     public constructor(_import: FObjectImport, pkg: PakPackage) {
         super(pkg)
         this._import = _import

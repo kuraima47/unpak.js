@@ -25,21 +25,19 @@ export class FSimpleMemberReference {
      * @type {UObject}
      * @public
      */
-    public MemberParent: UObject
-
+    public MemberParent!: UObject
     /**
      * MemberName
      * @type {FName}
      * @public
      */
-    public MemberName: FName
-
+    public MemberName!: FName
     /**
      * MemberGuid
      * @type {FGuid}
      * @public
      */
-    public MemberGuid: FGuid
+    public MemberGuid!: FGuid
 }
 
 /**
@@ -54,15 +52,13 @@ export class UActorComponent extends UObject {
      * @public
      */
     @UProperty({ skipPrevious: 1 })
-    public ComponentTags: FName[]
-
+    public ComponentTags!: FName[]
     /**
      * AssetUserData
      * @type {Array<FPackageIndex>}
      * @public
      */
-    public AssetUserData: FPackageIndex[]
-
+    public AssetUserData!: FPackageIndex[]
     /**
      * UCSSerializationIndex
      * @type {number}
@@ -124,26 +120,23 @@ export class UActorComponent extends UObject {
      * @type {EComponentCreationMethod}
      * @public
      */
-    public CreationMethod: EComponentCreationMethod
-
+    public CreationMethod!: EComponentCreationMethod
     /**
      * OnComponentActivated
      * @type {FMulticastScriptDelegate}
      * @public
      */
-    public OnComponentActivated: FMulticastScriptDelegate
-
+    public OnComponentActivated!: FMulticastScriptDelegate
     /**
      * OnComponentDeactivated
      * @type {FMulticastScriptDelegate}
      * @public
      */
-    public OnComponentDeactivated: FMulticastScriptDelegate
-
+    public OnComponentDeactivated!: FMulticastScriptDelegate
     /**
      * UCSModifiedProperties
      * @type {Array<FSimpleMemberReference>}
      * @public
      */
-    public UCSModifiedProperties: FSimpleMemberReference[]
+    public UCSModifiedProperties!: FSimpleMemberReference[]
 }

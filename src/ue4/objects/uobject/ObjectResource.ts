@@ -33,7 +33,7 @@ export class FPackageIndex {
      * @type {Package}
      * @public
      */
-    owner: Package = null
+    owner: Package | null = null
 
     /**
      * Name

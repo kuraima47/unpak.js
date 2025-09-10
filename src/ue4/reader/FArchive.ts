@@ -17,8 +17,7 @@ export abstract class FArchive {
      * @type {VersionContainer}
      * @public
      */
-    public versions: VersionContainer
-
+    public versions!: VersionContainer
     /**
      * Game that is used with this reader
      * @type {number}

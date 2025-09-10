@@ -14,8 +14,7 @@ export class FNiagaraVariable extends FNiagaraVariableBase {
      * @type {Buffer}
      * @public
      */
-    public varData: Buffer
-
+    public varData!: Buffer
     /**
      * Creates an instance using an UE4 Asset Reader
      * @param {FAssetArchive} Ar UE4 Reader to use

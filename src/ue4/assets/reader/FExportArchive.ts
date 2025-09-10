@@ -17,22 +17,19 @@ export class FExportArchive extends FAssetArchive {
      * @type {Buffer}
      * @public
      */
-    public data: Buffer
-
+    public data!: Buffer
     /**
      * UObject of this reader
      * @type {UObject}
      * @public
      */
-    public obj: UObject
-
+    public obj!: UObject
     /**
      * I/O Package of this reader
      * @type {IoPackage}
      * @public
      */
-    public pkg: IoPackage
-
+    public pkg!: IoPackage
     /**
      * Creates an instance
      * @param {Buffer} data Buffer to read

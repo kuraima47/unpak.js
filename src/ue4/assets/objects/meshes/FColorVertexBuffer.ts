@@ -5,11 +5,10 @@ import { VER_UE4_STATIC_SKELETAL_MESH_SERIALIZATION_FIX } from "../../../version
 import { ParserException } from "../../../../exceptions/Exceptions";
 
 export class FColorVertexBuffer {
-    public stripFlags: FStripDataFlags
+    public stripFlags!: FStripDataFlags
     public stride: number
     public numVertices: number
-    public data: FColor[]
-
+    public data!: FColor[]
     public constructor(Ar: FArchive)
     public constructor(stripFlags: FStripDataFlags, stride: number, numVertices: number, data: FColor[])
     public constructor(...args) {

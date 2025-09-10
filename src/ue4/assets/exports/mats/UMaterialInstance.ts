@@ -20,15 +20,13 @@ export class FMaterialParameterInfo {
      * @type {FName}
      * @public
      */
-    public Name: FName
-
+    public Name!: FName
     /**
      * Association
      * @type {EMaterialParameterAssociation}
      * @public
      */
-    public Association: EMaterialParameterAssociation
-
+    public Association!: EMaterialParameterAssociation
     /**
      * Index
      * @type {number}
@@ -56,8 +54,7 @@ export class FScalarParameterValue {
      * @type {FMaterialParameterInfo}
      * @public
      */
-    public ParameterInfo: FMaterialParameterInfo
-
+    public ParameterInfo!: FMaterialParameterInfo
     /**
      * ParameterValue
      * @type {number}
@@ -70,7 +67,7 @@ export class FScalarParameterValue {
      * @type {FGuid}
      * @public
      */
-    public ExpressionGUID: FGuid
+    public ExpressionGUID!: FGuid
 }
 
 /**
@@ -82,21 +79,19 @@ export class FVectorParameterValue {
      * @type {FMaterialParameterInfo}
      * @public
      */
-    public ParameterInfo: FMaterialParameterInfo
-
+    public ParameterInfo!: FMaterialParameterInfo
     /**
      * ParameterValue
      * @type {FLinearColor}
      * @public
      */
-    public ParameterValue: FLinearColor
-
+    public ParameterValue!: FLinearColor
     /**
      * ExpressionGUID
      * @type {FGuid}
      * @public
      */
-    public ExpressionGUID: FGuid
+    public ExpressionGUID!: FGuid
 }
 
 /**
@@ -108,21 +103,19 @@ export class FTextureParameterValue {
      * @type {FMaterialParameterInfo}
      * @public
      */
-    public ParameterInfo: FMaterialParameterInfo
-
+    public ParameterInfo!: FMaterialParameterInfo
     /**
      * ParameterValue
      * @type {Lazy<UTexture>}
      * @public
      */
-    public ParameterValue: Lazy<UTexture>
-
+    public ParameterValue!: Lazy<UTexture>
     /**
      * ExpressionGUID
      * @type {FGuid}
      * @public
      */
-    public ExpressionGUID: FGuid
+    public ExpressionGUID!: FGuid
 }
 
 /**
@@ -134,8 +127,7 @@ export class FRuntimeVirtualTextureParameterValue {
      * @type {FMaterialParameterInfo}
      * @public
      */
-    public ParameterInfo: FMaterialParameterInfo
-
+    public ParameterInfo!: FMaterialParameterInfo
     /**
      * ParameterValue
      * @type {FPackageIndex}
@@ -148,7 +140,7 @@ export class FRuntimeVirtualTextureParameterValue {
      * @type {FGuid}
      * @public
      */
-    public ExpressionGUID: FGuid
+    public ExpressionGUID!: FGuid
 }
 
 /**
@@ -160,8 +152,7 @@ export class FFontParameterValue {
      * @type {FMaterialParameterInfo}
      * @public
      */
-    public ParameterInfo: FMaterialParameterInfo
-
+    public ParameterInfo!: FMaterialParameterInfo
     /**
      * FontValue
      * @type {FPackageIndex}
@@ -181,7 +172,7 @@ export class FFontParameterValue {
      * @type {FGuid}
      * @public
      */
-    public ExpressionGUID: FGuid
+    public ExpressionGUID!: FGuid
 }
 
 /**
@@ -256,15 +247,13 @@ export class FMaterialInstanceBasePropertyOverrides {
      * @type {EBlendMode}
      * @public
      */
-    public BlendMode: EBlendMode
-
+    public BlendMode!: EBlendMode
     /**
      * ShadingModel
      * @type {EMaterialShadingModel}
      * @public
      */
-    public ShadingModel: EMaterialShadingModel
-
+    public ShadingModel!: EMaterialShadingModel
     /**
      * OpacityMaskClipValue
      * @type {number}
@@ -274,16 +263,16 @@ export class FMaterialInstanceBasePropertyOverrides {
 }
 
 export class FStaticParameterSet {
-    public StaticSwitchParameters: FStaticSwitchParameter[]
-    public StaticComponentMaskParameters: FStaticComponentMaskParameter[]
-    public TerrainLayerWeightParameters: FStaticTerrainLayerWeightParameter
-    public MaterialLayersParameters: FStaticMaterialLayersParameter
+    public StaticSwitchParameters!: FStaticSwitchParameter[]
+    public StaticComponentMaskParameters!: FStaticComponentMaskParameter[]
+    public TerrainLayerWeightParameters!: FStaticTerrainLayerWeightParameter
+    public MaterialLayersParameters!: FStaticMaterialLayersParameter
 }
 
 export class FStaticParameterBase {
-    public ParameterInfo: FMaterialParameterInfo
+    public ParameterInfo!: FMaterialParameterInfo
     public bOverride: boolean
-    public ExpressionGUID: FGuid
+    public ExpressionGUID!: FGuid
 }
 
 export class FStaticSwitchParameter extends FStaticParameterBase {
@@ -303,14 +292,14 @@ export class FStaticTerrainLayerWeightParameter extends FStaticParameterBase {
 }
 
 export class FMaterialLayersFunctions {
-    public Layers: FPackageIndex[]
-    public Blends: FPackageIndex[]
+    public Layers!: FPackageIndex[]
+    public Blends!: FPackageIndex[]
     public LayerStates: boolean[]
     public KeyString: string
 }
 
 export class FStaticMaterialLayersParameter extends FStaticParameterBase {
-    public Value: FMaterialLayersFunctions
+    public Value!: FMaterialLayersFunctions
 }
 
 /**
@@ -321,16 +310,16 @@ export class UMaterialInstance extends UMaterialInterface {
     public PhysMaterial: FPackageIndex /*PhysicalMaterial*/ = null
     @UProperty({ arrayDim: 8 })
     public PhysicalMaterialMap: FPackageIndex[] /*PhysicalMaterial[]*/ = null
-    public Parent: Lazy<UMaterialInterface> = null
+    public Parent: Lazy<UMaterialInterface> | null = null
     public bHasStaticPermutationResource: boolean = null
     public bOverrideSubsurfaceProfile: boolean = null
-    public ScalarParameterValues: FScalarParameterValue[] = null
-    public VectorParameterValues: FVectorParameterValue[] = null
-    public TextureParameterValues: FTextureParameterValue[] = null
-    public RuntimeVirtualTextureParameterValues: FRuntimeVirtualTextureParameterValue[] = null
-    public FontParameterValues: FFontParameterValue[] = null
-    public BasePropertyOverrides: FMaterialInstanceBasePropertyOverrides = null
-    public StaticParameters: FStaticParameterSet = null
-    public CachedLayerParameters: FMaterialCachedParameters = null
-    public CachedReferencedTextures: Lazy<UObject>[] = null
+    public ScalarParameterValues: FScalarParameterValue[] | null = null
+    public VectorParameterValues: FVectorParameterValue[] | null = null
+    public TextureParameterValues: FTextureParameterValue[] | null = null
+    public RuntimeVirtualTextureParameterValues: FRuntimeVirtualTextureParameterValue[] | null = null
+    public FontParameterValues: FFontParameterValue[] | null = null
+    public BasePropertyOverrides: FMaterialInstanceBasePropertyOverrides | null = null
+    public StaticParameters: FStaticParameterSet | null = null
+    public CachedLayerParameters: FMaterialCachedParameters | null = null
+    public CachedReferencedTextures: Lazy<UObject>[] | null = null
 }

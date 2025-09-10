@@ -26,7 +26,7 @@ export abstract class Package extends UObject {
      * @type {FileProvider}
      * @public
      */
-    provider?: FileProvider = null
+    provider?: FileProvider | null = null
 
     /**
      * Game which is used
@@ -187,7 +187,7 @@ export interface IJson {
  * Resolved Object
  */
 export abstract class ResolvedObject {
-    public pkg: Package
+    public pkg!: Package
     public exportIndex: number
 
     protected constructor(pkg: Package, exportIndex: number = -1) {
@@ -244,8 +244,7 @@ export abstract class ResolvedObject {
 }
 
 export class ResolvedLoadedObject extends ResolvedObject {
-    public obj: UObject
-
+    public obj!: UObject
     public constructor(obj: UObject) {
         super(obj instanceof Package ? obj : obj.owner)
         this.obj = obj

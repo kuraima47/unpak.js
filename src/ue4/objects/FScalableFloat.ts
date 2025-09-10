@@ -20,14 +20,14 @@ export class FScalableFloat {
      * @public
      */
     @UProperty({ name: "Curve" })
-    public curve?: FCurveTableRowHandle = null
+    public curve?: FCurveTableRowHandle | null = null
 
     /**
      * Cached direct pointer to the RealCurve we should evaluate
      * @type {?FRealCurve}
      * @private
      */
-    private finalCurve?: FRealCurve = null
+    private finalCurve?: FRealCurve | null = null
 
     /**
      * Returns the scaled value at a given level

@@ -103,4 +103,28 @@ export class UAkMediaAssetData extends UObject {
             dataChunks: this.dataChunks.map(chunk => chunk.toJson())
         }
     }
+
+    /**
+     * Get raw audio data (stub implementation)
+     * @returns {Buffer} Raw audio data
+     * @public
+     */
+    getRawAudioData(): Buffer {
+        // TODO: Implement proper raw audio data extraction from dataChunks
+        return Buffer.alloc(0);
+    }
+
+    /**
+     * Get media info (stub implementation)
+     * @returns {any} Media info
+     * @public
+     */
+    getMediaInfo(): any {
+        // TODO: Implement proper media info extraction
+        return {
+            isStreamed: this.isStreamed,
+            useDeviceMemory: this.useDeviceMemory,
+            chunks: this.dataChunks.length
+        };
+    }
 }

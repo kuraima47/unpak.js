@@ -299,4 +299,34 @@ export class UWwiseAudioEngine extends UObject {
                this.events.length > 0 &&
                this.supportedLanguages.length > 0;
     }
+
+    /**
+     * Get audio settings (stub implementation)
+     * @returns {any} Audio settings
+     * @public
+     */
+    getAudioSettings(): any {
+        // TODO: Implement proper audio settings extraction
+        return {
+            sampleRate: this.defaultSampleRate,
+            bufferSize: this.defaultBufferSize,
+            quality: this.compressionQuality,
+            streamingSettings: this.streamingSettings,
+            supportedLanguages: this.supportedLanguages
+        };
+    }
+
+    /**
+     * Get audio events (stub implementation)  
+     * @returns {Map<string, any>} Audio events
+     * @public
+     */
+    getAudioEvents(): Map<string, any> {
+        // TODO: Implement proper audio events extraction
+        const eventMap = new Map<string, any>();
+        this.events.forEach(event => {
+            eventMap.set(event.eventName, event);
+        });
+        return eventMap;
+    }
 }

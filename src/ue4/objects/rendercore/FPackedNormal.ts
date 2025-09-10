@@ -35,6 +35,34 @@ export class FPackedNormal {
         packed.data = data
         return packed
     }
+
+    /**
+     * Unpack x component
+     */
+    public get x(): number {
+        return ((this.data & 0xFF) - 127.5) / 127.5;
+    }
+
+    /**
+     * Unpack y component  
+     */
+    public get y(): number {
+        return (((this.data >> 8) & 0xFF) - 127.5) / 127.5;
+    }
+
+    /**
+     * Unpack z component
+     */
+    public get z(): number {
+        return (((this.data >> 16) & 0xFF) - 127.5) / 127.5;
+    }
+
+    /**
+     * Convert to vector
+     */
+    public toVector(): FVector {
+        return new FVector(this.x, this.y, this.z);
+    }
 }
 
 /** A vector, quantized and packed into 32-bits. */

@@ -99,7 +99,7 @@ export class EnhancedWwiseConverter {
                 // For OGG, we would need an OGG encoder
                 // This is a placeholder for OGG conversion
                 console.warn("OGG conversion not implemented yet");
-                return audioData;
+                return audioData.buffer.slice(audioData.byteOffset, audioData.byteOffset + audioData.byteLength) as ArrayBuffer;
             }
 
             return null;
@@ -471,7 +471,7 @@ export class EnhancedWwiseConverter {
 
         // For web, prioritize OGG Vorbis for best compression/quality ratio
         if (format === 'OGG') {
-            return this.compressToOGG(audioData, quality);
+            return this.compressToOGG(audioData.buffer.slice(audioData.byteOffset, audioData.byteOffset + audioData.byteLength) as ArrayBuffer, quality);
         }
         
         // Fallback to WAV for immediate compatibility
@@ -489,12 +489,12 @@ export class EnhancedWwiseConverter {
 
         // For mobile, use AAC for iOS and OGG for Android
         if (format === 'AAC') {
-            return this.compressToAAC(audioData, quality);
+            return this.compressToAAC(audioData.buffer.slice(audioData.byteOffset, audioData.byteOffset + audioData.byteLength) as ArrayBuffer, quality);
         } else if (format === 'OGG') {
-            return this.compressToOGG(audioData, quality);
+            return this.compressToOGG(audioData.buffer.slice(audioData.byteOffset, audioData.byteOffset + audioData.byteLength) as ArrayBuffer, quality);
         }
         
-        return audioData;
+        return audioData.buffer.slice(audioData.byteOffset, audioData.byteOffset + audioData.byteLength) as ArrayBuffer;
     }
 
     private static convertToDesktopAudio(asset: UAkMediaAssetData | USoundWave, format: string, quality: string): ArrayBuffer | null {
@@ -511,7 +511,7 @@ export class EnhancedWwiseConverter {
             return this.convertWwiseToWAV(asset as UAkMediaAssetData);
         }
         
-        return audioData;
+        return audioData.buffer.slice(audioData.byteOffset, audioData.byteOffset + audioData.byteLength) as ArrayBuffer;
     }
 
     // Compression implementation methods (placeholders for actual codec integration)

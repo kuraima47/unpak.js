@@ -66,10 +66,10 @@ function decodeBC3Block(bin: BufferStream) {
     }
     let indexBlock1 = Buffer.alloc(3)
     bin.read(indexBlock1)
-    indexBlock1 = getBC3Indices(indexBlock1)
+    indexBlock1 = getBC3Indices(indexBlock1) as Buffer<ArrayBuffer>
     let indexBlock2 = Buffer.alloc(3)
     bin.read(indexBlock2)
-    indexBlock2 = getBC3Indices(indexBlock2)
+    indexBlock2 = getBC3Indices(indexBlock2) as Buffer<ArrayBuffer>
     const bytes = Buffer.alloc(16)
     for (let i = 0; i < 8; ++i) {
         const blockValue = indexBlock1[i]

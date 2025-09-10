@@ -46,6 +46,7 @@
     "@types/lzma-native": "^4.0.4",
     "@types/node": "^18.19.124",
     "@types/sprintf-js": "^1.1.4",
+    "@types/stream-buffers": "^3.0.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.50.0",

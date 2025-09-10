@@ -1,21 +1,21 @@
-import { FArchive } from "../ue4/reader/FArchive";
-import { FArchiveWriter } from "../ue4/writer/FArchiveWriter";
+import { FArchive } from '../ue4/reader/FArchive';
+import { FArchiveWriter } from '../ue4/writer/FArchiveWriter';
 
 /**
  * Creates a parser exception
  * @extends {Error}
  */
 export class ParserException extends Error {
-    /**
-     * Creates an instance
-     * @param {string} message Message to use
-     * @param {FArchive | FArchiveWriter | null} Ar Archive for additional info
-     * @constructor
-     * @public
-     */
-    constructor(message: string, Ar?: FArchive | FArchiveWriter) {
-        super(message + (Ar ? ("\n" + Ar.printError()) : ""))
-    }
+  /**
+   * Creates an instance
+   * @param {string} message Message to use
+   * @param {FArchive | FArchiveWriter | null} Ar Archive for additional info
+   * @constructor
+   * @public
+   */
+  constructor(message: string, Ar?: FArchive | FArchiveWriter) {
+    super(message + (Ar ? '\n' + Ar.printError() : ''));
+  }
 }
 
 /**
@@ -23,15 +23,15 @@ export class ParserException extends Error {
  * @extends {Error}
  */
 export class InvalidAesKeyException extends ParserException {
-    /**
-     * Creates an instance
-     * @param {string} message Message to use
-     * @constructor
-     * @public
-     */
-    constructor(message: string) {
-        super(message)
-    }
+  /**
+   * Creates an instance
+   * @param {string} message Message to use
+   * @constructor
+   * @public
+   */
+  constructor(message: string) {
+    super(message);
+  }
 }
 
 /**
@@ -39,15 +39,15 @@ export class InvalidAesKeyException extends ParserException {
  * @extends {Error}
  */
 export class MissingSchemaException extends ParserException {
-    /**
-     * Creates an instance
-     * @param {string} message Message to use
-     * @constructor
-     * @public
-     */
-    constructor(message: string) {
-        super(message)
-    }
+  /**
+   * Creates an instance
+   * @param {string} message Message to use
+   * @constructor
+   * @public
+   */
+  constructor(message: string) {
+    super(message);
+  }
 }
 
 /**
@@ -55,14 +55,14 @@ export class MissingSchemaException extends ParserException {
  * @extends {Error}
  */
 export class UnknownPropertyException extends ParserException {
-    /**
-     * Creates an instance
-     * @param {string} message Message to use
-     * @param {FArchive} Ar FArchive for additional info
-     * @constructor
-     * @public
-     */
-    constructor(message: string, Ar: FArchive) {
-        super(message, Ar)
-    }
+  /**
+   * Creates an instance
+   * @param {string} message Message to use
+   * @param {FArchive} Ar FArchive for additional info
+   * @constructor
+   * @public
+   */
+  constructor(message: string, Ar: FArchive) {
+    super(message, Ar);
+  }
 }

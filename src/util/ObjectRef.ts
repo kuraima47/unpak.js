@@ -1,14 +1,14 @@
 export class ObjectRef<T> {
-    element: T
+  element: T;
 
-    constructor(element?: T) {
-        this.element = element
-    }
+  constructor(element?: T) {
+    this.element = element;
+  }
 
-    static ref<T>(element: T) {
-        return new ObjectRef<T>(element)
-    }
+  static ref<T>(element: T) {
+    return new ObjectRef<T>(element);
+  }
 }
 
-export type FloatRef = ObjectRef<number>
-export type IntRef = ObjectRef<number>
+export type FloatRef = ObjectRef<number>;
+export type IntRef = ObjectRef<number>;

@@ -9,14 +9,14 @@ export interface IKeyProvider {
    * @returns Promise resolving to the key buffer, or null if not found
    */
   getKey(guid: string): Promise<Buffer | null>;
-  
+
   /**
    * Check if a key is available for the given GUID
    * @param guid The key identifier
    * @returns Promise resolving to true if key is available
    */
   hasKey(guid: string): Promise<boolean>;
-  
+
   /**
    * Add a key to the provider
    * @param guid The key identifier
@@ -38,7 +38,7 @@ export interface ICryptoProvider {
    * @returns Promise resolving to decrypted data
    */
   decryptAES(data: Buffer, key: Buffer, mode: AESMode, iv?: Buffer): Promise<Buffer>;
-  
+
   /**
    * Test if a key is valid for the given encrypted data
    * @param data Sample encrypted data
@@ -67,17 +67,17 @@ export interface IKeyManager {
    * Add a key provider to the manager
    */
   addProvider(provider: IKeyProvider): void;
-  
+
   /**
    * Get a key for the given GUID, checking all providers
    */
   getKey(guid: string): Promise<Buffer | null>;
-  
+
   /**
    * Submit a key directly to the manager
    */
   submitKey(guid: string, key: string | Buffer): Promise<void>;
-  
+
   /**
    * Clear all cached keys
    */

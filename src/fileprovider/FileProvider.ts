@@ -1,820 +1,831 @@
-import { Game, Ue4Version } from "../ue4/versions/Game";
-import { GameFile } from "../ue4/pak/GameFile";
-import { Package } from "../ue4/assets/Package";
-import { TypeMappingsProvider } from "../ue4/assets/mappings/TypeMappingsProvider";
-import { ReflectionTypeMappingsProvider } from "../ue4/assets/mappings/ReflectionTypeMappingsProvider";
-import { Locres } from "../ue4/locres/Locres";
-import { FnLanguage, valueOfLanguageCode } from "../ue4/locres/FnLanguage";
-import { AssetRegistry } from "../ue4/registry/AssetRegistry";
-import { createIoChunkId, EIoChunkType, EIoChunkType5, FIoChunkId, FIoStoreEnvironment } from "../ue4/io/IoDispatcher";
-import { IoPackage } from "../ue4/assets/IoPackage";
-import { UnrealMap } from "../util/UnrealMap";
-import { PakPackage } from "../ue4/assets/PakPackage";
-import { FName } from "../ue4/objects/uobject/FName";
-import { PakFileReader } from "../ue4/pak/PakFileReader";
-import { EIoStoreTocReadOptions, FIoStoreReader } from "../ue4/io/IoStore";
-import { FGuid } from "../ue4/objects/core/misc/Guid";
-import { FPackageStore } from "../ue4/asyncloading2/FPackageStore";
-import fs from "fs";
-import { InvalidAesKeyException, ParserException } from "../exceptions/Exceptions";
-import { Aes } from "../encryption/aes/Aes";
-import { Lazy } from "../util/Lazy";
-import { Collection } from "@discordjs/collection";
-import EventEmitter from "events";
-import { ObjectTypeRegistry } from "../ue4/assets/ObjectTypeRegistry";
-import { UObject } from "../ue4/assets/exports/UObject";
-import { FSoftObjectPath } from "../ue4/objects/uobject/SoftObjectPath";
-import { createFPackageId } from "../ue4/objects/uobject/FPackageId";
-import { Oodle } from "../oodle/Oodle";
-import { Config, IConfig } from "../Config";
-import { Utils } from "../util/Utils";
-import { VersionContainer } from "../ue4/versions/VersionContainer";
-import { AbstractAesVfsReader, CustomEncryption } from "../ue4/vfs/AbstractAesVfsReader";
+import { Game, Ue4Version } from '../ue4/versions/Game';
+import { GameFile } from '../ue4/pak/GameFile';
+import { Package } from '../ue4/assets/Package';
+import { TypeMappingsProvider } from '../ue4/assets/mappings/TypeMappingsProvider';
+import { ReflectionTypeMappingsProvider } from '../ue4/assets/mappings/ReflectionTypeMappingsProvider';
+import { Locres } from '../ue4/locres/Locres';
+import { FnLanguage, valueOfLanguageCode } from '../ue4/locres/FnLanguage';
+import { AssetRegistry } from '../ue4/registry/AssetRegistry';
+import {
+  createIoChunkId,
+  EIoChunkType,
+  EIoChunkType5,
+  FIoChunkId,
+  FIoStoreEnvironment,
+} from '../ue4/io/IoDispatcher';
+import { IoPackage } from '../ue4/assets/IoPackage';
+import { UnrealMap } from '../util/UnrealMap';
+import { PakPackage } from '../ue4/assets/PakPackage';
+import { FName } from '../ue4/objects/uobject/FName';
+import { PakFileReader } from '../ue4/pak/PakFileReader';
+import { EIoStoreTocReadOptions, FIoStoreReader } from '../ue4/io/IoStore';
+import { FGuid } from '../ue4/objects/core/misc/Guid';
+import { FPackageStore } from '../ue4/asyncloading2/FPackageStore';
+import fs from 'fs';
+import { InvalidAesKeyException, ParserException } from '../exceptions/Exceptions';
+import { Aes } from '../encryption/aes/Aes';
+import { Lazy } from '../util/Lazy';
+import { Collection } from '@discordjs/collection';
+import EventEmitter from 'events';
+import { ObjectTypeRegistry } from '../ue4/assets/ObjectTypeRegistry';
+import { UObject } from '../ue4/assets/exports/UObject';
+import { FSoftObjectPath } from '../ue4/objects/uobject/SoftObjectPath';
+import { createFPackageId } from '../ue4/objects/uobject/FPackageId';
+import { Oodle } from '../oodle/Oodle';
+import { Config, IConfig } from '../Config';
+import { Utils } from '../util/Utils';
+import { VersionContainer } from '../ue4/versions/VersionContainer';
+import { AbstractAesVfsReader, CustomEncryption } from '../ue4/vfs/AbstractAesVfsReader';
 
 /**
  * The main hub for interacting with ue4 assets
  * @extends {EventEmitter}
  */
 export class FileProvider extends EventEmitter {
-    /**
-     * Path to paks folder
-     * @type {string}
-     * @public
-     */
-    folder: string
+  /**
+   * Path to paks folder
+   * @type {string}
+   * @public
+   */
+  folder: string;
 
-    /**
-     * Version container
-     * @type {VersionContainer}
-     * @public
-     */
-    versions: VersionContainer
+  /**
+   * Version container
+   * @type {VersionContainer}
+   * @public
+   */
+  versions: VersionContainer;
 
-    /**
-     * Current used game
-     * @type {number}
-     * @public
-     */
-    public get game(): number {
-        return this.versions.game
+  /**
+   * Current used game
+   * @type {number}
+   * @public
+   */
+  public get game(): number {
+    return this.versions.game;
+  }
+
+  public set game(v: number) {
+    this.versions.game = v;
+  }
+
+  /**
+   * Current used version
+   * @type {number}
+   * @public
+   */
+  public get ver(): number {
+    return this.versions.ver;
+  }
+
+  public set ver(v: number) {
+    this.versions.ver = v;
+  }
+
+  /**
+   * Whether global data is loaded or not
+   * @type {boolean}
+   * @protected
+   */
+  protected globalDataLoaded = false;
+
+  /**
+   * Type mappings to use
+   * @type {TypeMappingsProvider}
+   * @public
+   */
+  mappingsProvider: TypeMappingsProvider = new ReflectionTypeMappingsProvider();
+
+  /**
+   * Non I/O store files in current instance
+   * @type {Collection<string, GameFile>}
+   * @public
+   */
+  files = new Collection<string, GameFile>();
+
+  /**
+   * Non mounted paks
+   * @type {Array<PakFileReader>}
+   * @public
+   */
+  unloadedPaks = new Array<AbstractAesVfsReader>();
+
+  /**
+   * Mounted paks
+   * @type {Array<PakFileReader>}
+   * @public
+   */
+  mountedPaks = new Array<AbstractAesVfsReader>();
+
+  /**
+   * AES keys required for readers
+   * @see {unloadedPaks}
+   * @type {Array<FGuid>}
+   * @public
+   */
+  requiredKeys = new Array<FGuid>();
+
+  /**
+   * Custom Encryption
+   * @type {?CustomEncryption}
+   * @public
+   */
+  customEncryption?: CustomEncryption = undefined;
+
+  /**
+   * Stored AES keys
+   * @type {UnrealMap<FGuid, Buffer>}
+   * @public
+   */
+  keys = new UnrealMap<FGuid, Buffer>();
+
+  /**
+   * Global package store (used in e.g fortnite, handles I/O file entries)
+   * @type {Lazy<FPackageStore>}
+   * @public
+   */
+  globalPackageStore = new Lazy(() => new FPackageStore(this));
+
+  /**
+   * Local files
+   * @type {Set<string>}
+   * @public
+   */
+  localFiles = new Set<string>();
+
+  /**
+   * Whether to read io store toc directory index
+   * Set to 0 to skip reading directory index
+   * @type {EIoStoreTocReadOptions}
+   * @public
+   */
+  ioStoreTocReadOptions = EIoStoreTocReadOptions.ReadAll;
+
+  /**
+   * Creates a new instance of the file provider
+   * @param {string} folder Path to pak folder
+   * @param {?VersionContainer} versions Version containers
+   * @param {?Config} config Configurations for the lib
+   * @public
+   */
+  constructor(folder: string, versions?: VersionContainer, config?: IConfig);
+
+  /**
+   * Creates a new instance of the file provider
+   * @param {string} folder Path to pak folder
+   * @param {?Ue4Version} game Used game
+   * @param {?TypeMappingsProvider} mappingsProvider Type mappings provider to use
+   * @param {?Config} config Configurations for the lib
+   * @public
+   */
+  constructor(
+    folder: string,
+    game?: Ue4Version,
+    mappingsProvider?: TypeMappingsProvider,
+    config?: IConfig,
+  );
+
+  constructor(...args: any[]) {
+    super();
+
+    const folder = args[0];
+    if (folder == null) throw new SyntaxError("Missing parameter 'folder'.");
+    this.folder = folder;
+
+    const ver = args[1];
+    if (ver != null) {
+      if (ver instanceof Ue4Version) this.versions = new VersionContainer(ver.game);
+      else this.versions = ver;
+    } else {
+      this.versions = VersionContainer.DEFAULT;
     }
 
-    public set game(v: number) {
-        this.versions.game = v
+    const mapOrConf = args[2];
+    if (mapOrConf != null) {
+      if (mapOrConf instanceof TypeMappingsProvider) this.mappingsProvider = mapOrConf;
+      else {
+        this.mappingsProvider = new ReflectionTypeMappingsProvider();
+        Config.GDebug = mapOrConf.GDebug;
+        Config.GExportArchiveCheckDummyName = mapOrConf.GExportArchiveCheckDummyName;
+        Config.GFatalUnknownProperty = mapOrConf.GFatalUnknownProperty;
+        Config.GSuppressMissingSchemaErrors = mapOrConf.GSuppressMissingSchemaErrors;
+        Config.GUseLocalTypeRegistry = mapOrConf.GUseLocalTypeRegistry;
+      }
+    } else {
+      this.mappingsProvider = new ReflectionTypeMappingsProvider();
     }
 
-    /**
-     * Current used version
-     * @type {number}
-     * @public
-     */
-    public get ver(): number {
-        return this.versions.ver
+    const conf_2 = args[3];
+    if (conf_2 != null) {
+      Config.GDebug = conf_2.GDebug;
+      Config.GExportArchiveCheckDummyName = conf_2.GExportArchiveCheckDummyName;
+      Config.GFatalUnknownProperty = conf_2.GFatalUnknownProperty;
+      Config.GSuppressMissingSchemaErrors = conf_2.GSuppressMissingSchemaErrors;
+      Config.GUseLocalTypeRegistry = conf_2.GUseLocalTypeRegistry;
     }
 
-    public set ver(v: number) {
-        this.versions.ver = v
-    }
+    if (this.game >= Game.GAME_UE4(26)) Oodle.ensureLib();
+  }
 
-    /**
-     * Whether global data is loaded or not
-     * @type {boolean}
-     * @protected
-     */
-    protected globalDataLoaded = false
+  /**
+   * Gets stored AES keys as strings
+   * @type {UnrealMap<FGuid, string>}
+   * @public
+   */
+  get keysStr(): UnrealMap<FGuid, string> {
+    return this.keys.mapValues(it => '0x' + it.toString('hex'));
+  }
 
-    /**
-     * Type mappings to use
-     * @type {TypeMappingsProvider}
-     * @public
-     */
-    mappingsProvider: TypeMappingsProvider = new ReflectionTypeMappingsProvider()
+  /**
+   * Submits an aes key to mount
+   * @param {FGuid} guid
+   * @param {Buffer} key
+   * @returns {Promise<void>}
+   * @public
+   */
+  submitKey(guid: FGuid, key: Buffer | string) {
+    return Buffer.isBuffer(key)
+      ? this.submitKeys(new UnrealMap<FGuid, Buffer>().set(guid, key))
+      : this.submitKeysStr(new UnrealMap<FGuid, string>().set(guid, key));
+  }
 
-    /**
-     * Non I/O store files in current instance
-     * @type {Collection<string, GameFile>}
-     * @public
-     */
-    files = new Collection<string, GameFile>()
+  /**
+   * Submits aes key strings to mount
+   * @param {UnrealMap<FGuid, string>} keys
+   * @returns {Promise<void>}
+   * @public
+   */
+  submitKeysStr(keys: UnrealMap<FGuid, string>) {
+    return this.submitKeys(keys.mapValues(it => Aes.parseKey(it)));
+  }
 
-    /**
-     * Non mounted paks
-     * @type {Array<PakFileReader>}
-     * @public
-     */
-    unloadedPaks = new Array<AbstractAesVfsReader>()
+  /**
+   * Submits aes key strings to mount
+   * @param {UnrealMap<FGuid, string>} keys
+   * @returns {Promise<void>}
+   * @public
+   */
+  async submitKeys(keys: UnrealMap<FGuid, Buffer>) {
+    return await this.submitKeysAsync(keys);
+  }
 
-    /**
-     * Mounted paks
-     * @type {Array<PakFileReader>}
-     * @public
-     */
-    mountedPaks = new Array<AbstractAesVfsReader>()
+  /**
+   * Filters unloaded paks that match the provided guid
+   * @param {FGuid} guid Guid to look for
+   * @returns {Array<AbstractAesVfsReader>} Readers that matched the guid
+   * @public
+   */
+  unloadedPaksByGuid(guid: FGuid) {
+    return this.unloadedPaks.filter(it => it.encryptionKeyGuid.equals(guid));
+  }
 
-    /**
-     * AES keys required for readers
-     * @see {unloadedPaks}
-     * @type {Array<FGuid>}
-     * @public
-     */
-    requiredKeys = new Array<FGuid>()
-
-    /**
-     * Custom Encryption
-     * @type {?CustomEncryption}
-     * @public
-     */
-    customEncryption?: CustomEncryption = undefined
-
-    /**
-     * Stored AES keys
-     * @type {UnrealMap<FGuid, Buffer>}
-     * @public
-     */
-    keys = new UnrealMap<FGuid, Buffer>()
-
-    /**
-     * Global package store (used in e.g fortnite, handles I/O file entries)
-     * @type {Lazy<FPackageStore>}
-     * @public
-     */
-    globalPackageStore = new Lazy(() => new FPackageStore(this))
-
-    /**
-     * Local files
-     * @type {Set<string>}
-     * @public
-     */
-    localFiles = new Set<string>()
-
-    /**
-     * Whether to read io store toc directory index
-     * Set to 0 to skip reading directory index
-     * @type {EIoStoreTocReadOptions}
-     * @public
-     */
-    ioStoreTocReadOptions = EIoStoreTocReadOptions.ReadAll
-
-
-    /**
-     * Creates a new instance of the file provider
-     * @param {string} folder Path to pak folder
-     * @param {?VersionContainer} versions Version containers
-     * @param {?Config} config Configurations for the lib
-     * @public
-     */
-    constructor(folder: string, versions?: VersionContainer, config?: IConfig)
-
-    /**
-     * Creates a new instance of the file provider
-     * @param {string} folder Path to pak folder
-     * @param {?Ue4Version} game Used game
-     * @param {?TypeMappingsProvider} mappingsProvider Type mappings provider to use
-     * @param {?Config} config Configurations for the lib
-     * @public
-     */
-    constructor(folder: string, game?: Ue4Version, mappingsProvider?: TypeMappingsProvider, config?: IConfig)
-
-    constructor(...args: any[]) {
-        super()
-
-        const folder = args[0]
-        if (folder == null)
-            throw new SyntaxError("Missing parameter 'folder'.")
-        this.folder = folder
-
-        const ver = args[1]
-        if (ver != null) {
-            if (ver instanceof Ue4Version)
-                this.versions = new VersionContainer(ver.game)
-            else this.versions = ver
-        } else {
-            this.versions = VersionContainer.DEFAULT
-        }
-
-        const mapOrConf = args[2]
-        if (mapOrConf != null) {
-            if (mapOrConf instanceof TypeMappingsProvider)
-                this.mappingsProvider = mapOrConf
-            else {
-                this.mappingsProvider = new ReflectionTypeMappingsProvider()
-                Config.GDebug = mapOrConf.GDebug
-                Config.GExportArchiveCheckDummyName = mapOrConf.GExportArchiveCheckDummyName
-                Config.GFatalUnknownProperty = mapOrConf.GFatalUnknownProperty
-                Config.GSuppressMissingSchemaErrors = mapOrConf.GSuppressMissingSchemaErrors
-                Config.GUseLocalTypeRegistry = mapOrConf.GUseLocalTypeRegistry
-            }
-        } else {
-            this.mappingsProvider = new ReflectionTypeMappingsProvider()
-        }
-
-        const conf_2 = args[3]
-        if (conf_2 != null) {
-            Config.GDebug = conf_2.GDebug
-            Config.GExportArchiveCheckDummyName = conf_2.GExportArchiveCheckDummyName
-            Config.GFatalUnknownProperty = conf_2.GFatalUnknownProperty
-            Config.GSuppressMissingSchemaErrors = conf_2.GSuppressMissingSchemaErrors
-            Config.GUseLocalTypeRegistry = conf_2.GUseLocalTypeRegistry
-        }
-
-        if (this.game >= Game.GAME_UE4(26))
-            Oodle.ensureLib()
-    }
-
-    /**
-     * Gets stored AES keys as strings
-     * @type {UnrealMap<FGuid, string>}
-     * @public
-     */
-    get keysStr(): UnrealMap<FGuid, string> {
-        return this.keys.mapValues(it => "0x" + it.toString("hex"))
-    }
-
-    /**
-     * Submits an aes key to mount
-     * @param {FGuid} guid
-     * @param {Buffer} key
-     * @returns {Promise<void>}
-     * @public
-     */
-    submitKey(guid: FGuid, key: Buffer | string) {
-        return Buffer.isBuffer(key) ?
-            this.submitKeys(new UnrealMap<FGuid, Buffer>().set(guid, key)) :
-            this.submitKeysStr(new UnrealMap<FGuid, string>().set(guid, key))
-    }
-
-    /**
-     * Submits aes key strings to mount
-     * @param {UnrealMap<FGuid, string>} keys
-     * @returns {Promise<void>}
-     * @public
-     */
-    submitKeysStr(keys: UnrealMap<FGuid, string>) {
-        return this.submitKeys(keys.mapValues(it => Aes.parseKey(it)))
-    }
-
-    /**
-     * Submits aes key strings to mount
-     * @param {UnrealMap<FGuid, string>} keys
-     * @returns {Promise<void>}
-     * @public
-     */
-    async submitKeys(keys: UnrealMap<FGuid, Buffer>) {
-        return await this.submitKeysAsync(keys)
-    }
-
-    /**
-     * Filters unloaded paks that match the provided guid
-     * @param {FGuid} guid Guid to look for
-     * @returns {Array<AbstractAesVfsReader>} Readers that matched the guid
-     * @public
-     */
-    unloadedPaksByGuid(guid: FGuid) {
-        return this.unloadedPaks.filter(it => it.encryptionKeyGuid.equals(guid))
-    }
-
-    /**
-     * Submits keys asynchronously
-     * @param {UnrealMap<FGuid, Buffer>} newKeys Keys to submit
-     * @returns {Promise<void>}
-     * @public
-     */
-    async submitKeysAsync(newKeys: UnrealMap<FGuid, Buffer>) {
-        for (const [guid, key] of newKeys) {
-            this.keys.set(guid, key)
-            for (const reader of this.unloadedPaksByGuid(guid)) {
-                try {
-                    reader.aesKey = key
-                    this.mount(reader)
-                    this.unloadedPaks = this.unloadedPaks.filter(v => v !== reader)
-                    this.requiredKeys = this.requiredKeys.filter(v => !v.equals(guid))
-                } catch (e) {
-                    if (e instanceof InvalidAesKeyException) {
-                        this.keys.delete(guid)
-                    } else {
-                        console.warn(`Uncaught error while loading pak file ${reader.path.substring(reader.path.lastIndexOf("/") + 1)}`, e)
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Name of the game that is loaded by the provider
-     * @type {string}
-     * @public
-     */
-    get gameName(): string {
-        const first = Array.from(this.files.keys())[0]
-        const subStr = first ? first.substring(0, first.indexOf("/")) : ""
-        return subStr.endsWith("game") ? subStr.substring(0, first.indexOf("game")) : ""
-    }
-
-    /**
-     * Searches for a game file by its path
-     * @param {string} filePath The path to search for
-     * @returns {?GameFile} The game file or null if it wasn't found
-     * @public
-     */
-    findGameFile(filePath: string): GameFile | undefined {
-        return this.files.get(this.fixPath(filePath))
-    }
-
-    /**
-     * Loads a UE4 package
-     * @param {GameFile} file The game file to load
-     * @returns {?Package} The parsed package or null if the file was not an ue4 package (.uasset)
-     * @public
-     */
-    loadGameFile(file: GameFile): Package
-
-    /**
-     * Loads a UE4 package from I/O Store by package ID
-     * @param {bigint} packageId The package ID to load
-     * @returns {?IoPackage} The parsed package or null if not found
-     * @public
-     */
-    loadGameFile(packageId: bigint): IoPackage | null
-
-    /**
-     * Searches for the game file and then load its contained package
-     * @param {string} filePath The path to search for
-     * @returns {?Package} The parsed package or null if the path was not found or the found game file was not an ue4 package (.uasset)
-     * @public
-     */
-    loadGameFile(filePath: string): Package | null
-
-    /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
-    loadGameFile(x?: any): Package | IoPackage | null {
+  /**
+   * Submits keys asynchronously
+   * @param {UnrealMap<FGuid, Buffer>} newKeys Keys to submit
+   * @returns {Promise<void>}
+   * @public
+   */
+  async submitKeysAsync(newKeys: UnrealMap<FGuid, Buffer>) {
+    for (const [guid, key] of newKeys) {
+      this.keys.set(guid, key);
+      for (const reader of this.unloadedPaksByGuid(guid)) {
         try {
-            if (x instanceof GameFile) {
-                if (x.ioPackageId != null) {
-                    const result = this.loadGameFile(x.ioPackageId);
-                    return result as Package;
-                }
-                if (!x.isUE4Package() || !x.hasUexp())
-                    throw new Error("The provided file is not a package file")
-                const uasset = this.saveGameFile(x)
-                const uexp = this.saveGameFile(x.uexp)
-                const ubulk = x.hasUbulk() ? this.saveGameFile(x.ubulk!) : undefined
-                return new PakPackage(uasset, uexp, ubulk, x.path, this, this.versions)
-            } else if (typeof x === "string") {
-                const path = this.fixPath(x)
-                const gameFile = this.findGameFile(path)
-                if (gameFile)
-                    return this.loadGameFile(gameFile)
-                // try load from IoStore
-                if (this.globalDataLoaded) {
-                    const name = this.compactFilePath(x)
-                    const packageId = createFPackageId(FName.dummy(name))
-                    try {
-                        const ioFile = this.loadGameFile(packageId)
-                        if (ioFile)
-                            return ioFile as Package
-                    } catch (e) {
-                        console.error(e)
-                        console.error(`Failed to load package ${path}`)
-                    }
-                }
-                // try load from file system
-                if (!path.endsWith(".uasset") && !path.endsWith(".umap"))
-                    return null
-                const uasset = this.saveGameFile(path)
-                if (!uasset)
-                    return null
-                const uexp = this.saveGameFile(path.substring(0, path.lastIndexOf(".")) + ".uexp")
-                if (!uexp)
-                    return null
-                const ubulk = this.saveGameFile(path.substring(0, path.lastIndexOf(".")) + ".ubulk")
-                return new PakPackage(uasset, uexp, ubulk, path, this, this.versions)
-            } else {
-                const storeEntry = this.globalPackageStore.value?.findStoreEntry(x)
-                if (storeEntry == null)
-                    return null
-                const chunkType = this.game >= Game.GAME_UE5_BASE ? EIoChunkType5.ExportBundleData : EIoChunkType.ExportBundleData
-                const ioBuffer = this.saveChunk(createIoChunkId(x, 0, chunkType))
-                return new IoPackage(ioBuffer, x, storeEntry, this.globalPackageStore.value!, this, this.versions) as Package
-            }
+          reader.aesKey = key;
+          this.mount(reader);
+          this.unloadedPaks = this.unloadedPaks.filter(v => v !== reader);
+          this.requiredKeys = this.requiredKeys.filter(v => !v.equals(guid));
         } catch (e) {
-            console.error(`Failed to load package ${x?.toString() || 'unknown'}`)
-            console.error(e)
+          if (e instanceof InvalidAesKeyException) {
+            this.keys.delete(guid);
+          } else {
+            console.warn(
+              `Uncaught error while loading pak file ${reader.path.substring(reader.path.lastIndexOf('/') + 1)}`,
+              e,
+            );
+          }
         }
-        return null
+      }
+    }
+  }
+
+  /**
+   * Name of the game that is loaded by the provider
+   * @type {string}
+   * @public
+   */
+  get gameName(): string {
+    const first = Array.from(this.files.keys())[0];
+    const subStr = first ? first.substring(0, first.indexOf('/')) : '';
+    return subStr.endsWith('game') ? subStr.substring(0, first.indexOf('game')) : '';
+  }
+
+  /**
+   * Searches for a game file by its path
+   * @param {string} filePath The path to search for
+   * @returns {?GameFile} The game file or null if it wasn't found
+   * @public
+   */
+  findGameFile(filePath: string): GameFile | undefined {
+    return this.files.get(this.fixPath(filePath));
+  }
+
+  /**
+   * Loads a UE4 package
+   * @param {GameFile} file The game file to load
+   * @returns {?Package} The parsed package or null if the file was not an ue4 package (.uasset)
+   * @public
+   */
+  loadGameFile(file: GameFile): Package;
+
+  /**
+   * Loads a UE4 package from I/O Store by package ID
+   * @param {bigint} packageId The package ID to load
+   * @returns {?IoPackage} The parsed package or null if not found
+   * @public
+   */
+  loadGameFile(packageId: bigint): IoPackage | null;
+
+  /**
+   * Searches for the game file and then load its contained package
+   * @param {string} filePath The path to search for
+   * @returns {?Package} The parsed package or null if the path was not found or the found game file was not an ue4 package (.uasset)
+   * @public
+   */
+  loadGameFile(filePath: string): Package | null;
+
+  /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
+  loadGameFile(x?: any): Package | IoPackage | null {
+    try {
+      if (x instanceof GameFile) {
+        if (x.ioPackageId != null) {
+          const result = this.loadGameFile(x.ioPackageId);
+          return result as Package;
+        }
+        if (!x.isUE4Package() || !x.hasUexp())
+          throw new Error('The provided file is not a package file');
+        const uasset = this.saveGameFile(x);
+        const uexp = this.saveGameFile(x.uexp);
+        const ubulk = x.hasUbulk() ? this.saveGameFile(x.ubulk!) : undefined;
+        return new PakPackage(uasset, uexp, ubulk, x.path, this, this.versions);
+      } else if (typeof x === 'string') {
+        const path = this.fixPath(x);
+        const gameFile = this.findGameFile(path);
+        if (gameFile) return this.loadGameFile(gameFile);
+        // try load from IoStore
+        if (this.globalDataLoaded) {
+          const name = this.compactFilePath(x);
+          const packageId = createFPackageId(FName.dummy(name));
+          try {
+            const ioFile = this.loadGameFile(packageId);
+            if (ioFile) return ioFile as Package;
+          } catch (e) {
+            console.error(e);
+            console.error(`Failed to load package ${path}`);
+          }
+        }
+        // try load from file system
+        if (!path.endsWith('.uasset') && !path.endsWith('.umap')) return null;
+        const uasset = this.saveGameFile(path);
+        if (!uasset) return null;
+        const uexp = this.saveGameFile(path.substring(0, path.lastIndexOf('.')) + '.uexp');
+        if (!uexp) return null;
+        const ubulk = this.saveGameFile(path.substring(0, path.lastIndexOf('.')) + '.ubulk');
+        return new PakPackage(uasset, uexp, ubulk, path, this, this.versions);
+      } else {
+        const storeEntry = this.globalPackageStore.value?.findStoreEntry(x);
+        if (storeEntry == null) return null;
+        const chunkType =
+          this.game >= Game.GAME_UE5_BASE
+            ? EIoChunkType5.ExportBundleData
+            : EIoChunkType.ExportBundleData;
+        const ioBuffer = this.saveChunk(createIoChunkId(x, 0, chunkType));
+        return new IoPackage(
+          ioBuffer,
+          x,
+          storeEntry,
+          this.globalPackageStore.value!,
+          this,
+          this.versions,
+        ) as Package;
+      }
+    } catch (e) {
+      console.error(`Failed to load package ${x?.toString() || 'unknown'}`);
+      console.error(e);
+    }
+    return null;
+  }
+
+  /**
+   * Loads an ue4 object
+   * @param {string} objectPath Path to the object
+   * @returns {?UObject} The object that matched your args or null
+   * @public
+   */
+  loadObject<T extends UObject>(objectPath: string | FSoftObjectPath): T | null {
+    if (objectPath == null || objectPath === 'None') return null;
+    let packagePath: string = objectPath as any;
+    if (objectPath instanceof FSoftObjectPath) {
+      packagePath = objectPath.assetPathName.text;
     }
 
-    /**
-     * Loads an ue4 object
-     * @param {string} objectPath Path to the object
-     * @returns {?UObject} The object that matched your args or null
-     * @public
-     */
-    loadObject<T extends UObject>(objectPath: string | FSoftObjectPath): T | null {
-        if (objectPath == null || objectPath === "None") return null;
-        let packagePath: string = objectPath as any
-        if (objectPath instanceof FSoftObjectPath) {
-            packagePath = objectPath.assetPathName.text
-        }
-
-        let objectName: string
-        const dotIndex = packagePath.indexOf(".")
-        if (dotIndex === -1) {
-            objectName = packagePath.substring(packagePath.lastIndexOf("/") + 1)
-        } else {
-            objectName = packagePath.substring(dotIndex + 1)
-            packagePath = packagePath.substring(0, dotIndex)
-        }
-
-        const pkg = this.loadGameFile(packagePath) // TODO allow reading umaps via this route, currently fixPath() only appends .uasset. EDIT(2020-12-15): This works with IoStore assets, but not PAK assets.
-        return pkg?.findObjectByName(objectName)?.value as T
+    let objectName: string;
+    const dotIndex = packagePath.indexOf('.');
+    if (dotIndex === -1) {
+      objectName = packagePath.substring(packagePath.lastIndexOf('/') + 1);
+    } else {
+      objectName = packagePath.substring(dotIndex + 1);
+      packagePath = packagePath.substring(0, dotIndex);
     }
 
-    /**
-     * Searches for the game file and then load its contained locres
-     * @param {string} filePath The path to search for
-     * @returns {?Locres} The parsed package or null if the path was not found or the found game file was not an ue4 package (.uasset)
-     * @public
-     */
-    loadLocres(filePath: string): Locres
+    const pkg = this.loadGameFile(packagePath); // TODO allow reading umaps via this route, currently fixPath() only appends .uasset. EDIT(2020-12-15): This works with IoStore assets, but not PAK assets.
+    return pkg?.findObjectByName(objectName)?.value as T;
+  }
 
-    /**
-     * Loads a UE4 Locres file
-     * @param {string} file The game file to load
-     * @returns {?Locres} The parsed locres or null if the file was not an ue4 locres (.locres)
-     * @public
-     */
-    loadLocres(file: GameFile): Locres
+  /**
+   * Searches for the game file and then load its contained locres
+   * @param {string} filePath The path to search for
+   * @returns {?Locres} The parsed package or null if the path was not found or the found game file was not an ue4 package (.uasset)
+   * @public
+   */
+  loadLocres(filePath: string): Locres;
 
-    /**
-     * Loads a UE4 Locres file
-     * @param {FnLanguage} ln Language to load
-     * @returns {?Locres} The parsed locres or null if not found
-     * @public
-     */
-    loadLocres(ln: FnLanguage): Locres | null
+  /**
+   * Loads a UE4 Locres file
+   * @param {string} file The game file to load
+   * @returns {?Locres} The parsed locres or null if the file was not an ue4 locres (.locres)
+   * @public
+   */
+  loadLocres(file: GameFile): Locres;
 
-    /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
-    loadLocres(x?: any): Locres | null {
-        try {
-            if (x instanceof GameFile) {
-                if (!x.isLocres())
-                    return null
-                const locres = this.saveGameFile(x)
-                return new Locres(locres, x.path, this.getLocresLanguageByPath(x.path))
-            } else if (typeof x === "string") {
-                // basically String.replaceAll() but it doesnt exist in js yet lol
-                const langKey = x.toUpperCase().split("-").join("_") as keyof typeof FnLanguage;
-                if (FnLanguage[langKey] != null) {
-                    const files = this.files
-                        .filter(it => {
-                            const path = it.path.toLowerCase()
-                            return path.startsWith(`${this.gameName}Game/Content/Localization`.toLowerCase())
-                                && path.includes(`/${x}/`.toLowerCase())
-                                && path.endsWith(".locres")
-                        })
-                    if (!files.size) return null
-                    let first: Locres | null = null
-                    for (const file of files.values()) {
-                        try {
-                            const f = first
-                            if (f == null) {
-                                first = this.loadLocres(file)
-                            } else {
-                                const locres = this.loadLocres(file)
-                                if (locres && first) {
-                                    locres.mergeInto(first)
-                                }
-                            }
-                        } catch (e) {
-                            console.error(`Failed to locres file ${file.getName()}`)
-                            console.error(e)
-                        }
-                    }
-                    return first
-                } else {
-                    const path = this.fixPath(x)
-                    const gameFile = this.findGameFile(path)
-                    if (gameFile)
-                        return this.loadLocres(gameFile)
-                    if (!path.endsWith(".locres"))
-                        return null
-                    const locres = this.saveGameFile(path)
-                    if (!locres)
-                        return null
-                    return new Locres(locres, path, this.getLocresLanguageByPath(x))
-                }
-            }
-        } catch (e) {
-            console.error(`Failed to load locres ${x instanceof GameFile ? x.path : x}`)
-            console.error(e)
-        }
-        return null
-    }
+  /**
+   * Loads a UE4 Locres file
+   * @param {FnLanguage} ln Language to load
+   * @returns {?Locres} The parsed locres or null if not found
+   * @public
+   */
+  loadLocres(ln: FnLanguage): Locres | null;
 
-    /**
-     * Gets a locres language by path
-     * @param {string} filePath Path to the locres file
-     * @returns {FnLanguage} The locres language
-     * @public
-     */
-    getLocresLanguageByPath(filePath: string): FnLanguage {
-        return valueOfLanguageCode(Utils.takeWhileStr(
-            filePath.split(new RegExp("Localization/(.*?)/"))[2],
-            (it) => it !== "/")
-        )
-    }
-
-    /**
-     * Searches for the game file and then loads a UE4 AssetRegistry file
-     * @param {string} filePath The path to search for
-     * @returns {?AssetRegistry} The parsed asset registry or null
-     * @public
-     */
-    loadAssetRegistry(filePath: string): AssetRegistry
-
-    /**
-     * Loads a UE4 AssetRegistry file
-     * @param {string} file The game file to load
-     * @returns {?AssetRegistry} The parsed asset registry or null
-     * @public
-     */
-    loadAssetRegistry(file: GameFile): AssetRegistry | null
-
-    /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
-    loadAssetRegistry(x: any): AssetRegistry | null {
-        try {
-            if (x instanceof GameFile) {
-                if (!x.isAssetRegistry())
-                    return null
-                const locres = this.saveGameFile(x)
-                return new AssetRegistry(locres, x.path)
-            } else {
-                const path = this.fixPath(x)
-                const gameFile = this.findGameFile(x)
-                if (gameFile)
-                    return this.loadAssetRegistry(gameFile)
-                if (!path.endsWith(".bin"))
-                    return null
-                const locres = this.saveGameFile(path)
-                return locres ? new AssetRegistry(locres, path) : null
-            }
-        } catch (e) {
-            console.error(e)
-            console.error(`Failed to load asset registry ${x instanceof GameFile ? x.path : x}`)
-        }
-        return null
-    }
-
-    /**
-     * Searches for the game file and then saves all parts of this package
-     * @param {string} filePath The path to search for
-     * @returns {?Collection<string, Buffer>} A map with the files name as key and data as value or null
-     * @public
-     */
-    savePackage(filePath: string): Collection<string, Buffer>
-
-    /**
-     * Saves all parts of this package
-     * @param {GameFile} file The game file to save
-     * @returns {?Collection<string, Buffer>} A map with the files name as key and data as value
-     */
-    savePackage(file: GameFile): Collection<string, Buffer>
-
-    /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
-    savePackage(x: any) {
-        if (x instanceof GameFile) {
-            const map = new Collection<string, Buffer>()
+  /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
+  loadLocres(x?: any): Locres | null {
+    try {
+      if (x instanceof GameFile) {
+        if (!x.isLocres()) return null;
+        const locres = this.saveGameFile(x);
+        return new Locres(locres, x.path, this.getLocresLanguageByPath(x.path));
+      } else if (typeof x === 'string') {
+        // basically String.replaceAll() but it doesnt exist in js yet lol
+        const langKey = x.toUpperCase().split('-').join('_') as keyof typeof FnLanguage;
+        if (FnLanguage[langKey] != null) {
+          const files = this.files.filter(it => {
+            const path = it.path.toLowerCase();
+            return (
+              path.startsWith(`${this.gameName}Game/Content/Localization`.toLowerCase()) &&
+              path.includes(`/${x}/`.toLowerCase()) &&
+              path.endsWith('.locres')
+            );
+          });
+          if (!files.size) return null;
+          let first: Locres | null = null;
+          for (const file of files.values()) {
             try {
-                if (!x.isUE4Package() || !x.hasUexp()) {
-                    const data = this.saveGameFile(x)
-                    map.set(x.path, data)
-                } else {
-                    const uasset = this.saveGameFile(x)
-                    map.set(x.path, uasset)
-                    const uexp = this.saveGameFile(x.uexp)
-                    map.set(x.uexp.path, uexp)
-                    const ubulk = x.hasUbulk() && x.ubulk ? this.saveGameFile(x.ubulk) : null
-                    if (ubulk && x.ubulk)
-                        map.set(x.ubulk.path, ubulk)
+              const f = first;
+              if (f == null) {
+                first = this.loadLocres(file);
+              } else {
+                const locres = this.loadLocres(file);
+                if (locres && first) {
+                  locres.mergeInto(first);
                 }
+              }
             } catch (e) {
-                console.error(e)
+              console.error(`Failed to locres file ${file.getName()}`);
+              console.error(e);
             }
-            return map
+          }
+          return first;
         } else {
-            const path = this.fixPath(x)
-            const gameFile = this.findGameFile(path)
-            if (gameFile)
-                return this.savePackage(gameFile)
-            const map = new Collection<string, Buffer>()
-            try {
-                if (path.endsWith(".uasset") || path.endsWith(".umap")) {
-                    const uasset = this.saveGameFile(path)
-                    if (!uasset)
-                        return map
-                    map.set(path, uasset)
-                    const uexpPath = path.substring(0, path.lastIndexOf(".")) + ".uexp"
-                    const uexp = this.saveGameFile(uexpPath)
-                    if (!uexp)
-                        return null
-                    map.set(uexpPath, uexp)
-                    const ubulkPath = path.substring(0, path.lastIndexOf(".")) + ".ubulk"
-                    const ubulk = this.saveGameFile(ubulkPath)
-                    map.set(ubulkPath, ubulk)
-                } else {
-                    const data = this.saveGameFile(path)
-                    if (!data)
-                        return map
-                    map.set(path, data)
-                }
-            } catch (e) {
-                console.error(e)
-            }
-            return map
+          const path = this.fixPath(x);
+          const gameFile = this.findGameFile(path);
+          if (gameFile) return this.loadLocres(gameFile);
+          if (!path.endsWith('.locres')) return null;
+          const locres = this.saveGameFile(path);
+          if (!locres) return null;
+          return new Locres(locres, path, this.getLocresLanguageByPath(x));
         }
+      }
+    } catch (e) {
+      console.error(`Failed to load locres ${x instanceof GameFile ? x.path : x}`);
+      console.error(e);
     }
+    return null;
+  }
 
-    /**
-     * Searches for the game file and then saves the it
-     * @param {string} filePath Path to the file to save
-     * @returns {?Buffer} The files data or null
-     */
-    saveGameFile(filePath: string): Buffer
+  /**
+   * Gets a locres language by path
+   * @param {string} filePath Path to the locres file
+   * @returns {FnLanguage} The locres language
+   * @public
+   */
+  getLocresLanguageByPath(filePath: string): FnLanguage {
+    return valueOfLanguageCode(
+      Utils.takeWhileStr(filePath.split(new RegExp('Localization/(.*?)/'))[2], it => it !== '/'),
+    );
+  }
 
-    /**
-     * Saves the game file
-     * @param {GameFile} file The game file to save
-     * @returns {?Buffer} The files data or null
-     */
-    saveGameFile(file: GameFile): Buffer
+  /**
+   * Searches for the game file and then loads a UE4 AssetRegistry file
+   * @param {string} filePath The path to search for
+   * @returns {?AssetRegistry} The parsed asset registry or null
+   * @public
+   */
+  loadAssetRegistry(filePath: string): AssetRegistry;
 
-    /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
-    saveGameFile(x: any) {
-        if (x instanceof GameFile) {
-            if (x.ioPackageId)
-                return this.saveChunk(createIoChunkId(x.ioPackageId, 0, EIoChunkType.ExportBundleData))
-            const reader = this.mountedPaks.find(it => it.path === x.pakFileName)
-            if (!reader)
-                throw new Error("Couldn't find any possible pak file readers")
-            return reader.extract(x)
+  /**
+   * Loads a UE4 AssetRegistry file
+   * @param {string} file The game file to load
+   * @returns {?AssetRegistry} The parsed asset registry or null
+   * @public
+   */
+  loadAssetRegistry(file: GameFile): AssetRegistry | null;
+
+  /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
+  loadAssetRegistry(x: any): AssetRegistry | null {
+    try {
+      if (x instanceof GameFile) {
+        if (!x.isAssetRegistry()) return null;
+        const locres = this.saveGameFile(x);
+        return new AssetRegistry(locres, x.path);
+      } else {
+        const path = this.fixPath(x);
+        const gameFile = this.findGameFile(x);
+        if (gameFile) return this.loadAssetRegistry(gameFile);
+        if (!path.endsWith('.bin')) return null;
+        const locres = this.saveGameFile(path);
+        return locres ? new AssetRegistry(locres, path) : null;
+      }
+    } catch (e) {
+      console.error(e);
+      console.error(`Failed to load asset registry ${x instanceof GameFile ? x.path : x}`);
+    }
+    return null;
+  }
+
+  /**
+   * Searches for the game file and then saves all parts of this package
+   * @param {string} filePath The path to search for
+   * @returns {?Collection<string, Buffer>} A map with the files name as key and data as value or null
+   * @public
+   */
+  savePackage(filePath: string): Collection<string, Buffer>;
+
+  /**
+   * Saves all parts of this package
+   * @param {GameFile} file The game file to save
+   * @returns {?Collection<string, Buffer>} A map with the files name as key and data as value
+   */
+  savePackage(file: GameFile): Collection<string, Buffer>;
+
+  /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
+  savePackage(x: any) {
+    if (x instanceof GameFile) {
+      const map = new Collection<string, Buffer>();
+      try {
+        if (!x.isUE4Package() || !x.hasUexp()) {
+          const data = this.saveGameFile(x);
+          map.set(x.path, data);
         } else {
-            const path = this.fixPath(x)
-            const gameFile = this.findGameFile(path)
-            return gameFile ? this.saveGameFile(gameFile) : null
+          const uasset = this.saveGameFile(x);
+          map.set(x.path, uasset);
+          const uexp = this.saveGameFile(x.uexp);
+          map.set(x.uexp.path, uexp);
+          const ubulk = x.hasUbulk() && x.ubulk ? this.saveGameFile(x.ubulk) : null;
+          if (ubulk && x.ubulk) map.set(x.ubulk.path, ubulk);
         }
+      } catch (e) {
+        console.error(e);
+      }
+      return map;
+    } else {
+      const path = this.fixPath(x);
+      const gameFile = this.findGameFile(path);
+      if (gameFile) return this.savePackage(gameFile);
+      const map = new Collection<string, Buffer>();
+      try {
+        if (path.endsWith('.uasset') || path.endsWith('.umap')) {
+          const uasset = this.saveGameFile(path);
+          if (!uasset) return map;
+          map.set(path, uasset);
+          const uexpPath = path.substring(0, path.lastIndexOf('.')) + '.uexp';
+          const uexp = this.saveGameFile(uexpPath);
+          if (!uexp) return null;
+          map.set(uexpPath, uexp);
+          const ubulkPath = path.substring(0, path.lastIndexOf('.')) + '.ubulk';
+          const ubulk = this.saveGameFile(ubulkPath);
+          map.set(ubulkPath, ubulk);
+        } else {
+          const data = this.saveGameFile(path);
+          if (!data) return map;
+          map.set(path, data);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      return map;
+    }
+  }
+
+  /**
+   * Searches for the game file and then saves the it
+   * @param {string} filePath Path to the file to save
+   * @returns {?Buffer} The files data or null
+   */
+  saveGameFile(filePath: string): Buffer;
+
+  /**
+   * Saves the game file
+   * @param {GameFile} file The game file to save
+   * @returns {?Buffer} The files data or null
+   */
+  saveGameFile(file: GameFile): Buffer;
+
+  /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
+  saveGameFile(x: any) {
+    if (x instanceof GameFile) {
+      if (x.ioPackageId)
+        return this.saveChunk(createIoChunkId(x.ioPackageId, 0, EIoChunkType.ExportBundleData));
+      const reader = this.mountedPaks.find(it => it.path === x.pakFileName);
+      if (!reader) throw new Error("Couldn't find any possible pak file readers");
+      return reader.extract(x);
+    } else {
+      const path = this.fixPath(x);
+      const gameFile = this.findGameFile(path);
+      return gameFile ? this.saveGameFile(gameFile) : null;
+    }
+  }
+
+  /**
+   * Saves a I/O Store chunk by its ID
+   * @param {FIoChunkId} chunkId The chunk ID
+   * @returns {Buffer} The chunk data
+   * @throws {Error}
+   */
+  saveChunk(chunkId: FIoChunkId): Buffer {
+    for (const reader of this.mountedPaks) {
+      if (!(reader instanceof FIoStoreReader)) continue;
+      try {
+        return reader.read(chunkId);
+      } catch (e: any) {
+        if (e.message !== 'Unknown chunk ID') {
+          throw e;
+        }
+      }
+    }
+    throw new Error("Couldn't find any possible I/O store readers");
+  }
+
+  /**
+   * Mounts a pak file reader
+   * @param {AbstractAesVfsReader} reader Reader to mount
+   * @returns {Promise<void>}
+   * @public
+   */
+  public mount(reader: AbstractAesVfsReader) {
+    const index = reader.readIndex();
+    for (const it of index) {
+      this.files.set(it.path.toLowerCase(), it);
     }
 
-    /**
-     * Saves a I/O Store chunk by its ID
-     * @param {FIoChunkId} chunkId The chunk ID
-     * @returns {Buffer} The chunk data
-     * @throws {Error}
-     */
-    saveChunk(chunkId: FIoChunkId): Buffer {
-        for (const reader of this.mountedPaks) {
-            if (!(reader instanceof FIoStoreReader))
-                continue
-            try {
-                return reader.read(chunkId)
-            } catch (e: any) {
-                if (e.message !== "Unknown chunk ID") {
-                    throw e
-                }
-            }
-        }
-        throw new Error("Couldn't find any possible I/O store readers")
-    }
-
-    /**
-     * Mounts a pak file reader
-     * @param {AbstractAesVfsReader} reader Reader to mount
-     * @returns {Promise<void>}
-     * @public
-     */
-    public mount(reader: AbstractAesVfsReader) {
-        const index = reader.readIndex()
-        for (const it of index) {
-            this.files.set(it.path.toLowerCase(), it)
-        }
-
-        this.mountedPaks.push(reader)
-        if (reader instanceof FIoStoreReader) {
-            if (reader.name === "global") {
-                this.globalDataLoaded = true
-                console.log("Initialized I/O store")
-            }
-            /*if (this.globalPackageStore.isInitialized)
+    this.mountedPaks.push(reader);
+    if (reader instanceof FIoStoreReader) {
+      if (reader.name === 'global') {
+        this.globalDataLoaded = true;
+        console.log('Initialized I/O store');
+      }
+      /*if (this.globalPackageStore.isInitialized)
                 this.globalPackageStore.value.onContainerMounted(reader)*/
-        }
-
-        this.emit("mounted:reader", reader)
     }
 
-    /**
-     * Initializes the file provider
-     * @returns {Promise<void>}
-     * @public
-     */
-    async initialize() {
-        await ObjectTypeRegistry.init()
-        this.folder = this.folder.endsWith("/") ? this.folder : this.folder + "/"
-        if (!fs.existsSync(this.folder))
-            throw new ParserException(`Path '${this.folder}' does not exist!`)
+    this.emit('mounted:reader', reader);
+  }
 
-        const dir = await fs.readdirSync(this.folder)
-        for (const dirEntry of dir) {
-            const path = this.folder + dirEntry
-            if (path.endsWith(".pak")) {
-                try {
-                    const reader = new PakFileReader(path, this.versions)
-                    reader.customEncryption = this.customEncryption
-                    if (reader.isEncrypted) {
-                        if (!this.requiredKeys.find(r => r.equals(reader.encryptionKeyGuid)))
-                            this.requiredKeys.push(reader.encryptionKeyGuid)
-                    }
-                    this.unloadedPaks.push(reader)
-                } catch (e) {
-                    console.error(e)
-                }
-            } else if (path.endsWith(".utoc")) {
-                const _path = path.substring(0, path.lastIndexOf("."))
-                try {
-                    const reader = new FIoStoreReader(_path, this.versions)
-                    reader.customEncryption = this.customEncryption
-                    reader.initialize(new FIoStoreEnvironment(_path), this.keys, this.ioStoreTocReadOptions)
-                    if (reader.isEncrypted) {
-                        if (!this.requiredKeys.find(r => r.equals(reader.encryptionKeyGuid)))
-                            this.requiredKeys.push(reader.encryptionKeyGuid)
-                    }
-                    this.unloadedPaks.push(reader)
-                } catch (e) {
-                    console.error(e)
-                }
-            } else {
-                let gamePath = path.substring(this.folder.length)
-                if (gamePath.startsWith("\\") || gamePath.startsWith("/")) {
-                    gamePath = gamePath.substring(1)
-                }
-                gamePath = gamePath.replace("\\", "/")
-                this.localFiles.add(gamePath.toLowerCase())
-            }
+  /**
+   * Initializes the file provider
+   * @returns {Promise<void>}
+   * @public
+   */
+  async initialize() {
+    await ObjectTypeRegistry.init();
+    this.folder = this.folder.endsWith('/') ? this.folder : this.folder + '/';
+    if (!fs.existsSync(this.folder))
+      throw new ParserException(`Path '${this.folder}' does not exist!`);
+
+    const dir = await fs.readdirSync(this.folder);
+    for (const dirEntry of dir) {
+      const path = this.folder + dirEntry;
+      if (path.endsWith('.pak')) {
+        try {
+          const reader = new PakFileReader(path, this.versions);
+          reader.customEncryption = this.customEncryption;
+          if (reader.isEncrypted) {
+            if (!this.requiredKeys.find(r => r.equals(reader.encryptionKeyGuid)))
+              this.requiredKeys.push(reader.encryptionKeyGuid);
+          }
+          this.unloadedPaks.push(reader);
+        } catch (e) {
+          console.error(e);
         }
-
-        this.emit("ready")
+      } else if (path.endsWith('.utoc')) {
+        const _path = path.substring(0, path.lastIndexOf('.'));
+        try {
+          const reader = new FIoStoreReader(_path, this.versions);
+          reader.customEncryption = this.customEncryption;
+          reader.initialize(new FIoStoreEnvironment(_path), this.keys, this.ioStoreTocReadOptions);
+          if (reader.isEncrypted) {
+            if (!this.requiredKeys.find(r => r.equals(reader.encryptionKeyGuid)))
+              this.requiredKeys.push(reader.encryptionKeyGuid);
+          }
+          this.unloadedPaks.push(reader);
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        let gamePath = path.substring(this.folder.length);
+        if (gamePath.startsWith('\\') || gamePath.startsWith('/')) {
+          gamePath = gamePath.substring(1);
+        }
+        gamePath = gamePath.replace('\\', '/');
+        this.localFiles.add(gamePath.toLowerCase());
+      }
     }
 
-    /**
-     * Fixes a file path
-     * @param {string} filePath File path to fix
-     * @returns {string} File path translated into the correct format
-     * @public
-     */
-    fixPath(filePath: string): string {
-        const gameName = this.gameName
-        let path = filePath.toLowerCase()
-        path = path.replace("\\", "/")
-        if (path.startsWith("/"))
-            path = path.substring(1)
-        const lastPart = path.substring(path.lastIndexOf("/") + 1)
-        if (lastPart.includes(".") && lastPart.substring(0, lastPart.indexOf(".")) === lastPart.substring(lastPart.indexOf(".") + 1))
-            path = path.substring(0, path.lastIndexOf(".")) + "/" + lastPart.substring(0, lastPart.indexOf("."))
-        if (!path.endsWith("/") && !path.substring(path.lastIndexOf("/") + 1).includes("."))
-            path += ".uasset"
-        if (path.startsWith("game/")) {
-            path =
-                path.startsWith("game/content/") ? path.replace("game/content/", gameName + "game/content/") :
-                    path.startsWith("game/config/") ? path.replace("game/config/", gameName + "game/config/") :
-                        path.startsWith("game/plugins/") ? path.replace("game/plugins/", gameName + "game/plugins/") :
-                            (path.includes("assetregistry") || path.endsWith(".uproject")) ? path.replace("game/", `${gameName}game/`) :
-                                path.replace("game/", gameName + "game/content/")
-        } else if (path.startsWith("engine/")) {
-            path =
-                path.startsWith("engine/content/") ? path :
-                    path.startsWith("engine/config/") ? path :
-                        path.startsWith("engine/plugins") ? path :
-                            path.replace("engine/", "engine/content/")
-        }
-        return path.toLowerCase()
-    }
+    this.emit('ready');
+  }
 
-    /**
-     * Compacts a file path
-     * @param {string} path Path to compact
-     * @warning This does convert FortniteGame/Plugins/GameFeatures/GameFeatureName/Content/Package into /GameFeatureName/Package
-     * @returns {string}
-     * @public
-     */
-    compactFilePath(path: string): string {
-        path = path.toLowerCase()
-        if (path[0] === "/") {
-            return path
-        }
-        if (path.startsWith("engine/content")) { // -> /Engine
-            return "/engine" + path.substring("engine/content".length)
-        }
-        if (path.startsWith("engine/plugins")) { // -> /Plugins
-            return path.substring("engine".length)
-        }
-        const delim = path.indexOf("/content/")
-        return delim === -1 ? path : "/game" + path.substring(delim + "/content".length)
+  /**
+   * Fixes a file path
+   * @param {string} filePath File path to fix
+   * @returns {string} File path translated into the correct format
+   * @public
+   */
+  fixPath(filePath: string): string {
+    const gameName = this.gameName;
+    let path = filePath.toLowerCase();
+    path = path.replace('\\', '/');
+    if (path.startsWith('/')) path = path.substring(1);
+    const lastPart = path.substring(path.lastIndexOf('/') + 1);
+    if (
+      lastPart.includes('.') &&
+      lastPart.substring(0, lastPart.indexOf('.')) === lastPart.substring(lastPart.indexOf('.') + 1)
+    )
+      path =
+        path.substring(0, path.lastIndexOf('.')) +
+        '/' +
+        lastPart.substring(0, lastPart.indexOf('.'));
+    if (!path.endsWith('/') && !path.substring(path.lastIndexOf('/') + 1).includes('.'))
+      path += '.uasset';
+    if (path.startsWith('game/')) {
+      path = path.startsWith('game/content/')
+        ? path.replace('game/content/', gameName + 'game/content/')
+        : path.startsWith('game/config/')
+          ? path.replace('game/config/', gameName + 'game/config/')
+          : path.startsWith('game/plugins/')
+            ? path.replace('game/plugins/', gameName + 'game/plugins/')
+            : path.includes('assetregistry') || path.endsWith('.uproject')
+              ? path.replace('game/', `${gameName}game/`)
+              : path.replace('game/', gameName + 'game/content/');
+    } else if (path.startsWith('engine/')) {
+      path = path.startsWith('engine/content/')
+        ? path
+        : path.startsWith('engine/config/')
+          ? path
+          : path.startsWith('engine/plugins')
+            ? path
+            : path.replace('engine/', 'engine/content/');
     }
+    return path.toLowerCase();
+  }
+
+  /**
+   * Compacts a file path
+   * @param {string} path Path to compact
+   * @warning This does convert FortniteGame/Plugins/GameFeatures/GameFeatureName/Content/Package into /GameFeatureName/Package
+   * @returns {string}
+   * @public
+   */
+  compactFilePath(path: string): string {
+    path = path.toLowerCase();
+    if (path[0] === '/') {
+      return path;
+    }
+    if (path.startsWith('engine/content')) {
+      // -> /Engine
+      return '/engine' + path.substring('engine/content'.length);
+    }
+    if (path.startsWith('engine/plugins')) {
+      // -> /Plugins
+      return path.substring('engine'.length);
+    }
+    const delim = path.indexOf('/content/');
+    return delim === -1 ? path : '/game' + path.substring(delim + '/content'.length);
+  }
 }

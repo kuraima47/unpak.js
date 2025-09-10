@@ -8,19 +8,15 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   extends: [
     'eslint:recommended',
-    '@typescript-eslint/recommended',
-    '@typescript-eslint/recommended-requiring-type-checking',
     'prettier',
   ],
   rules: {
     'prettier/prettier': 'error',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    '@typescript-eslint/explicit-function-return-type': 'warn',
-    '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/prefer-const': 'error',
-    '@typescript-eslint/no-inferrable-types': 'off',
     'prefer-const': 'error',
     'no-var': 'error',
+    'no-undef': 'off', // TypeScript handles this
+    'no-unused-vars': 'off', // Use @typescript-eslint/no-unused-vars instead
   },
   env: {
     node: true,

@@ -1,7 +1,7 @@
-import { FPackageIndex } from '../objects/ObjectResource';
+import { FPackageIndex } from '../../objects/uobject/ObjectResource';
 import { UObject } from '../exports/UObject';
 import { FAssetArchive } from '../reader/FAssetArchive';
-import { UProperty } from '../objects/UProperty';
+import { UProperty } from '../../../util/decorators/UProperty';
 
 /**
  * ULevelSequence - Level sequence assets for cinematics

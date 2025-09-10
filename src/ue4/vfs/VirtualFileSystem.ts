@@ -5,8 +5,8 @@
  * with intelligent caching, prioritization, and async loading capabilities.
  */
 
-import { IArchive } from '../../core/IArchive';
-import { IFileEntry } from '../../core/IFileEntry';
+import { IArchive } from '../../core/io/IArchive';
+import { IFileEntry } from '../../core/io/IFileEntry';
 import { GameFile } from '../pak/GameFile';
 import { Collection } from '@discordjs/collection';
 

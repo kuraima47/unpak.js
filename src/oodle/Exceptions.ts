@@ -3,15 +3,15 @@
  * @extends {Error}
  */
 export class OodleException extends Error {
-    /**
-     * Creates an instance
-     * @param {string} message Message to use
-     * @constructor
-     * @public
-     */
-    constructor(message: string) {
-        super(message)
-    }
+  /**
+   * Creates an instance
+   * @param {string} message Message to use
+   * @constructor
+   * @public
+   */
+  constructor(message: string) {
+    super(message);
+  }
 }
 
 /**
@@ -19,15 +19,15 @@ export class OodleException extends Error {
  * @extends {Error}
  */
 export class DecompressException extends Error {
-    /**
-     * Creates an instance
-     * @param {string} message Message to use
-     * @constructor
-     * @public
-     */
-    constructor(message: string) {
-        super(message)
-    }
+  /**
+   * Creates an instance
+   * @param {string} message Message to use
+   * @constructor
+   * @public
+   */
+  constructor(message: string) {
+    super(message);
+  }
 }
 
 /**
@@ -35,13 +35,13 @@ export class DecompressException extends Error {
  * @extends {Error}
  */
 export class CompressException extends Error {
-    /**
-     * Creates an instance
-     * @param {string} message Message to use
-     * @constructor
-     * @public
-     */
-    constructor(message: string) {
-        super(message)
-    }
+  /**
+   * Creates an instance
+   * @param {string} message Message to use
+   * @constructor
+   * @public
+   */
+  constructor(message: string) {
+    super(message);
+  }
 }

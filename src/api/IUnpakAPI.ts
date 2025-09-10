@@ -7,13 +7,13 @@ import { IKeyManager } from '../crypto/ICrypto';
 export interface ContainerOptions {
   /** Key manager for decryption */
   keyManager?: IKeyManager;
-  
+
   /** Whether to load directory index immediately */
   loadDirectoryIndex?: boolean;
-  
+
   /** Maximum file size to read in memory */
   maxFileSize?: number;
-  
+
   /** Enable verbose logging */
   verbose?: boolean;
 }
@@ -24,16 +24,16 @@ export interface ContainerOptions {
 export interface ListFilesOptions {
   /** Pattern to match file paths (glob-style) */
   pattern?: string;
-  
+
   /** Only include compressed files */
   compressedOnly?: boolean;
-  
+
   /** Only include encrypted files */
   encryptedOnly?: boolean;
-  
+
   /** File extension filter */
   extensions?: string[];
-  
+
   /** Maximum number of results */
   limit?: number;
 }
@@ -44,10 +44,10 @@ export interface ListFilesOptions {
 export interface ExtractOptions {
   /** Output directory (for file extraction) */
   outputDir?: string;
-  
+
   /** Whether to preserve directory structure */
   preserveStructure?: boolean;
-  
+
   /** Whether to overwrite existing files */
   overwrite?: boolean;
 }
@@ -61,27 +61,31 @@ export interface IUnpakAPI {
    * Open a container (pak file or IoStore)
    */
   openContainer(pathOrBuffer: string | Buffer, options?: ContainerOptions): Promise<IArchive>;
-  
+
   /**
    * List files in the container
    */
   listFiles(archive: IArchive, options?: ListFilesOptions): Promise<IFileEntry[]>;
-  
+
   /**
    * Extract files from the container
    */
-  extractFiles(archive: IArchive, paths: string | string[], options?: ExtractOptions): Promise<Buffer[]>;
-  
+  extractFiles(
+    archive: IArchive,
+    paths: string | string[],
+    options?: ExtractOptions,
+  ): Promise<Buffer[]>;
+
   /**
    * Read an asset file and return parsed properties
    */
   readAsset(archive: IArchive, path: string): Promise<Record<string, any>>;
-  
+
   /**
    * Read a .uplugin file
    */
   readPlugin(archive: IArchive, path: string): Promise<Record<string, any>>;
-  
+
   /**
    * Read AssetRegistry.bin if present
    */

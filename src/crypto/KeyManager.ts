@@ -19,13 +19,18 @@ export class MemoryKeyProvider implements IKeyProvider {
   async addKey(guid: string, key: string | Buffer): Promise<void> {
     try {
       const keyBuffer = KeyUtils.normalizeKey(key);
-      
+
       if (!KeyUtils.validateKeyLength(keyBuffer)) {
-        throw new Error(`Invalid key length: ${keyBuffer.length} bytes. Expected 16, 24, or 32 bytes.`);
+        throw new Error(
+          `Invalid key length: ${keyBuffer.length} bytes. Expected 16, 24, or 32 bytes.`,
+        );
       }
-      
+
       this.keys.set(guid.toLowerCase(), keyBuffer);
-      logger.debug('Added key to memory provider', { guid: guid.toLowerCase(), keyLength: keyBuffer.length });
+      logger.debug('Added key to memory provider', {
+        guid: guid.toLowerCase(),
+        keyLength: keyBuffer.length,
+      });
     } catch (error) {
       if (error instanceof Error && error.message.includes('hex string')) {
         throw new Error(`Invalid key format: ${error.message}`);
@@ -63,7 +68,7 @@ export class KeyManager implements IKeyManager {
 
   async getKey(guid: string): Promise<Buffer | null> {
     const normalizedGuid = guid.toLowerCase();
-    
+
     // Check cache first
     if (this.cache.has(normalizedGuid)) {
       return this.cache.get(normalizedGuid) || null;
@@ -75,9 +80,9 @@ export class KeyManager implements IKeyManager {
         const key = await provider.getKey(normalizedGuid);
         if (key) {
           this.cache.set(normalizedGuid, key);
-          logger.debug('Found key in provider', { 
-            guid: normalizedGuid, 
-            providerType: provider.constructor.name 
+          logger.debug('Found key in provider', {
+            guid: normalizedGuid,
+            providerType: provider.constructor.name,
           });
           return key;
         }
@@ -85,7 +90,7 @@ export class KeyManager implements IKeyManager {
         logger.warn('Error getting key from provider', {
           guid: normalizedGuid,
           providerType: provider.constructor.name,
-          error: error instanceof Error ? error.message : String(error)
+          error: error instanceof Error ? error.message : String(error),
         });
       }
     }
@@ -99,17 +104,17 @@ export class KeyManager implements IKeyManager {
   async submitKey(guid: string, key: string | Buffer): Promise<void> {
     const normalizedGuid = guid.toLowerCase();
     const keyBuffer = KeyUtils.normalizeKey(key);
-    
+
     // Add to the first provider (create memory provider if none exist)
     if (this.providers.length === 0) {
       this.addProvider(new MemoryKeyProvider());
     }
 
     await this.providers[0].addKey(normalizedGuid, keyBuffer);
-    
+
     // Update cache
     this.cache.set(normalizedGuid, keyBuffer);
-    
+
     logger.info('Submitted key', { guid: normalizedGuid, keyLength: keyBuffer.length });
   }
 
@@ -124,7 +129,7 @@ export class KeyManager implements IKeyManager {
   getStats(): { cachedKeys: number; providers: number } {
     return {
       cachedKeys: this.cache.size,
-      providers: this.providers.length
+      providers: this.providers.length,
     };
   }
 }

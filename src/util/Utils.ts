@@ -1,86 +1,83 @@
 export class Utils {
-    static replaceAll(str: string, value1: string, value2: string) {
-        while (str.includes(value1))
-            str = str.replace(value1, value2)
-        return str
-    }
+  static replaceAll(str: string, value1: string, value2: string) {
+    while (str.includes(value1)) str = str.replace(value1, value2);
+    return str;
+  }
 
-    static bufferIsNotEmpty(buffer: Buffer): boolean {
-        const len = buffer.length
-        for (let i = 0; i < len; ++i) {
-            const byte = buffer[i]
-            if (byte !== 0) return false
-        }
-        return true
+  static bufferIsNotEmpty(buffer: Buffer): boolean {
+    const len = buffer.length;
+    for (let i = 0; i < len; ++i) {
+      const byte = buffer[i];
+      if (byte !== 0) return false;
     }
+    return true;
+  }
 
-    static clamp(self: number, min: number, max: number) {
-        return Math.min(Math.max(self, min), max)
-    }
+  static clamp(self: number, min: number, max: number) {
+    return Math.min(Math.max(self, min), max);
+  }
 
-    static pathAppend(str1: string, str2: string, strLength: number = str2.length) {
-        let data = str1
-        const dataNum = data.length
-        if (dataNum > 0 && data[dataNum - 1] !== '/' && data[dataNum - 1] !== '\\') {
-            data += '/'
-        }
-        if (strLength > 0) {
-            const start = (str2[0] === '/' || str2[0] === '\\') ? 1 : 0
-            const length = Math.min(str2.length - start, strLength - start)
-            data += str2.substr(start, length)
-            //data.append(str2, 0, min(str1.length, strLength))
-        }
-        return data
+  static pathAppend(str1: string, str2: string, strLength: number = str2.length) {
+    let data = str1;
+    const dataNum = data.length;
+    if (dataNum > 0 && data[dataNum - 1] !== '/' && data[dataNum - 1] !== '\\') {
+      data += '/';
     }
+    if (strLength > 0) {
+      const start = str2[0] === '/' || str2[0] === '\\' ? 1 : 0;
+      const length = Math.min(str2.length - start, strLength - start);
+      data += str2.substr(start, length);
+      //data.append(str2, 0, min(str1.length, strLength))
+    }
+    return data;
+  }
 
-    static isAligned(value: number, alignment: number) {
-        return (value & (alignment - 1)) <= 0
-    }
+  static isAligned(value: number, alignment: number) {
+    return (value & (alignment - 1)) <= 0;
+  }
 
-    static alignBigInt(value: bigint, alignment: bigint) {
-        const h = value + alignment - 1n & ~(alignment - 1n)
-        return Number(h)
-    }
+  static alignBigInt(value: bigint, alignment: bigint) {
+    const h = (value + alignment - 1n) & ~(alignment - 1n);
+    return Number(h);
+  }
 
-    static align(value: number, alignment: number) {
-        return value + alignment - 1 & ~(alignment - 1)
-    }
+  static align(value: number, alignment: number) {
+    return (value + alignment - 1) & ~(alignment - 1);
+  }
 
-    static repeat(times: number, action: (n: number) => void) {
-        let x = 0
-        while (x < times) {
-            action(x)
-            ++x
-        }
+  static repeat(times: number, action: (n: number) => void) {
+    let x = 0;
+    while (x < times) {
+      action(x);
+      ++x;
     }
+  }
 
-    static toRadians(angdeg: number) {
-        return angdeg * 0.017453292519943295 // DEGREES_TO_RADIANS
-    }
+  static toRadians(angdeg: number) {
+    return angdeg * 0.017453292519943295; // DEGREES_TO_RADIANS
+  }
 
-    static takeWhile(buf: Buffer, filter: (byte: number) => boolean) {
-        const bytes = []
-        for (let b = 0; b < buf.length; ++b) {
-            const byte = buf[b]
-            if (!filter(byte))
-                break
-            bytes.push(byte)
-        }
-        return Buffer.from(bytes)
+  static takeWhile(buf: Buffer, filter: (byte: number) => boolean) {
+    const bytes = [];
+    for (let b = 0; b < buf.length; ++b) {
+      const byte = buf[b];
+      if (!filter(byte)) break;
+      bytes.push(byte);
     }
+    return Buffer.from(bytes);
+  }
 
-    static takeWhileStr(str: string, filter: (char: string) => boolean) {
-        const loop = str.split("")
-        let res = ""
-        for (const char of loop) {
-            if (!filter(char))
-                break
-            res += char
-        }
-        return res
+  static takeWhileStr(str: string, filter: (char: string) => boolean) {
+    const loop = str.split('');
+    let res = '';
+    for (const char of loop) {
+      if (!filter(char)) break;
+      res += char;
     }
+    return res;
+  }
 
-    static divideAndRoundUp(int: number, divisor: number) {
-        return Math.floor((int + divisor - 1) / divisor)
-    }
+  static divideAndRoundUp(int: number, divisor: number) {
+    return Math.floor((int + divisor - 1) / divisor);
+  }
 }

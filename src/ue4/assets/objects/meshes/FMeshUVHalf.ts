@@ -6,7 +6,7 @@ export class FMeshUVHalf {
     public u: number
     public v: number
 
-    public constructor(Ar: FArchive = null) {
+    public constructor(Ar: FArchive | null = null) {
         if (Ar != null) {
             this.u = Ar.readUInt16()
             this.v = Ar.readUInt16()

@@ -4,8 +4,7 @@ import { FArchive } from "./FArchive";
  * Proxy for UE4 Generic Reader
  */
 export class FArchiveProxy extends FArchive {
-    public wrappedAr: FArchive
-
+    public wrappedAr!: FArchive
     /**
      * Whether to use little endian order
      * @type {boolean}

@@ -77,28 +77,28 @@ export class UClass extends UStruct {
      * @type {number}
      * @public
      */
-    classWithin: FPackageIndex = null
+    classWithin: FPackageIndex | null = null
 
     /**
      * This is the blueprint that caused the generation of this class, or null if it is a native compiled-in class
      * @type {FPackageIndex}
      * @public
      */
-    classGeneratedBy: FPackageIndex = null
+    classGeneratedBy: FPackageIndex | null = null
 
     /**
      * Which Name.ini file to load Config variables out of
      * @type {FName}
      * @public
      */
-    classConfigName: FName = null
+    classConfigName: FName | null = null
 
     /**
      * The class default object; used for delta serialization and object initialization
      * @type {FPackageIndex}
      * @public
      */
-    classDefaultObject: FPackageIndex = null
+    classDefaultObject: FPackageIndex | null = null
 
     /**
      * Map of all functions by name contained in this class

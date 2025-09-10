@@ -24,13 +24,13 @@ export class FStaticMeshLODResources {
     private static readonly CDSF_ReversedIndexBuffer = 4
     private static readonly CDSF_RaytracingResources = 8
 
-    public sections: FStaticMeshSection[] = null
-    public vertexBuffer: FStaticMeshVertexBuffer = null
-    public positionVertexBuffer: FPositionVertexBuffer = null
-    public colorVertexBuffer: FColorVertexBuffer = null
-    public indexBuffer: FRawStaticIndexBuffer = null
+    public sections: FStaticMeshSection[] | null = null
+    public vertexBuffer: FStaticMeshVertexBuffer | null = null
+    public positionVertexBuffer: FPositionVertexBuffer | null = null
+    public colorVertexBuffer: FColorVertexBuffer | null = null
+    public indexBuffer: FRawStaticIndexBuffer | null = null
     public reversedIndexBuffer = new FRawStaticIndexBuffer()
-    public depthOnlyIndexBuffer: FRawStaticIndexBuffer = null
+    public depthOnlyIndexBuffer: FRawStaticIndexBuffer | null = null
     public reversedDepthOnlyIndexBuffer = new FRawStaticIndexBuffer()
     public wireframeIndexBuffer = new FRawStaticIndexBuffer()
     public adjacencyIndexBuffer = new FRawStaticIndexBuffer()

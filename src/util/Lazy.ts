@@ -1,6 +1,6 @@
 export class Lazy<T> {
     private initializer: () => T = null
-    private _value: T = null
+    private _value: T | null = null
 
     constructor(initializer: () => T) {
         this.initializer = initializer

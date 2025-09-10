@@ -18,7 +18,7 @@ export class FPrecomputedVisibilityCell {
      * @type {FVector}
      * @public
      */
-    public min: FVector = null
+    public min: FVector | null = null
 
     /**
      * Chunk index
@@ -70,8 +70,7 @@ export class FCompressedVisibilityChunk {
      * @type {Buffer}
      * @public
      */
-    public data: Buffer
-
+    public data!: Buffer
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use
@@ -101,15 +100,13 @@ export class FPrecomputedVisibilityBucket {
      * @type {Array<FPrecomputedVisibilityCell>}
      * @public
      */
-    public cells: FPrecomputedVisibilityCell[]
-
+    public cells!: FPrecomputedVisibilityCell[]
     /**
      * Cell data chunks
      * @type {Array<FCompressedVisibilityChunk>}
      * @public
      */
-    public cellDataChunks: FCompressedVisibilityChunk[]
-
+    public cellDataChunks!: FCompressedVisibilityChunk[]
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use
@@ -213,8 +210,7 @@ export class FPrecomputedVolumeDistanceField {
      * @type {FBox}
      * @public
      */
-    public volumeBox: FBox
-
+    public volumeBox!: FBox
     /**
      * volumeSizeX
      * @type {number}
@@ -272,56 +268,47 @@ export class ULevel extends ULevel_Properties {
      * url
      * @type {FUrl}
      */
-    public url: FUrl
-
+    public url!: FUrl
     /**
      * actors
      * @type {Array<Lazy<UObject>>}
      */
-    public actors: Lazy<UObject>[]
-
+    public actors!: Lazy<UObject>[]
     /**
      * model
      * @type {Lazy<UObject>}
      */
-    public model: Lazy<UObject>
-
+    public model!: Lazy<UObject>
     /**
      * modelComponents
      * @type {Array<Lazy<UObject>>}
      */
-    public modelComponents: Lazy<UObject>[]
-
+    public modelComponents!: Lazy<UObject>[]
     /**
      * levelScriptActor
      * @type {Lazy<UObject>}
      */
-    public levelScriptActor: Lazy<UObject>
-
+    public levelScriptActor!: Lazy<UObject>
     /**
      * navListStart
      * @type {Lazy<UObject>}
      */
-    public navListStart: Lazy<UObject>
-
+    public navListStart!: Lazy<UObject>
     /**
      * navListEnd
      * @type {Lazy<UObject>}
      */
-    public navListEnd: Lazy<UObject>
-
+    public navListEnd!: Lazy<UObject>
     /**
      * precomputedVisibilityHandler
      * @type {FPrecomputedVisibilityHandler}
      */
-    public precomputedVisibilityHandler: FPrecomputedVisibilityHandler
-
+    public precomputedVisibilityHandler!: FPrecomputedVisibilityHandler
     /**
      * precomputedVolumeDistanceField
      * @type {FPrecomputedVolumeDistanceField}
      */
-    public precomputedVolumeDistanceField: FPrecomputedVolumeDistanceField
-
+    public precomputedVolumeDistanceField!: FPrecomputedVolumeDistanceField
     /**
      * Deserializes this
      * @param {FAssetArchive} Ar UE4 Asset Reader to use

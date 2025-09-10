@@ -8,8 +8,7 @@ export class AkEntry {
     public readonly folderId: number
     public path: string
     public isSoundBank: boolean
-    public data: Buffer
-
+    public data!: Buffer
     constructor(Ar: FArchive) {
         this.nameHash = Ar.readUInt32()
         this.offsetMultiplier = Ar.readUInt32()

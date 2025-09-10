@@ -39,8 +39,7 @@ export class FFileArchive extends FArchive {
      * @type {Stats}
      * @public
      */
-    public stats: Stats
-
+    public stats!: Stats
     /**
      * Size of the reader
      * @type {number}

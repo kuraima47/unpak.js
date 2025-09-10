@@ -5,12 +5,12 @@ import { FPackageIndex } from "../../ue4/objects/uobject/ObjectResource";
 import { UScriptMap } from "../../ue4/objects/uobject/UScriptMap";
 
 export class CharacterUIData extends UObject {
-    FullPortrait: FPackageIndex = null
-    BustPortrait: FPackageIndex = null
-    DisplayIconSmall: FPackageIndex = null
-    DisplayIcon: FPackageIndex = null
-    Abilities: UScriptMap = null // Map<ECharacterAbilitySlot, FPackageIndex<CharacterAbilityUIData>>
-    WwiseStateName: FName = null
-    DisplayName: FText = null
-    Description: FText = null
+    FullPortrait: FPackageIndex | null = null
+    BustPortrait: FPackageIndex | null = null
+    DisplayIconSmall: FPackageIndex | null = null
+    DisplayIcon: FPackageIndex | null = null
+    Abilities: UScriptMap | null = null // Map<ECharacterAbilitySlot, FPackageIndex<CharacterAbilityUIData>>
+    WwiseStateName: FName | null = null
+    DisplayName: FText | null = null
+    Description: FText | null = null
 }

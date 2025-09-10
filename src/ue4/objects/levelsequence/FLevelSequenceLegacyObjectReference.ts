@@ -13,15 +13,13 @@ export class FLevelSequenceLegacyObjectReference implements IStructType {
      * @type {FGuid}
      * @public
      */
-    public keyGuid: FGuid
-
+    public keyGuid!: FGuid
     /**
      * objectId
      * @type {FGuid}
      * @public
      */
-    public objectId: FGuid
-
+    public objectId!: FGuid
     /**
      * objectPath
      * @type {string}
@@ -87,8 +85,7 @@ export class FLevelSequenceLegacyObjectReference implements IStructType {
 }
 
 export class FLevelSequenceObjectReferenceMap implements IStructType {
-    public mapData: FLevelSequenceLegacyObjectReference[]
-
+    public mapData!: FLevelSequenceLegacyObjectReference[]
     constructor(arg: FArchive | FLevelSequenceLegacyObjectReference[]) {
         if (arg instanceof FArchive) {
             const len = arg.readInt32()

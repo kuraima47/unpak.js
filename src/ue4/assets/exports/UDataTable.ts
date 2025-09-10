@@ -23,7 +23,7 @@ export class UDataTable extends UObject {
      * @public
      */
     @UProperty()
-    public RowStruct: Lazy<UScriptStruct> = null
+    public RowStruct: Lazy<UScriptStruct> | null = null
 
     /**
      * Whether strip from client builds
@@ -147,7 +147,7 @@ export class UDataTable extends UObject {
      * @returns {any} Json
      * @public
      */
-    toJson(locres: Locres = null): any {
+    toJson(locres: Locres | null = null): any {
         const obj = {}
         for (const [k, v] of this.rows) {
             obj[k.text] = v.toJson(locres)

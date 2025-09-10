@@ -134,8 +134,7 @@ export class UTexture extends UStreamableRenderAsset implements UUnrealMaterial 
      * @type {FGuid}
      * @public
      */
-    public LightingGuid: FGuid
-
+    public LightingGuid!: FGuid
     /**
      * Lod bias
      * @type {number}
@@ -148,43 +147,37 @@ export class UTexture extends UStreamableRenderAsset implements UUnrealMaterial 
      * @type {ETextureCompressionSettings}
      * @public
      */
-    public CompressionSettings: ETextureCompressionSettings
-
+    public CompressionSettings!: ETextureCompressionSettings
     /**
      * Texture filter
      * @type {ETextureFilter}
      * @public
      */
-    public Filter: ETextureFilter
-
+    public Filter!: ETextureFilter
     /**
      * Mip load options
      * @type {ETextureMipLoadOptions}
      * @public
      */
-    public MipLoadOptions: ETextureMipLoadOptions
-
+    public MipLoadOptions!: ETextureMipLoadOptions
     /**
      * LOD group
      * @type {ETextureGroup}
      * @public
      */
-    public LODGroup: ETextureGroup
-
+    public LODGroup!: ETextureGroup
     /**
      * Texture downscale
      * @type {FPerPlatformFloat}
      * @public
      */
-    public Downscale: FPerPlatformFloat
-
+    public Downscale!: FPerPlatformFloat
     /**
      * Options of texture downscale
      * @type {ETextureDownscaleOptions}
      * @public
      */
-    public DownscaleOptions: ETextureDownscaleOptions
-
+    public DownscaleOptions!: ETextureDownscaleOptions
     /**
      * SRGB
      * @type {boolean}
@@ -232,8 +225,7 @@ export class UTexture extends UStreamableRenderAsset implements UUnrealMaterial 
      * @type {Array<FPackageIndex>}
      * @public
      */
-    public AssetUserData: FPackageIndex[]
-
+    public AssetUserData!: FPackageIndex[]
     /**
      * Gets params
      * @param {CMaterialParams} params Params to modify

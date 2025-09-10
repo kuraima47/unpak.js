@@ -13,15 +13,13 @@ export class FBox2D implements IStructType {
      * @type {FVector2D}
      * @public
      */
-    public min: FVector2D
-
+    public min!: FVector2D
     /**
      * Holds the box's maximum point
      * @type {FVector2D}
      * @public
      */
-    public max: FVector2D
-
+    public max!: FVector2D
     /**
      * Holds a flag indicating whether this box is valid
      * @type {boolean}

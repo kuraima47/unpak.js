@@ -4,7 +4,7 @@ import { sum } from "lodash"
 import { Config } from "../../../Config";
 
 export class SoundWave {
-    public data: Buffer
+    public data!: Buffer
     public format: string
 
     constructor(data: Buffer, format: string) {

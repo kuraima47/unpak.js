@@ -10,14 +10,14 @@ import { Image } from "../textures/Image";
 
 export class CMaterialParams {
 // textures
-    public diffuse?: UUnrealMaterial = null
-    public normal?: UUnrealMaterial = null
-    public specular?: UUnrealMaterial = null
-    public specPower?: UUnrealMaterial = null
-    public opacity?: UUnrealMaterial = null
-    public emissive?: UUnrealMaterial = null
-    public cube?: UUnrealMaterial = null
-    public mask?: UUnrealMaterial = null         // multiple mask textures baked into a single one
+    public diffuse?: UUnrealMaterial | null = null
+    public normal?: UUnrealMaterial | null = null
+    public specular?: UUnrealMaterial | null = null
+    public specPower?: UUnrealMaterial | null = null
+    public opacity?: UUnrealMaterial | null = null
+    public emissive?: UUnrealMaterial | null = null
+    public cube?: UUnrealMaterial | null = null
+    public mask?: UUnrealMaterial | null = null         // multiple mask textures baked into a single one
     // channels (used with Mask texture)
     public emissiveChannel: ETextureChannel = ETextureChannel.TC_NONE
     public specularMaskChannel: ETextureChannel = ETextureChannel.TC_NONE
@@ -34,14 +34,14 @@ export class CMaterialParams {
     public opacityFromAlpha: boolean = false
 
     constructor(
-        diffuse: UUnrealMaterial = null,
-        normal: UUnrealMaterial = null,
-        specular: UUnrealMaterial = null,
-        specPower: UUnrealMaterial = null,
-        opacity: UUnrealMaterial = null,
-        emissive: UUnrealMaterial = null,
-        cube: UUnrealMaterial = null,
-        mask: UUnrealMaterial = null,         // multiple mask textures baked into a single one
+        diffuse: UUnrealMaterial | null = null,
+        normal: UUnrealMaterial | null = null,
+        specular: UUnrealMaterial | null = null,
+        specPower: UUnrealMaterial | null = null,
+        opacity: UUnrealMaterial | null = null,
+        emissive: UUnrealMaterial | null = null,
+        cube: UUnrealMaterial | null = null,
+        mask: UUnrealMaterial | null = null,         // multiple mask textures baked into a single one
         // channels (used with Mask texture)
         emissiveChannel: ETextureChannel = ETextureChannel.TC_NONE,
         specularMaskChannel: ETextureChannel = ETextureChannel.TC_NONE,

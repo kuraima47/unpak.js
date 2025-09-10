@@ -5,10 +5,10 @@ import { FArchiveWriter } from "../../../writer/FArchiveWriter";
 
 export class FBoxSphereBounds {
     @UProperty({ name: "Origin" })
-    public origin: FVector = null
+    public origin: FVector | null = null
 
     @UProperty({ name: "BoxExtent" })
-    public boxExtent: FVector = null
+    public boxExtent: FVector | null = null
 
     @UProperty({ name: "SphereRadius" })
     public sphereRadius: number = null

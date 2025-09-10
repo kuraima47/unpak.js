@@ -15,7 +15,7 @@ export class FBlueprintCookedComponentInstancingData {
      * @type {Array<FBlueprintComponentChangedPropertyInfo>}
      * @public
      */
-    public ChangedPropertyList: FBlueprintComponentChangedPropertyInfo[] = null
+    public ChangedPropertyList: FBlueprintComponentChangedPropertyInfo[] | null = null
 
     /**
      * bHasValidCookedData
@@ -34,7 +34,7 @@ export class FBlueprintComponentChangedPropertyInfo {
      * @type {FName}
      * @public
      */
-    public PropertyName: FName = null
+    public PropertyName: FName | null = null
 
     /**
      * ArrayIndex
@@ -48,7 +48,7 @@ export class FBlueprintComponentChangedPropertyInfo {
      * @type {UStruct}
      * @public
      */
-    public PropertyScope: UStruct = null
+    public PropertyScope: UStruct | null = null
 }
 
 /**
@@ -61,42 +61,42 @@ export class USCS_Node extends UObject {
      * @type {UClass}
      * @public
      */
-    public ComponentClass: UClass = null
+    public ComponentClass: UClass | null = null
 
     /**
      * ComponentTemplate
      * @type {UActorComponent}
      * @public
      */
-    public ComponentTemplate: UActorComponent = null
+    public ComponentTemplate: UActorComponent | null = null
 
     /**
      * CookedComponentInstancingData
      * @type {FBlueprintCookedComponentInstancingData}
      * @public
      */
-    public CookedComponentInstancingData: FBlueprintCookedComponentInstancingData = null
+    public CookedComponentInstancingData: FBlueprintCookedComponentInstancingData | null = null
 
     /**
      * AttachToName
      * @type {FName}
      * @public
      */
-    public AttachToName: FName = null
+    public AttachToName: FName | null = null
 
     /**
      * ParentComponentOrVariableName
      * @type {FName}
      * @public
      */
-    public ParentComponentOrVariableName: FName = null
+    public ParentComponentOrVariableName: FName | null = null
 
     /**
      * ParentComponentOwnerClassName
      * @type {FName}
      * @public
      */
-    public ParentComponentOwnerClassName: FName = null
+    public ParentComponentOwnerClassName: FName | null = null
 
     /**
      * bIsParentComponentNative
@@ -110,26 +110,26 @@ export class USCS_Node extends UObject {
      * @type {Array<USCS_Node>}
      * @public
      */
-    public ChildNodes: USCS_Node[] = null
+    public ChildNodes: USCS_Node[] | null = null
 
     /**
      * MetaDataArray
      * @type {Array<FBPVariableMetaDataEntry>}
      * @public
      */
-    public MetaDataArray: FBPVariableMetaDataEntry[] = null
+    public MetaDataArray: FBPVariableMetaDataEntry[] | null = null
 
     /**
      * VariableGuid
      * @type {FGuid}
      * @public
      */
-    public VariableGuid: FGuid = null
+    public VariableGuid: FGuid | null = null
 
     /**
      * InternalVariableName
      * @type {FName}
      * @public
      */
-    public InternalVariableName: FName = null
+    public InternalVariableName: FName | null = null
 }

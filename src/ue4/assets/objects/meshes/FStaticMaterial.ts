@@ -8,13 +8,13 @@ import { EFRenderingObjectVersion, FRenderingObjectVersion } from "../../../vers
 
 export class FStaticMaterial {
     @UProperty({ name: "MaterialInterface" })
-    public materialInterface: Lazy<UMaterialInterface> = null
+    public materialInterface: Lazy<UMaterialInterface> | null = null
     @UProperty({ name: "MaterialSlotName" })
     public materialSlotName: FName = FName.NAME_None
     @UProperty({ name: "ImportedMaterialSlotName" })
     public importedMaterialSlotName: FName = FName.NAME_None
     @UProperty({ name: "UVChannelData" })
-    public uvChannelData: FMeshUVChannelInfo = null
+    public uvChannelData: FMeshUVChannelInfo | null = null
 
     constructor(Ar?: FAssetArchive) {
         this.materialInterface = Ar.readObject()

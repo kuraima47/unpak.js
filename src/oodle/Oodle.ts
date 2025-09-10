@@ -1,6 +1,15 @@
-import * as ffi from "ffi-napi"
+// Optional FFI dependencies for Oodle compression support
+let ffi: any = null;
+let ref: any = null;
+
+try {
+    ffi = require("ffi-napi");
+    ref = require("ref-napi");
+} catch (e) {
+    // FFI dependencies not available - Oodle compression will be disabled
+}
+
 import { CompressException, DecompressException, OodleException } from "./Exceptions";
-import ref from "ref-napi";
 import { INTEGER_MAX_VALUE } from "../util/Const";
 import { existsSync } from "fs";
 import { OodleDownloader } from './OodleDownloader';
@@ -41,7 +50,7 @@ export class Oodle {
      * @public
      * @static
      */
-    static oodleLib: OodleLibrary = null
+    static oodleLib: OodleLibrary | null = null
 
     /**
      * Decompresses an Oodle compressed array
@@ -82,6 +91,10 @@ export class Oodle {
 
     /** DO NOT USE THIS METHOD, THIS IS FOR THE LIBRARY */
     static decompress(src: Buffer, dstLen?: Buffer | number, dst?: Buffer, dstOff?: number, srcOff?: number, srcLen?: number): Buffer {
+        if (!ffi || !ref) {
+            throw new OodleException("Oodle dependencies not available - install ffi-napi and ref-napi");
+        }
+        
         this.ensureLib()
         if (typeof dstLen === "number" && !dst) {
             return this.decompress(src, Buffer.allocUnsafe(dstLen))
@@ -89,11 +102,11 @@ export class Oodle {
             return this.decompress(src, dstLen.length, dstLen, 0, 0, src.length)
         } else {
             //const start = Date.now()
-            const sourcePointer = src.subarray(srcOff, srcOff + srcLen)
-            const dstPointer = dst.subarray(dstOff, dstOff + dstLen)
+            const sourcePointer = src.subarray(srcOff || 0, (srcOff || 0) + (srcLen || src.length))
+            const dstPointer = dst!.subarray(dstOff || 0, (dstOff || 0) + (dstLen as number))
             const resultCode = this.oodleLib.OodleLZ_Decompress(
-                sourcePointer, srcLen,
-                dstPointer, dstLen,
+                sourcePointer, srcLen || src.length,
+                dstPointer, dstLen as number,
                 0, 0, INTEGER_MAX_VALUE,
                 ref.NULL, 0,
                 ref.NULL, ref.NULL, ref.NULL,

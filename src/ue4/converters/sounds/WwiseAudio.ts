@@ -6,7 +6,7 @@ import { ParserException } from "../../../exceptions/Exceptions";
 
 export class WwiseAudio {
     public name: string
-    public data: Buffer
+    public data!: Buffer
     public format: string
 
     constructor(data: Buffer, format: string, name: string) {

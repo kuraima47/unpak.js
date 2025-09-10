@@ -114,10 +114,10 @@ export class UMediaPlayer extends UObject {
 }
 
 /**
- * UMediaSource - Base class for media sources
+ * UMediaPlayerSource - Media source reference for MediaPlayer
  * Supporting video, audio, and streaming media
  */
-export class UMediaSource extends UObject {
+export class UMediaPlayerSource extends UObject {
     @UProperty()
     public MediaUrl: string | null = null;
     

@@ -13,21 +13,21 @@ export class UWorld extends UObject {
      * @type {ULevel}
      * @public
      */
-    public persistentLevel: Lazy<ULevel> = null
+    public persistentLevel: Lazy<ULevel> | null = null
 
     /**
      * extraReferencedObjects
      * @type {UObject}
      * @public
      */
-    public extraReferencedObjects: Lazy<UObject> = null
+    public extraReferencedObjects: Lazy<UObject> | null = null
 
     /**
      * streamingLevels
      * @type {UObject}
      * @public
      */
-    public streamingLevels: Lazy<UObject> = null
+    public streamingLevels: Lazy<UObject> | null = null
 
     deserialize(Ar: FAssetArchive, validPos: number) {
         super.deserialize(Ar, validPos);

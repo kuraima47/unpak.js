@@ -14,8 +14,7 @@ export class FGameplayTagContainer implements Iterable<FName>, IStructType {
      * @type {Array<FName>}
      * @public
      */
-    public gameplayTags: FName[]
-
+    public gameplayTags!: FName[]
     /**
      * Creates an empty instance
      * @constructor

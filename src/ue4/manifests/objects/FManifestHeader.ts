@@ -46,8 +46,7 @@ export class FManifestHeader {
      * @type {Buffer}
      * @public
      */
-    public shaHash: Buffer
-
+    public shaHash!: Buffer
     /**
      * Stored as
      * @type {number}

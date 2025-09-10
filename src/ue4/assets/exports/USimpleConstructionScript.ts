@@ -11,19 +11,19 @@ export class USimpleConstructionScript extends UObject {
      * @type {Array<USCS_Node>}
      * @public
      */
-    public RootNodes: USCS_Node[] = null
+    public RootNodes: USCS_Node[] | null = null
 
     /**
      * All nodes
      * @type {Array<USCS_Node>}
      * @public
      */
-    public AllNodes: USCS_Node[] = null
+    public AllNodes: USCS_Node[] | null = null
 
     /**
      * Default scene root node
      * @type {USCS_Node}
      * @public
      */
-    public DefaultSceneRootNode: USCS_Node = null
+    public DefaultSceneRootNode: USCS_Node | null = null
 }

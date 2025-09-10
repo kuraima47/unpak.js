@@ -6,9 +6,9 @@ import { FStaticMaterial } from "../objects/meshes/FStaticMaterial";
 import { FBoxSphereBounds } from "../../objects/core/math/FBoxSphereBounds";
 
 export class UStaticMesh_Properties extends UStreamableRenderAsset {
-    public MinLOD: FPerPlatformInt = null
+    public MinLOD: FPerPlatformInt | null = null
     public LpvBiasMultiplier: number = null
-    public StaticMaterials: FStaticMaterial[] = null
+    public StaticMaterials: FStaticMaterial[] | null = null
     public LightmapUVDensity: number = null
     public LightMapResolution: number = null
     public LightMapCoordinateIndex: number = null
@@ -24,9 +24,9 @@ export class UStaticMesh_Properties extends UStreamableRenderAsset {
     public bAllowCPUAccess: boolean = null
     public bSupportGpuUniformlyDistributedSampling: boolean = null
     public Sockets: FPackageIndex[] /*StaticMeshSocket[]*/ = null
-    public PositiveBoundsExtension: FVector = null
-    public NegativeBoundsExtension: FVector = null
-    public ExtendedBounds: FBoxSphereBounds = null
+    public PositiveBoundsExtension: FVector | null = null
+    public NegativeBoundsExtension: FVector | null = null
+    public ExtendedBounds: FBoxSphereBounds | null = null
     public ElementToIgnoreForTexFactor: number = null
     public AssetUserData: FPackageIndex[] /*AssetUserData[]*/ = null
     public EditableMesh: FPackageIndex /*Object*/ = null

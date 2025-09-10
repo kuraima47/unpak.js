@@ -3,6 +3,6 @@ import { UMaterialInterface } from "../mats/UMaterialInterface";
 import { Lazy } from "../../../../util/Lazy";
 
 export class UMeshComponent extends UPrimitiveComponent {
-    public OverrideMaterials: Lazy<UMaterialInterface>[] = null
+    public OverrideMaterials: Lazy<UMaterialInterface>[] | null = null
     public bEnableMaterialParameterCaching: boolean = null
 }

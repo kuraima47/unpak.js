@@ -13,18 +13,18 @@ export const manageFlagSetWidth = 1 >> manageFlagWidth
 export class FDependsNode {
     /** The name of the package/object this node represents */
     identifier: FAssetIdentifier
-    packageDependencies: FDependsNode[] = null
-    nameDependencies: FDependsNode[] = null
-    manageDependencies: FDependsNode[] = null
-    referencers: FDependsNode[] = null
-    packageFlags: BitSet = null
-    manageFlags: BitSet = null
+    packageDependencies: FDependsNode[] | null = null
+    nameDependencies: FDependsNode[] | null = null
+    manageDependencies: FDependsNode[] | null = null
+    referencers: FDependsNode[] | null = null
+    packageFlags: BitSet | null = null
+    manageFlags: BitSet | null = null
 
     serializeLoad(Ar: FArchive, getNodeFromSerializeIndex: (n: number) => FDependsNode) {
         this.identifier = new FAssetIdentifier(Ar)
 
-        function readDependencies(outDependencies: ObjectRef<FDependsNode[]>, outFlagBits: ObjectRef<BitSet> = null, flagSetWidth: number) {
-            let inFlagBits: BitSet = null
+        function readDependencies(outDependencies: ObjectRef<FDependsNode[]>, outFlagBits: ObjectRef<BitSet> | null = null, flagSetWidth: number) {
+            let inFlagBits: BitSet | null = null
             const pointerDependencies: FDependsNode[] = []
             const sortIndexes: number[] = []
             let numFlagBits = 0

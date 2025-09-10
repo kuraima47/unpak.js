@@ -60,8 +60,7 @@ export class FSoundConcurrencySettings {
      * @type {EMaxConcurrentResolutionRule}
      * @public
      */
-    public ResolutionRule: EMaxConcurrentResolutionRule
-
+    public ResolutionRule!: EMaxConcurrentResolutionRule
     /**
      * RetriggerTime
      * @type {number}
@@ -81,8 +80,7 @@ export class FSoundConcurrencySettings {
      * @type {EConcurrencyVolumeScaleMode}
      * @public
      */
-    public VolumeScaleMode: EConcurrencyVolumeScaleMode
-
+    public VolumeScaleMode!: EConcurrencyVolumeScaleMode
     /**
      * VolumeScaleAttackTime
      * @type {number}
@@ -190,14 +188,14 @@ export class USoundBase extends UObject {
      * @type {EVirtualizationMode}
      * @public
      */
-    public VirtualizationMode: EVirtualizationMode = null
+    public VirtualizationMode: EVirtualizationMode | null = null
 
     /**
      * Concurrency overrides
      * @type {FSoundConcurrencySettings}
      * @public
      */
-    public ConcurrencyOverrides: FSoundConcurrencySettings = null
+    public ConcurrencyOverrides: FSoundConcurrencySettings | null = null
 
     /**
      * Duration
@@ -239,28 +237,28 @@ export class USoundBase extends UObject {
      * @type {FSoundModulationDestinationSettings}
      * @public
      */
-    public VolumeModulationDestination: FSoundModulationDestinationSettings = null
+    public VolumeModulationDestination: FSoundModulationDestinationSettings | null = null
 
     /**
      * Pitch modulation destination
      * @type {FSoundModulationDestinationSettings}
      * @public
      */
-    public PitchModulationDestination: FSoundModulationDestinationSettings = null
+    public PitchModulationDestination: FSoundModulationDestinationSettings | null = null
 
     /**
      * Highpass modulation destination
      * @type {FSoundModulationDestinationSettings}
      * @public
      */
-    public HighpassModulationDestination: FSoundModulationDestinationSettings = null
+    public HighpassModulationDestination: FSoundModulationDestinationSettings | null = null
 
     /**
      * Lowpass modulation destination
      * @type {FSoundModulationDestinationSettings}
      * @public
      */
-    public LowpassModulationDestination: FSoundModulationDestinationSettings = null
+    public LowpassModulationDestination: FSoundModulationDestinationSettings | null = null
 
     /**
      * Sound submix

@@ -13,15 +13,13 @@ export class TRange<T> implements IStructType {
      * @type {TRangeBound}
      * @public
      */
-    public lowerBound: TRangeBound<T>
-
+    public lowerBound!: TRangeBound<T>
     /**
      * Holds the range's upper bound
      * @type {TRangeBound}
      * @public
      */
-    public upperBound: TRangeBound<T>
-
+    public upperBound!: TRangeBound<T>
     /**
      * Creates an instance using an UE4 Reader and an init function
      * @param {FArchive} Ar Reader to use

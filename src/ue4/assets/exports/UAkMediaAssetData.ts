@@ -69,7 +69,7 @@ export class UAkMediaAssetData extends UObject {
      * @type {Array<FAkMediaDataChunk>}
      * @public
      */
-    public dataChunks: FAkMediaDataChunk[] = null
+    public dataChunks: FAkMediaDataChunk[] | null = null
 
     /**
      * Deserializes this
@@ -96,7 +96,7 @@ export class UAkMediaAssetData extends UObject {
      * @returns {any}
      * @public
      */
-    toJson(locres: Locres = null): any {
+    toJson(locres: Locres | null = null): any {
         return {
             isStreamed: this.isStreamed,
             useDeviceMemory: this.useDeviceMemory,

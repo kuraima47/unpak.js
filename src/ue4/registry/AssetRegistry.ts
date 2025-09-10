@@ -22,7 +22,7 @@ export class AssetRegistry {
         this.originalAr = x instanceof FArchive ? x : new FByteArchive(x)
         // init
         const version = new FAssetRegistryVersion(this.originalAr)
-        let Ar: FAssetRegistryArchive = null
+        let Ar: FAssetRegistryArchive | null = null
         if (version.version < Type.RemovedMD5Hash) {
             throw new ParserException("Cannot read states before this version")
         } else if (version.version < Type.FixedTags) {

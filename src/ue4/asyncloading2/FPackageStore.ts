@@ -71,8 +71,7 @@ export class FPackageStore extends FOnContainerMountedListener {
      * @type {FileProvider}
      * @public
      */
-    public provider: FileProvider
-
+    public provider!: FileProvider
     /**
      * Creates instance using values
      * @param {FileProvider} provider File provider to use
@@ -223,7 +222,7 @@ export class FPackageStore extends FOnContainerMountedListener {
                 )
             }
 
-            /*let localizedPackages: FSourceToLocalizedPackageIdMap = null
+            /*let localizedPackages: FSourceToLocalizedPackageIdMap | null = null
             for (const cultureName of this.currentCultureNames) {
                 localizedPackages = containerHeader.culturePackageMap.get(cultureName)
                 if (localizedPackages)

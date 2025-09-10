@@ -38,7 +38,7 @@ export class UUserDefinedStruct extends UScriptStruct {
      * @type {FGuid}
      * @public
      */
-    public Guid: FGuid = null
+    public Guid: FGuid | null = null
 
     deserialize(Ar: FAssetArchive, validPos: number) {
         super.deserialize(Ar, validPos);

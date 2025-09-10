@@ -12,8 +12,7 @@ export class FFileManifestList {
      * @type {Array<FFileManifest>}
      * @public
      */
-    public fileList: FFileManifest[]
-
+    public fileList!: FFileManifest[]
     /**
      * Creates an instance using an UE4 Reader
      * @param {FArchive} Ar UE4 Reader to use

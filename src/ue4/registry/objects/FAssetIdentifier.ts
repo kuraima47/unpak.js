@@ -2,10 +2,10 @@ import { FName } from "../../objects/uobject/FName";
 import { FArchive } from "../../reader/FArchive";
 
 export class FAssetIdentifier {
-    packageName: FName = null
-    primaryAssetType: FName = null
-    objectName: FName = null
-    valueName: FName = null
+    packageName: FName | null = null
+    primaryAssetType: FName | null = null
+    objectName: FName | null = null
+    valueName: FName | null = null
 
     constructor(Ar: FArchive) {
         const fieldBits = Ar.readInt8()

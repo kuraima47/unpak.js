@@ -11,14 +11,14 @@ export class FRuntimeFloatCurve {
      * @type {FRichCurve}
      * @public
      */
-    public EditorCurveData: FRichCurve = null
+    public EditorCurveData: FRichCurve | null = null
 
     /**
      * ExternalCurve
      * @type {Lazy<UCurveFloat>}
      * @public
      */
-    public ExternalCurve: Lazy<UCurveFloat> = null
+    public ExternalCurve: Lazy<UCurveFloat> | null = null
 }
 
 /**
@@ -31,7 +31,7 @@ export class UCurveFloat extends UObject {
      * @type {FRichCurve}
      * @public
      */
-    public FloatCurve: FRichCurve = null
+    public FloatCurve: FRichCurve | null = null
 
     /**
      * Flag to represent event curve

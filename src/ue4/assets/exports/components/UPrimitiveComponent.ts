@@ -48,11 +48,11 @@ export class UPrimitiveComponent extends USceneComponent {
     public MinDrawDistance: number
     public LDMaxDrawDistance: number = null
     public CachedMaxDrawDistance: number = null
-    public DepthPriorityGroup: ESceneDepthPriorityGroup = null
+    public DepthPriorityGroup: ESceneDepthPriorityGroup | null = null
     /*public ESceneDepthPriorityGroup ViewOwnerDepthPriorityGroup = null
     public EIndirectLightingCacheQuality IndirectLightingCacheQuality = null*/
     @UProperty({ skipPrevious: 2 })
-    public LightmapType: ELightmapType = null
+    public LightmapType: ELightmapType | null = null
     public bUseMaxLODAsImposter: boolean = null
     public bBatchImpostersAsInstances: boolean = null
     public bNeverDistanceCull: boolean = null
@@ -105,9 +105,9 @@ export class UPrimitiveComponent extends USceneComponent {
     public bUseEditorCompositing: boolean = null
     public bRenderCustomDepth: boolean = null
     public EHasCustomNavigableGeometry = null
-    public CanCharacterStepUpOn: ECanBeCharacterBase = null
-    public LightingChannels: FLightingChannels = null
-    public CustomDepthStencilWriteMask: ERendererStencilMask = null
+    public CanCharacterStepUpOn: ECanBeCharacterBase | null = null
+    public LightingChannels: FLightingChannels | null = null
+    public CustomDepthStencilWriteMask: ERendererStencilMask | null = null
     public CustomDepthStencilValue: number = null
     /*public FCustomPrimitiveData CustomPrimitiveData = null
     public FCustomPrimitiveData CustomPrimitiveDataInternal = null*/
@@ -122,21 +122,21 @@ export class UPrimitiveComponent extends USceneComponent {
     @UProperty({ skipPrevious: 1 })
     public LpvBiasMultiplier: number = null
     public BoundsScale: number = null
-    public MoveIgnoreActors: Lazy<AActor>[] = null
+    public MoveIgnoreActors: Lazy<AActor>[] | null = null
     public MoveIgnoreComponents: FPackageIndex[] /*PrimitiveComponent[]*/ = null
-    public BodyInstance: FBodyInstance = null
-    public OnComponentHit: FMulticastScriptDelegate = null
-    public OnComponentBeginOverlap: FMulticastScriptDelegate = null
-    public OnComponentEndOverlap: FMulticastScriptDelegate = null
-    public OnComponentWake: FMulticastScriptDelegate = null
-    public OnComponentSleep: FMulticastScriptDelegate = null
-    public OnBeginCursorOver: FMulticastScriptDelegate = null
-    public OnEndCursorOver: FMulticastScriptDelegate = null
-    public OnClicked: FMulticastScriptDelegate = null
-    public OnReleased: FMulticastScriptDelegate = null
-    public OnInputTouchBegin: FMulticastScriptDelegate = null
-    public OnInputTouchEnd: FMulticastScriptDelegate = null
-    public OnInputTouchEnter: FMulticastScriptDelegate = null
-    public OnInputTouchLeave: FMulticastScriptDelegate = null
-    public LODParentPrimitive: Lazy<UPrimitiveComponent> = null
+    public BodyInstance: FBodyInstance | null = null
+    public OnComponentHit: FMulticastScriptDelegate | null = null
+    public OnComponentBeginOverlap: FMulticastScriptDelegate | null = null
+    public OnComponentEndOverlap: FMulticastScriptDelegate | null = null
+    public OnComponentWake: FMulticastScriptDelegate | null = null
+    public OnComponentSleep: FMulticastScriptDelegate | null = null
+    public OnBeginCursorOver: FMulticastScriptDelegate | null = null
+    public OnEndCursorOver: FMulticastScriptDelegate | null = null
+    public OnClicked: FMulticastScriptDelegate | null = null
+    public OnReleased: FMulticastScriptDelegate | null = null
+    public OnInputTouchBegin: FMulticastScriptDelegate | null = null
+    public OnInputTouchEnd: FMulticastScriptDelegate | null = null
+    public OnInputTouchEnter: FMulticastScriptDelegate | null = null
+    public OnInputTouchLeave: FMulticastScriptDelegate | null = null
+    public LODParentPrimitive: Lazy<UPrimitiveComponent> | null = null
 }

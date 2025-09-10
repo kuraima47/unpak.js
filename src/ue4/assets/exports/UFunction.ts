@@ -20,7 +20,7 @@ export class UFunction extends UStruct {
      * @type {UFunction}
      * @public
      */
-    eventGraphFunction: Lazy<UFunction> = null
+    eventGraphFunction: Lazy<UFunction> | null = null
 
     /**
      * Event graph call offset

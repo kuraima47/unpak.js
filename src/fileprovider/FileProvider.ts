@@ -388,12 +388,12 @@ export class FileProvider extends EventEmitter {
                 const ubulk = this.saveGameFile(path.substring(0, path.lastIndexOf(".")) + ".ubulk")
                 return new PakPackage(uasset, uexp, ubulk, path, this, this.versions)
             } else {
-                const storeEntry = this.globalPackageStore.value.findStoreEntry(x)
+                const storeEntry = this.globalPackageStore.value?.findStoreEntry(x)
                 if (storeEntry == null)
                     return null
                 const chunkType = this.game >= Game.GAME_UE5_BASE ? EIoChunkType5.ExportBundleData : EIoChunkType.ExportBundleData
                 const ioBuffer = this.saveChunk(createIoChunkId(x, 0, chunkType))
-                return new IoPackage(ioBuffer, x, storeEntry, this.globalPackageStore.value, this, this.versions) as Package
+                return new IoPackage(ioBuffer, x, storeEntry, this.globalPackageStore.value!, this, this.versions) as Package
             }
         } catch (e) {
             console.error(`Failed to load package ${x?.toString() || 'unknown'}`)

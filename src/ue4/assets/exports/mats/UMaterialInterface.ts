@@ -91,7 +91,7 @@ export class FMaterialTextureInfo {
      * @type {FName}
      * @public
      */
-    public TextureName: FName = null
+    public TextureName: FName | null = null
 }
 
 /**
@@ -105,28 +105,28 @@ export class UMaterialInterface extends UObject implements UUnrealMaterial {
      * @type {?FPackageIndex}
      * @public
      */
-    @UProperty() public SubsurfaceProfile?: FPackageIndex = null /*SubsurfaceProfile*/
+    @UProperty() public SubsurfaceProfile?: FPackageIndex | null = null /*SubsurfaceProfile*/
 
     /**
      * LightmassSettings
      * @type {?FLightmassMaterialInterfaceSettings}
      * @public
      */
-    @UProperty() public LightmassSettings?: FLightmassMaterialInterfaceSettings = null
+    @UProperty() public LightmassSettings?: FLightmassMaterialInterfaceSettings | null = null
 
     /**
      * TextureStreamingData
      * @type {?Array<FMaterialTextureInfo>}
      * @public
      */
-    @UProperty() public TextureStreamingData?: FMaterialTextureInfo[] = null
+    @UProperty() public TextureStreamingData?: FMaterialTextureInfo[] | null = null
 
     /**
      * AssetUserData
      * @type {?Array<FPackageIndex>}
      * @public
      */
-    @UProperty() public AssetUserData?: FPackageIndex[] = null
+    @UProperty() public AssetUserData?: FPackageIndex[] | null = null
 
     // Not sure if these are in UE4
     /**
@@ -134,21 +134,21 @@ export class UMaterialInterface extends UObject implements UUnrealMaterial {
      * @type {?UTexture}
      * @public
      */
-    public FlattenedTexture?: UTexture = null
+    public FlattenedTexture?: UTexture | null = null
 
     /**
      * MobileBaseTexture
      * @type {?UTexture}
      * @public
      */
-    public MobileBaseTexture?: UTexture = null
+    public MobileBaseTexture?: UTexture | null = null
 
     /**
      * MobileNormalTexture
      * @type {?UTexture}
      * @public
      */
-    public MobileNormalTexture?: UTexture = null
+    public MobileNormalTexture?: UTexture | null = null
 
     /**
      * bUseMobileSpecular
@@ -176,7 +176,7 @@ export class UMaterialInterface extends UObject implements UUnrealMaterial {
      * @type {?UTexture}
      * @public
      */
-    public MobileMaskTexture?: UTexture = null
+    public MobileMaskTexture?: UTexture | null = null
 
     /**
      * Gets params

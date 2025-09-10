@@ -30,7 +30,7 @@ export class UEnum extends UObject {
      * @type {ECppForm}
      * @public
      */
-    cppForm: ECppForm = null
+    cppForm: ECppForm | null = null
 
     /**
      * Deserializes this

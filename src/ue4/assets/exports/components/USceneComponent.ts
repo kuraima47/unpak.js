@@ -15,14 +15,14 @@ export enum EComponentMobility {
 
 export class USceneComponent extends UActorComponent {
     public PhysicsVolume: FPackageIndex /*WeakObjectProperty PhysicsVolume*/ = null
-    public AttachParent: Lazy<USceneComponent> = null
-    public AttachSocketName: FName = null
-    public AttachChildren: Lazy<USceneComponent>[] = null
-    public ClientAttachedChildren: Lazy<USceneComponent> = null
-    public RelativeLocation: FVector = null
-    public RelativeRotation: FRotator = null
-    public RelativeScale3D: FVector = null
-    public ComponentVelocity: FVector = null
+    public AttachParent: Lazy<USceneComponent> | null = null
+    public AttachSocketName: FName | null = null
+    public AttachChildren: Lazy<USceneComponent>[] | null = null
+    public ClientAttachedChildren: Lazy<USceneComponent> | null = null
+    public RelativeLocation: FVector | null = null
+    public RelativeRotation: FRotator | null = null
+    public RelativeScale3D: FVector | null = null
+    public ComponentVelocity: FVector | null = null
     public bComponentToWorldUpdated: boolean = null
     public bAbsoluteLocation: boolean = null
     public bAbsoluteRotation: boolean = null
@@ -35,7 +35,7 @@ export class USceneComponent extends UActorComponent {
     public bHiddenInGame: boolean = null
     public bBoundsChangeTriggersStreamingDataRebuild: boolean = null
     public bUseAttachParentBound: boolean = null
-    public Mobility: EComponentMobility = null
-    public DetailMode: EDetailMode = null
-    public PhysicsVolumeChangedDelegate: FMulticastScriptDelegate = null
+    public Mobility: EComponentMobility | null = null
+    public DetailMode: EDetailMode | null = null
+    public PhysicsVolumeChangedDelegate: FMulticastScriptDelegate | null = null
 }

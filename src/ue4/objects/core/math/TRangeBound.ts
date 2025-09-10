@@ -12,15 +12,13 @@ export class TRangeBound<T> implements IStructType {
      * @type {ERangeBoundTypes}
      * @public
      */
-    public type: ERangeBoundTypes
-
+    public type!: ERangeBoundTypes
     /**
      * Holds the bound's value
      * @type {any}
      * @public
      */
-    public value: T
-
+    public value!: T
     /**
      * Creates an instance using an UE4 Reader and an init function
      * @param {FArchive} Ar Reader to use

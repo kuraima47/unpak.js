@@ -26,11 +26,11 @@ export class UStaticMesh extends UStaticMesh_Properties {
     private static readonly MAX_STATIC_UV_SETS_UE4 = 8
     private static readonly MAX_STATIC_LODS_UE4 = 8
 
-    public stripFlags: FStripDataFlags = null
-    public bodySetup: Lazy<UObject> = null
-    public navCollision: Lazy<UObject> = null // UNavCollision
-    public lightingGuid: FGuid = null
-    public sockets: Array<Lazy<UObject>> = null
+    public stripFlags: FStripDataFlags | null = null
+    public bodySetup: Lazy<UObject> | null = null
+    public navCollision: Lazy<UObject> | null = null // UNavCollision
+    public lightingGuid: FGuid | null = null
+    public sockets: Array<Lazy<UObject>> | null = null
     public lods = new Array<FStaticMeshLODResources>()
     public bounds = new FBoxSphereBounds(new FVector(), new FVector(), 0)
     public lodsShareStaticLighting = false

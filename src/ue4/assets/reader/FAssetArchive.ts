@@ -17,8 +17,7 @@ export class FAssetArchive extends FArchiveProxy {
      * @type {Buffer}
      * @public
      */
-    public data: Buffer
-
+    public data!: Buffer
     /**
      * File provider
      * @type {FileProvider}
@@ -41,7 +40,7 @@ export class FAssetArchive extends FArchiveProxy {
      * @constructor
      * @public
      */
-    constructor(data: Buffer, provider: FileProvider = null, pkgName: string) {
+    constructor(data: Buffer, provider: FileProvider | null = null, pkgName: string) {
         super(new FByteArchive(data))
         this.data = data
         this.provider = provider
@@ -53,8 +52,7 @@ export class FAssetArchive extends FArchiveProxy {
      * @type {Package}
      * @public
      */
-    public owner: Package
-
+    public owner!: Package
     /**
      * Payloads
      * @type {Map<PayloadType, FAssetArchive>}

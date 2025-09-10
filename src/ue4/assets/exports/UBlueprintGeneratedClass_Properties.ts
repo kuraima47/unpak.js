@@ -36,21 +36,21 @@ export class UBlueprintGeneratedClass_Properties extends UClass {
      * @type {Array<FPackageIndex>}
      * @public
      */
-    public DynamicBindingObjects: FPackageIndex[] = null
+    public DynamicBindingObjects: FPackageIndex[] | null = null
 
     /**
      * ComponentTemplates
      * @type {Array<UActorComponent>}
      * @public
      */
-    public ComponentTemplates: UActorComponent[] = null
+    public ComponentTemplates: UActorComponent[] | null = null
 
     /**
      * Timelines
      * @type {Array<UTimelineTemplate>}
      * @public
      */
-    public Timelines: UTimelineTemplate[] = null
+    public Timelines: UTimelineTemplate[] | null = null
     //public List<FBPComponentClassOverride> ComponentClassOverrides;
 
     /**
@@ -59,21 +59,21 @@ export class UBlueprintGeneratedClass_Properties extends UClass {
      * @public
      */
     @UProperty({ skipPrevious: 1 })
-    public SimpleConstructionScript: FPackageIndex = null
+    public SimpleConstructionScript: FPackageIndex | null = null
 
     /**
      * InheritableComponentHandler
      * @type {FPackageIndex}
      * @public
      */
-    public InheritableComponentHandler: FPackageIndex = null
+    public InheritableComponentHandler: FPackageIndex | null = null
 
     /**
      * UberGraphFramePointerProperty
      * @type {FPackageIndex}
      * @public
      */
-    public UberGraphFramePointerProperty: FPackageIndex = null
+    public UberGraphFramePointerProperty: FPackageIndex | null = null
 
     /**
      * UberGraphFunction
@@ -81,6 +81,6 @@ export class UBlueprintGeneratedClass_Properties extends UClass {
      * @public
      */
     @UProperty({ skipNext: 1 })
-    public UberGraphFunction: UFunction = null
+    public UberGraphFunction: UFunction | null = null
     //public Map<FName, FBlueprintCookedComponentInstancingData> CookedComponentInstancingData;
 }

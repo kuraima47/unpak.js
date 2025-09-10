@@ -32,7 +32,7 @@ export class FSoftObjectPath implements IStructType {
      * @type {Package}
      * @public
      */
-    owner: Package = null
+    owner: Package | null = null
 
     /**
      * Creates an empty instance

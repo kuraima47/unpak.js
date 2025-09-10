@@ -4,10 +4,9 @@ import { FArchive } from "../../../reader/FArchive";
 import { FMeshUVHalf } from "./FMeshUVHalf";
 
 export class FStaticMeshUVItem {
-    public normal: FPackedNormal[]
-    public uv: FMeshUVFloat[]
-
-    public constructor(Ar: FArchive = null, useHighPrecisionTangents: boolean = null,
+    public normal!: FPackedNormal[]
+    public uv!: FMeshUVFloat[]
+    public constructor(Ar: FArchive | null = null, useHighPrecisionTangents: boolean = null,
                        numStaticUVSets: number = null, useStaticFloatUVs: boolean = null) {
         if (Ar != null) {
             // Serialize Tangents

@@ -40,7 +40,7 @@ export class UCurveTable extends UObject {
      * @type {ECurveTableMode}
      * @public
      */
-    public curveTableMode: ECurveTableMode = null
+    public curveTableMode: ECurveTableMode | null = null
 
     /*val richCurveRowMap get(): Map<FName, FRichCurve> {
         check(curveTableMode != ECurveTableMode.SimpleCurves)
@@ -105,7 +105,7 @@ export class UCurveTable extends UObject {
      * @returns {any} Json
      * @public
      */
-    toJson(locres: Locres = null): any {
+    toJson(locres: Locres | null = null): any {
         const obj = {}
         for (const [k, v] of this.rowMap) {
             obj[k.text] = v.toJson()
@@ -124,7 +124,7 @@ export class FCurveTableRowHandle {
      * @public
      */
     @UProperty({ name: "CurveTable" })
-    public curveTable: UCurveTable = null
+    public curveTable: UCurveTable | null = null
 
     /**
      * Name of row in the table that we want

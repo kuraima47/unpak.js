@@ -6,7 +6,7 @@ import { FArchiveWriter } from "../../writer/FArchiveWriter";
  * FChunkPart
  */
 export class FChunkPart {
-    public guid: FGuid
+    public guid!: FGuid
     public offset: number
     public size: number
 

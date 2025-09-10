@@ -30,7 +30,7 @@ export class UObject implements IPropertyHolder {
      * @type {UObject}
      * @public
      */
-    outer: UObject = null
+    outer: UObject | null = null
 
     /**
      * Object class
@@ -44,7 +44,7 @@ export class UObject implements IPropertyHolder {
      * @type {Lazy<UObject>}
      * @public
      */
-    template: Lazy<UObject> = null
+    template: Lazy<UObject> | null = null
 
     /**
      * Object properties
@@ -58,7 +58,7 @@ export class UObject implements IPropertyHolder {
      * @type {FGuid}
      * @public
      */
-    objectGuid: FGuid = null
+    objectGuid: FGuid | null = null
 
     /**
      * Object flags
@@ -195,7 +195,7 @@ export class UObject implements IPropertyHolder {
      * @returns {any} Json
      * @public
      */
-    toJson(locres: Locres = null): any {
+    toJson(locres: Locres | null = null): any {
         const ob = {}
         for (const property of this.properties) {
             const tagValue = property.prop
@@ -226,11 +226,11 @@ export class UObject implements IPropertyHolder {
         return (this.flags & flagsToCheck) !== 0
     }
 
-    public getFullName0(stopOuter: UObject = null, includeClassPackage: boolean = false): string {
+    public getFullName0(stopOuter: UObject | null = null, includeClassPackage: boolean = false): string {
         return this.getFullName1("", stopOuter, includeClassPackage)
     }
 
-    public getFullName1(resultString: string, stopOuter: UObject = null, includeClassPackage: boolean = false): string {
+    public getFullName1(resultString: string, stopOuter: UObject | null = null, includeClassPackage: boolean = false): string {
         if (includeClassPackage) {
             resultString += this.clazz?.getPathName() || "???"
         } else {
@@ -240,11 +240,11 @@ export class UObject implements IPropertyHolder {
         return this.getPathName1(resultString, stopOuter)
     }
 
-    public getPathName0(stopOuter: UObject = null): string {
+    public getPathName0(stopOuter: UObject | null = null): string {
         return this.getPathName1("", stopOuter)
     }
 
-    public getPathName1(resultString: string, stopOuter: UObject = null): string {
+    public getPathName1(resultString: string, stopOuter: UObject | null = null): string {
         if (this != stopOuter) {
             const objOuter = this.outer
             if (objOuter != null && objOuter != stopOuter) {

@@ -375,10 +375,9 @@ export class FPackageObjectIndex {
  */
 export class FZenPackageVersioningInfo {
     public version: number
-    public packageVersion: FPackageFileVersion
+    public packageVersion!: FPackageFileVersion
     public licenseeVersion: number
-    public customVersions: FCustomVersion[]
-
+    public customVersions!: FCustomVersion[]
     constructor(Ar: FArchive) {
         this.version = Ar.readInt32()
         this.packageVersion = new FPackageFileVersion(Ar)
@@ -396,7 +395,7 @@ export class FZenPackageVersioningInfo {
 export class FZenPackageSummary {
     public bHasVersioningInfo: boolean
     public headerSize: number
-    public name: FMappedName
+    public name!: FMappedName
     public packageFlags: number
     public cookedHeaderSize: number
     public importedPublicExportHashesOffset: number

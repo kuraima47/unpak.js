@@ -25,8 +25,7 @@ export class FByteArchive extends FArchive {
      * @type {Buffer}
      * @public
      */
-    public data: Buffer
-
+    public data!: Buffer
     /**
      * Creates an instance
      * @param {Buffer} data Bytes to read

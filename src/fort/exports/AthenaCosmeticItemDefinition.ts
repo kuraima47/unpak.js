@@ -28,30 +28,30 @@ export class AthenaCosmeticItemDefinition extends FortAccountItemDefinition {
     public FoleyLibraries: FPackageIndex[] /*FoleySoundLibrary[]*/ | null = null
     public DisallowedCosmeticTags: FGameplayTagContainer | null = null
     public MetaTags: FGameplayTagContainer | null = null
-    public VariantChannelsToNeverSendToMCP: FGameplayTag[] = null
-    public ReactivePreviewDrivers: UnrealMap<CosmeticVariantInfo, FSoftObjectPath> = null
-    public MaterialOverrides: AthenaCosmeticMaterialOverride[] = null
-    public ObservedPlayerStats: FGameplayTagContainer = null
-    public BuiltInEmotes: FPackageIndex[] /*UFortMontageItemDefinitionBase[]*/ = null
-    public ItemVariants: FortCosmeticVariant[] = null
-    public VariantChannelToUseForThumbnails: FGameplayTag = null
-    public ItemVariantPreviews: FortCosmeticVariantPreview[] = null
-    public DirectAquisitionStyleDisclaimerOverride: FText = null
+    public VariantChannelsToNeverSendToMCP: FGameplayTag[] | null = null
+    public ReactivePreviewDrivers: UnrealMap<CosmeticVariantInfo, FSoftObjectPath> | null = null
+    public MaterialOverrides: AthenaCosmeticMaterialOverride[] | null = null
+    public ObservedPlayerStats: FGameplayTagContainer | null = null
+    public BuiltInEmotes: FPackageIndex[] /*UFortMontageItemDefinitionBase[]*/ | null = null
+    public ItemVariants: FortCosmeticVariant[] | null = null
+    public VariantChannelToUseForThumbnails: FGameplayTag | null = null
+    public ItemVariantPreviews: FortCosmeticVariantPreview[] | null = null
+    public DirectAquisitionStyleDisclaimerOverride: FText | null = null
     //public List<FortCosmeticAdaptiveStatPreview> ItemObservedStatPreviews
     @UProperty({ skipPrevious: 1 })
-    public UnlockRequirements: FText = null
-    public UnlockingItemDef: FSoftObjectPath = null
-    public ItemPreviewActorClass: FSoftObjectPath /*SoftClassPath*/ = null
-    public ItemPreviewParticleSystem: FSoftObjectPath = null
-    public ItemPreviewMontage_Male: FSoftObjectPath = null
-    public ItemPreviewMontage_Female: FSoftObjectPath = null
-    public ItemPreviewHero: FSoftObjectPath = null
-    public ConfiguredDynamicInstallBundles: FName[] = null
-    public PendingDynamicInstallBundles: FName[] = null
-    public ExclusiveRequiresOutfitTags: FGameplayTagContainer = null
-    public CustomExclusiveCallout: FText = null
-    public ExclusiveDesciption: FText = null
-    public ExclusiveIcon: FSoftObjectPath = null
+    public UnlockRequirements: FText | null = null
+    public UnlockingItemDef: FSoftObjectPath | null = null
+    public ItemPreviewActorClass: FSoftObjectPath /*SoftClassPath*/ | null = null
+    public ItemPreviewParticleSystem: FSoftObjectPath | null = null
+    public ItemPreviewMontage_Male: FSoftObjectPath | null = null
+    public ItemPreviewMontage_Female: FSoftObjectPath | null = null
+    public ItemPreviewHero: FSoftObjectPath | null = null
+    public ConfiguredDynamicInstallBundles: FName[] | null = null
+    public PendingDynamicInstallBundles: FName[] | null = null
+    public ExclusiveRequiresOutfitTags: FGameplayTagContainer | null = null
+    public CustomExclusiveCallout: FText | null = null
+    public ExclusiveDesciption: FText | null = null
+    public ExclusiveIcon: FSoftObjectPath | null = null
 }
 
 export enum EVariantUnlockType {
@@ -60,30 +60,30 @@ export enum EVariantUnlockType {
 }
 
 export class WeirdVariantStruct {
-    public Unknown0: FGameplayTag = null
-    public Unknown1: FGameplayTag = null
+    public Unknown0: FGameplayTag | null = null
+    public Unknown1: FGameplayTag | null = null
 }
 
 export class AthenaCosmeticMaterialOverride {
-    public ComponentName: FName = null
-    public MaterialOverrideIndex: number = null
-    public OverrideMaterial: FSoftObjectPath = null
+    public ComponentName: FName | null = null
+    public MaterialOverrideIndex: number | null = null
+    public OverrideMaterial: FSoftObjectPath | null = null
 }
 
 export class FortCosmeticVariantPreview {
-    public UnlockCondition: FText = null
-    public PreviewTime: number = null
-    public VariantOptions: McpVariantChannelInfo[] = null
-    public AdditionalItems: FortCosmeticVariantPreviewElement[] = null
+    public UnlockCondition: FText | null = null
+    public PreviewTime: number | null = null
+    public VariantOptions: McpVariantChannelInfo[] | null = null
+    public AdditionalItems: FortCosmeticVariantPreviewElement[] | null = null
 }
 
 export class McpVariantChannelInfo extends CosmeticVariantInfo {
-    public OwnedVariantTags: FGameplayTagContainer = null
-    public ItemVariantIsUsedFor: FPackageIndex /*FortItemDefinition*/ = null
-    public CustomData: string = null
+    public OwnedVariantTags: FGameplayTagContainer | null = null
+    public ItemVariantIsUsedFor: FPackageIndex /*FortItemDefinition*/ | null = null
+    public CustomData: string | null = null
 }
 
 export class FortCosmeticVariantPreviewElement {
-    public VariantOptions: McpVariantChannelInfo[] = null
-    public Item: FPackageIndex /*AthenaCosmeticItemDefinition*/ = null
+    public VariantOptions: McpVariantChannelInfo[] | null = null
+    public Item: FPackageIndex /*AthenaCosmeticItemDefinition*/ | null = null
 }

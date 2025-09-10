@@ -38,13 +38,14 @@ export * from './ue4/assets/exports/mats/UDecalMaterial';
 // Enhanced texture formats (Phase 6 continuation)
 export * from './ue4/converters/textures/EnhancedFormats';
 
-// NEW ROADMAP IMPLEMENTATIONS (Phase 6, 11, 12)
+// NEW ROADMAP IMPLEMENTATIONS (Phase 6, 11, 12, 13)
 // FBX Export and Enhanced Converters (Phase 6)
 export * from './ue4/converters/FBXConverter';
 
 // Performance Optimization Tools (Phase 11)
 export * from './ue4/performance/IncrementalParser';
 export * from './ue4/performance/AssetParsingBenchmark';
+export * from './ue4/performance/JITCompiler'; // NEW: JIT compilation for hot paths ✅
 
 // Enterprise API Features (Phase 12)
 export * from './api/server/RestServer';
@@ -58,6 +59,13 @@ export * from './api/database/UnpakDatabaseProvider';
 
 // NEW: Multi-Tenant Support (Phase 12) ✅
 export * from './api/tenancy/MultiTenantManager';
+
+// NEW: Community and Ecosystem Features (Phase 13) ✅
+export * from './community/PluginMarketplace';
+
+// NEW: Asset Type Coverage Expansion (Phase 4) ✅
+export * from './ue4/assets/exports/ULevelSequence';
+export * from './ue4/assets/exports/UMediaPlayer';
 
 // Plugin support (Phase 9 start)
 export * from './ue4/assets/plugins/UPlugin';
@@ -93,6 +101,7 @@ export const FEATURES = {
   FBX_EXPORT: true, // Phase 6 - NEW: Complete FBX export with animations ✅
   INCREMENTAL_PARSING: true, // Phase 11 - NEW: Large file processing ✅
   ASSET_BENCHMARKING: true, // Phase 11 - NEW: Performance profiling ✅
+  JIT_COMPILATION: true, // Phase 11 - NEW: JIT compilation for hot asset paths ✅
   REST_API_SERVER: true, // Phase 12 - NEW: Web service interface ✅
   REAL_TIME_MONITORING: true, // Phase 12 - NEW: Asset change monitoring ✅
   WEB_INTERFACE: true, // Phase 12 - NEW: FModel-like web interface ✅
@@ -105,6 +114,15 @@ export const FEATURES = {
   
   // NEW: Advanced Plugin Features (Phase 9) ✅
   BLUEPRINT_PLUGIN_SUPPORT: true, // Phase 9 - NEW: Blueprint plugin parsing ✅
+  
+  // NEW: Community and Ecosystem Features (Phase 13) ✅
+  PLUGIN_MARKETPLACE: true, // Phase 13 - NEW: Community plugin discovery and installation ✅
+  ASSET_SHARING: true, // Phase 13 - NEW: Community asset sharing and collaboration ✅
+  
+  // NEW: Enhanced Asset Types (Phase 4) ✅
+  LEVEL_SEQUENCE_SUPPORT: true, // Phase 4 - NEW: ULevelSequence cinematics support ✅
+  MEDIA_PLAYER_SUPPORT: true, // Phase 4 - NEW: UMediaPlayer video/audio support ✅
+  NIAGARA_SYSTEM_SUPPORT: true, // Phase 4 - Enhanced: UNiagaraSystem particle effects ✅
   
   // Future features
   BULK_DATA_LAZY: false, // Phase 10 - Future

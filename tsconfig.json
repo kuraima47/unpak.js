@@ -23,7 +23,7 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "types": ["node", "jest"]
   },
   "include": [
     "src/**/*"

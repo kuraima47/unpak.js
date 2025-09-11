@@ -287,7 +287,7 @@ export class CityHash {
   /**
    * Hash function for a byte array.  Most useful in 32-bit binaries.
    */
-  public static cityHash32(s: Buffer, pos: number, len: number): long {
+  public static cityHash32(_s: Buffer, _pos: number, _len: number): long {
     return Long.fromNumber(-1);
   }
 

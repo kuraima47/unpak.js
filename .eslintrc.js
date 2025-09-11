@@ -17,6 +17,7 @@ module.exports = {
     'no-var': 'error',
     'no-undef': 'off', // TypeScript handles this
     'no-unused-vars': 'off', // Use @typescript-eslint/no-unused-vars instead
+    'no-dupe-class-members': 'off', // Allow TypeScript method overloads
   },
   env: {
     node: true,

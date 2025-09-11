@@ -1,4 +1,4 @@
-import { createCipheriv, createDecipheriv } from 'crypto';
+import { createDecipheriv } from 'crypto';
 import { ICryptoProvider, AESMode } from './ICrypto';
 import { DecryptionError } from '../core/errors/UnpakErrors';
 

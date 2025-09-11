@@ -1,4 +1,4 @@
-import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+import { Worker, isMainThread, parentPort } from 'worker_threads';
 import { EventEmitter } from 'events';
 import * as os from 'os';
 
@@ -124,7 +124,7 @@ class WorkerTaskProcessor {
 
   private async handleExtraction(payload: any): Promise<any> {
     // Simulate asset extraction
-    const { archivePath, assetPath, options } = payload;
+    const { assetPath } = payload;
 
     // This would contain actual extraction logic
     await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 200));
@@ -139,7 +139,7 @@ class WorkerTaskProcessor {
 
   private async handleConversion(payload: any): Promise<any> {
     // Simulate asset conversion
-    const { inputFormat, outputFormat, data, options } = payload;
+    const { inputFormat, outputFormat, data } = payload;
 
     // This would contain actual conversion logic
     await new Promise(resolve => setTimeout(resolve, 200 + Math.random() * 300));
@@ -155,7 +155,7 @@ class WorkerTaskProcessor {
 
   private async handleCompression(payload: any): Promise<any> {
     // Simulate compression
-    const { data, algorithm, level } = payload;
+    const { data, algorithm } = payload;
 
     await new Promise(resolve => setTimeout(resolve, 150 + Math.random() * 250));
 
@@ -170,7 +170,7 @@ class WorkerTaskProcessor {
 
   private async handleParsing(payload: any): Promise<any> {
     // Simulate asset parsing
-    const { data, format, options } = payload;
+    const { format } = payload;
 
     await new Promise(resolve => setTimeout(resolve, 80 + Math.random() * 120));
 
@@ -187,7 +187,7 @@ class WorkerTaskProcessor {
 
   private async handleAnalysis(payload: any): Promise<any> {
     // Simulate asset analysis
-    const { assetData, analysisType } = payload;
+    const { analysisType } = payload;
 
     await new Promise(resolve => setTimeout(resolve, 300 + Math.random() * 500));
 
@@ -551,7 +551,7 @@ if (!isMainThread && parentPort) {
     this.isRunning = false;
 
     // Cancel pending tasks
-    for (const [taskId, { reject }] of this.pendingTasks) {
+    for (const [, { reject }] of this.pendingTasks) {
       reject(new Error('Worker pool shutting down'));
     }
     this.pendingTasks.clear();

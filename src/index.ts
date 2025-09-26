@@ -31,9 +31,10 @@ export * from './containers/iostore/IoStoreArchive';
 // API layer
 export * from './api/IUnpakAPI';
 
-// Enhanced asset types (Phase 4 continuation)
-export * from './ue4/assets/exports/UMediaSource';
-export * from './ue4/assets/exports/mats/UDecalMaterial';
+// Enhanced asset types (Phase 4 continuation) - TEMPORARILY DISABLED DUE TO CIRCULAR REFERENCES
+// TODO: Fix circular reference between Package -> UObject -> Package
+// export * from './ue4/assets/exports/UMediaSource';
+// export * from './ue4/assets/exports/mats/UDecalMaterial';
 
 // Enhanced texture formats (Phase 6 continuation)
 export * from './ue4/converters/textures/EnhancedFormats';
@@ -63,9 +64,10 @@ export * from './api/tenancy/MultiTenantManager';
 // NEW: Community and Ecosystem Features (Phase 13) ✅
 export * from './community/PluginMarketplace';
 
-// NEW: Asset Type Coverage Expansion (Phase 4) ✅
-export * from './ue4/assets/exports/ULevelSequence';
-export * from './ue4/assets/exports/UMediaPlayer';
+// Enhanced Asset Type Coverage Expansion (Phase 4) - TEMPORARILY DISABLED DUE TO CIRCULAR REFERENCES  
+// TODO: Fix circular reference between Package -> UObject -> Package
+// export * from './ue4/assets/exports/ULevelSequence';
+// export * from './ue4/assets/exports/UMediaPlayer';
 
 // Plugin support (Phase 9 start)
 export * from './ue4/assets/plugins/UPlugin';
@@ -80,8 +82,9 @@ export * from './performance/WorkerThreads';
 // Enhanced asset registry (Phase 8 continuation)
 export * from './ue4/registry/EnhancedAssetRegistry';
 
-// NEW: Enhanced Audio System (Phase 7) ✅
-export * from './ue4/converters/sounds/EnhancedWwiseConverter';
+// Enhanced Audio System (Phase 7) - TEMPORARILY DISABLED DUE TO CIRCULAR REFERENCES
+// TODO: Fix circular reference between Package -> UObject -> audio asset classes
+// export * from './ue4/converters/sounds/EnhancedWwiseConverter';
 
 // Main library version and metadata
 export const VERSION = '2.0.0-alpha.1';
